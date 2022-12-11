@@ -1,0 +1,37 @@
+.header {
+  height: 80px;
+  padding: 0 16px 0 0;
+
+  background-color: red;
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  height: inherit;
+  margin: auto;
+}
+
+.header__nav {
+  display: none;
+}
+
+.menu-button {
+  padding: 0;
+  width: 32px;
+  height: 32px;
+
+  border: none;
+  background-color: transparent;
+}
+.menu-button img {
+  width: 100%;
+  height: 100%;
+}
+
+.header__menu-button {
+  color: blue;
+  background-color: white;
+}
