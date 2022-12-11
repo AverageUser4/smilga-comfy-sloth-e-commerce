@@ -1,14 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 
 import Logo from '../Logo/Logo.js';
-import shoppingCart from '../../assets/shopping-cart.svg';
-import addPerson from '../../assets/add-person.svg';
-import menuBars from '../../assets/menu-bars.svg';
-import menuClose from '../../assets/menu-close.svg';
+import { ReactComponent as ShoppingCart } from '../../assets/shopping-cart.svg';
+import { ReactComponent as AddPerson } from '../../assets/add-person.svg';
+import { ReactComponent as MenuBars } from '../../assets/menu-bars.svg';
+import { ReactComponent as MenuClose } from '../../assets/menu-close.svg';
 
 import './header.css';
 
 export default function Header() {
+  const [navVisible, setNavVisible] = useState(true);
+
   return (
     <header className="header">
 
@@ -16,36 +19,13 @@ export default function Header() {
 
         <Logo width={175}/>
 
-        <nav className="header__nav">
+        {navVisible && <Nav setNavVisible={setNavVisible}/>}
 
-          <div>
-            <Logo width={175}/>
-            <button className="text-button">
-              <img 
-                src={menuClose} 
-                alt="Icon representing cross sign."
-              />
-            </button>
-          </div>
-
-          <ul>
-            <li><a href="#">Home</a></li>
-            <li><a href="#">About</a></li>
-            <li><a href="#">Products</a></li>
-          </ul>
-
-          <ul>
-            <li><a href="#">Cart <img src={shoppingCart} alt="Icon representing shopping cart."/></a></li>
-            <li><a href="#">Login <img src={addPerson} alt="Icon representing person with plus sign next to their head."/></a></li>
-          </ul>
-          
-        </nav>
-
-        <button className="menu-button header__menu-button">
-          <img
-            src={menuBars} 
-            alt="Icon representing three horizontal bars."
-          />
+        <button 
+          className="header__menu-button"
+          onClick={() => setNavVisible(true)}
+        >
+          <MenuBars/>
         </button>
 
       </div>
@@ -53,3 +33,36 @@ export default function Header() {
     </header>
   );
 }
+
+function Nav({ setNavVisible }) {
+  return (
+    <nav className="header__nav">
+
+      <div className="header__nav-top">
+        <Logo width={175}/>
+        <button 
+          className="header__menu-button header__menu-button--red"
+          onClick={() => setNavVisible(false)}
+        >
+          <MenuClose/>
+        </button>
+      </div>
+
+      <ul className="header__pages-list">
+        <li><a className="header__pages-link" href="#">Home</a></li>
+        <li><a className="header__pages-link" href="#">About</a></li>
+        <li><a className="header__pages-link" href="#">Products</a></li>
+      </ul>
+
+      <ul className="header__profile-list">
+        <li><a className="header__profile-link" href="#">Cart <ShoppingCart/></a></li>
+        <li><a className="header__profile-link" href="#">Login <AddPerson/></a></li>
+      </ul>
+      
+    </nav>
+  );
+}
+
+Nav.propTypes = {
+  setNavVisible: PropTypes.func
+};

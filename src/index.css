@@ -13,9 +13,20 @@
   --black-main: rgb(16, 42, 66);
 
   --gray-main: rgb(97, 125, 152);
+  --gray-dark: rgb(50, 77, 103);
+  --gray-darker: rgb(36, 58, 82);
+  --gray-light: rgb(241, 245, 248);
+
+  --red-dark: rgb(187, 37, 37);
 }
 
 /* GLOBAL STYLES */
 body {
   margin: 0;
+  /* TODO: get proper font families */
+  font-family: sans-serif;
+}
+
+button:hover {
+  cursor: pointer;
 }
