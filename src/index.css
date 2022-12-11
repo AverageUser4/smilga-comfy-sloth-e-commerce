@@ -18,6 +18,8 @@
   --gray-light: rgb(241, 245, 248);
 
   --red-dark: rgb(187, 37, 37);
+
+  --max-width: 1170px;
 }
 
 /* GLOBAL STYLES */

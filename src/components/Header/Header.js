@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 
 import Logo from '../Logo/Logo.js';
@@ -10,7 +10,7 @@ import { ReactComponent as MenuClose } from '../../assets/menu-close.svg';
 import './header.css';
 
 export default function Header() {
-  const [navVisible, setNavVisible] = useState(true);
+  const [isNavVisible, setIsNavVisible] = useState(false);
 
   return (
     <header className="header">
@@ -19,11 +19,14 @@ export default function Header() {
 
         <Logo width={175}/>
 
-        {navVisible && <Nav setNavVisible={setNavVisible}/>}
+        <Nav
+          shouldBeVisible={isNavVisible}
+          close={setIsNavVisible.bind(null, false)}
+        />
 
         <button 
-          className="header__menu-button"
-          onClick={() => setNavVisible(true)}
+          className="header__menu-button header__menu-button--open"
+          onClick={() => setIsNavVisible(true)}
         >
           <MenuBars/>
         </button>
@@ -34,15 +37,75 @@ export default function Header() {
   );
 }
 
-function Nav({ setNavVisible }) {
+const PHASE_ONE = 'header__nav';
+const PHASE_TWO = 'header__nav header__nav--available';
+const PHASE_THREE = 'header__nav header__nav--available header__nav--visible';
+
+function Nav({ shouldBeVisible, close }) {
+  const [navClasses, setNavClasses] = useState(PHASE_ONE);
+
+  const firstFocusableRef = useRef();
+  const defaultFocusableRef = useRef();
+  const lastFocusableRef = useRef();
+
+  useEffect(() => {
+    if(shouldBeVisible) {
+      setNavClasses(PHASE_TWO);
+      var timeoutA = setTimeout(() => {
+        setNavClasses(PHASE_THREE);
+        defaultFocusableRef.current.focus();
+      }, 50);
+    }
+    else {
+      setNavClasses(PHASE_TWO);
+      var timeoutB = setTimeout(() => setNavClasses(PHASE_ONE), 300);
+    }
+
+    return () => {
+      clearTimeout(timeoutA);
+      clearTimeout(timeoutB);
+    };
+  }, [shouldBeVisible]);
+
+  useEffect(() => {
+    function onKeyDown(event) {
+      const { key, shiftKey } = event;
+
+      switch(key) {
+        case 'Esc':
+        case 'Escape':
+          close();
+          break;
+
+        case 'Tab':
+          if(!shiftKey && document.activeElement === lastFocusableRef.current) {
+            event.preventDefault();
+            firstFocusableRef.current.focus();
+          } else if(shiftKey && document.activeElement === firstFocusableRef.current) {
+            event.preventDefault();
+            lastFocusableRef.current.focus();
+          }
+          break;
+      }
+    }
+
+    window.addEventListener('keydown', onKeyDown);
+
+    return () => window.removeEventListener('keydown', onKeyDown);
+  }, []);
+  
   return (
-    <nav className="header__nav">
+    <nav className={navClasses}>
 
       <div className="header__nav-top">
-        <Logo width={175}/>
+        <Logo 
+          width={175}
+          ref={firstFocusableRef}
+        />
         <button 
           className="header__menu-button header__menu-button--red"
-          onClick={() => setNavVisible(false)}
+          onClick={close}
+          ref={defaultFocusableRef}
         >
           <MenuClose/>
         </button>
@@ -56,7 +119,15 @@ function Nav({ setNavVisible }) {
 
       <ul className="header__profile-list">
         <li><a className="header__profile-link" href="#">Cart <ShoppingCart/></a></li>
-        <li><a className="header__profile-link" href="#">Login <AddPerson/></a></li>
+        <li>
+          <a 
+            className="header__profile-link" 
+            href="#"
+            ref={lastFocusableRef}
+          >
+            Login <AddPerson/>
+          </a>
+        </li>
       </ul>
       
     </nav>
@@ -64,5 +135,6 @@ function Nav({ setNavVisible }) {
 }
 
 Nav.propTypes = {
-  setNavVisible: PropTypes.func
+  shouldBeVisible: PropTypes.bool,
+  close: PropTypes.func
 };
