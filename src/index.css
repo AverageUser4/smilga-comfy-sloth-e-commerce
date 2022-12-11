@@ -2,13 +2,14 @@
 :root {
   --beige: rgb(196, 183, 175);
   --beige-light: rgb(234, 222, 215);
+  --beige-medium: rgb(222, 203, 192);
 
   --brown: rgb(121, 87, 68);
   --brown-dark: rgb(69, 50, 39);
   --brown-light: rgb(197, 164, 145);
   --brown-main: rgb(171, 122, 95);
   --brown-medium: rgb(95, 68, 53);
-
+  
   --black: rgb(34, 34, 34);
   --black-main: rgb(16, 42, 66);
 
@@ -26,9 +27,57 @@
 body {
   margin: 0;
   /* TODO: get proper font families */
-  font-family: sans-serif;
+  font-family: Ubuntu, sans-serif;
 }
 
 button:hover {
   cursor: pointer;
+}
+
+.heading {
+  font-size: clamp(32px, 3.5vw, 42px);
+  color: var(--black-main);
+  letter-spacing: 0.1rem;
+}
+.heading--no-margin {
+  margin: 0;
+}
+.heading--underline {
+  max-width: max-content;
+  margin: auto;
+}
+.heading--underline::after {
+  content: '';
+
+  display: block;
+  width: 35%;
+  height: 0.10em;
+  margin: 0.33em auto 0;
+
+  background-color: var(--brown-main);
+}
+
+.paragraph {
+  color: var(--gray-main);
+  line-height: 2;
+  font-size: clamp(16px, 2.5vw, 18px);
+}
+
+.button {
+  display: inline-block;
+  padding: 0.6em 1.2em;
+
+  font-size: 14px;
+  background-color: var(--brown-main);
+  color: var(--beige-light);
+  text-transform: uppercase;
+  box-shadow: 0 1px 3px rgba(0,0,0,.2);
+  text-decoration: none;
+  border-radius: 3px;
+
+  transition: 500ms;
+}
+.button:hover {
+  background-color: var(--brown-light);
+  color: var(--brown-dark);
 }

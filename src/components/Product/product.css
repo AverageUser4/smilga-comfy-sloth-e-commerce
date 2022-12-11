@@ -1,0 +1,31 @@
+.product {
+  display: grid;
+  grid-template-columns: repeat(2, auto);
+  grid-template-rows: 225px auto;
+
+  font-size: 18px;
+  letter-spacing: 0.05rem;
+}
+
+.product__image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  
+  object-fit: cover;
+  object-position: center;
+  grid-column: 1 / 3;
+}
+
+.product__name, .product__price {
+  padding: 16px 0 0;
+}
+
+.product__name {
+  color: var(--black-main);
+}
+
+.product__price {
+  color: var(--brown-main);
+  text-align: right;
+}

@@ -1,0 +1,44 @@
+.main {
+  max-width: var(--max-width);
+  margin: auto;
+}
+
+.article-with-photo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 64px;
+
+  padding: 16px;
+  margin: 128px 0;
+}
+
+.article-with-photo__text {
+  max-width: 740px;
+  align-self: flex-start;
+}
+
+.dope-section {
+  padding: 90px 16px;
+
+  background-color: var(--gray-light);
+}
+
+
+@media(min-width: 980px) {
+  .article-with-photo {
+    flex-direction: row;
+    align-items: center;
+
+    padding: 32px;
+  }
+
+  .article-with-photo__text {
+    max-width: 560px;
+    align-self: auto;
+  }
+
+  .dope-section {
+    padding: 90px 32px;
+  }
+}

@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import './fancy-pics.css';
 
 function FancyPics({ smallImage, bigImage, backgroundColor }) {
   const backgroundStyle = {};
@@ -10,10 +11,8 @@ function FancyPics({ smallImage, bigImage, backgroundColor }) {
   return (
     <div className="photos-container">
 
-      <div className="background"></div>
-
-      <img src={smallImage.src}/>
-      <img src={bigImage.src}/>
+      <img className="photos-container__photo photos-container__photo--big" src={bigImage.src}/>
+      <img className="photos-container__photo photos-container__photo--small" src={smallImage.src}/>
 
     </div>
   );
