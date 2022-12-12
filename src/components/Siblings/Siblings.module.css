@@ -1,0 +1,18 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 24px 96px;
+}
+
+@media(min-width: 980px) {
+  .container {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+}
+
+@media(min-width: 1200px) {
+  .container {
+    margin: 0;
+  }
+}

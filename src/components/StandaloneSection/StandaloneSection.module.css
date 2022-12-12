@@ -1,0 +1,24 @@
+.section {
+  padding: 72px 16px;
+}
+.section--background-1 {
+  background-color: var(--gray-light);
+}
+.section--background-2 {
+  background-color: var(--beige-light);
+}
+
+@media(min-width: 980px) {
+  .section {
+    padding: 90px 32px;
+  }
+}
+@media(min-width: 1200px) {
+  .section--protruding {
+    padding: 90px 32px 0;
+  }
+  .section--protruding > :last-child > :last-child {
+    position: relative;
+    top: 75px;
+  }
+}

@@ -56,11 +56,38 @@ button:hover {
 
   background-color: var(--brown-main);
 }
+.heading--medium {
+  font-size: clamp(26px, 3vw, 34px);
+}
+.heading--small {
+  font-size: clamp(22px, 3vw, 26px);
+}
+.heading--color-2 {
+  color: var(--brown-dark);
+}
+.heading--no-shrink {
+  flex-shrink: 0;
+}
 
 .paragraph {
   color: var(--gray-main);
+  line-height: 1.8;
+  font-size: 16px;
+}
+.paragraph--no-margin {
+  margin: 0;
+}
+.paragraph--color-2 {
+  color: var(--brown);
+}
+.paragraph--big-line-height {
   line-height: 2;
+}
+.paragraph--growing {
   font-size: clamp(16px, 2.5vw, 18px);
+}
+.paragraph--width-cap {
+  max-width: 585px;
 }
 
 .button {
@@ -80,4 +107,19 @@ button:hover {
 .button:hover {
   background-color: var(--brown-light);
   color: var(--brown-dark);
+}
+.button--centered {
+  display: block;
+  width: max-content;
+  margin: auto;
+}
+
+.max-width {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: var(--max-width);
+}
+
+.standalone-element {
+  margin: 64px 0;
 }

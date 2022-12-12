@@ -5,52 +5,122 @@ import FancyPics from '../../components/FancyPics/FancyPics.js';
 import Grid from '../../components/Grid/Grid.js';
 import './home.css';
 import Product from '../../components/Product/Product';
+import Card from '../../components/Card/Card';
+import { ReactComponent as Compass } from '../../assets/compass.svg';
+import { ReactComponent as Mining } from '../../assets/mining-diamond.svg';
+import { ReactComponent as Scroll } from '../../assets/scroll.svg';
 
+import StandaloneSection from '../../components/StandaloneSection/StandaloneSection.js';
+import Siblings from '../../components/Siblings/Siblings.js';
+import BlockAndText from '../../components/BlockAndText/BlockAndText';
+import VerticalGap from '../../components/VerticalGap/VerticalGap';
 
 function Home() {
   return (
-    <main className="main">
+    <main>
 
-      <article className="article-with-photo">
+      <StandaloneSection>
 
-        <div className="article-with-photo__text">
-          <h1 className="heading heading--no-margin">Design Your <br/> Comfort Zone</h1>
-          <p className="paragraph">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Iusto, at sed omnis corporis doloremque possimus velit! Repudiandae nisi odit, aperiam odio ducimus, obcaecati libero et quia tempora excepturi quis alias?</p>
-          <a className="button" href="#">Shop now</a>
+        <div className="max-width">
+
+          <BlockAndText>
+
+            <div>
+              <h1 className="heading heading--no-margin">Design Your <br/> Comfort Zone</h1>
+              <p className="paragraph paragraph--width-cap paragraph--growing paragraph--big-line-height">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Iusto, at sed omnis corporis doloremque possimus velit! Repudiandae nisi odit, aperiam odio ducimus, obcaecati libero et quia tempora excepturi quis alias?</p>
+              <a className="button" href="#">Shop now</a>
+            </div>
+
+            <FancyPics
+              smallImage={{ src: manWorking, alt: 'Our professional, seasoned and well-paid employee working on our high quality products.' }}
+              bigImage={{ src: furniture, alt: 'Our mind-blowing furniture.' }}
+            />
+
+          </BlockAndText>
+
         </div>
 
-        <FancyPics
-          smallImage={{ src: manWorking, alt: 'Our professional, seasoned and well-paid employee working on our high quality products.' }}
-          bigImage={{ src: furniture, alt: 'Our mind-blowing furniture.' }}
-        />
+      </StandaloneSection>
 
-      </article>
+      <StandaloneSection backgroundID={1}>
 
-      <section className="dope-section">
+        <div className="max-width">
 
-        <h2 className="heading heading--no-margin heading--centered heading--underline">Featured Products</h2>
+          <h2 className="heading heading--no-margin heading--centered heading--underline">Featured Products</h2>
 
-        <Grid>
+          <div className="standalone-element">
 
-          <Product
-            name="sofa"
-            price={123}
-            image="https://cdn.wamiz.fr/cdn-cgi/image/format=auto,quality=80,width=400,height=400,fit=cover/animal/breed/pictures/613f5a1a89c13770998047.jpg"
+            <Grid>
+
+              <Product
+                name="sofa"
+                price={123}
+                image="https://cdn.wamiz.fr/cdn-cgi/image/format=auto,quality=80,width=400,height=400,fit=cover/animal/breed/pictures/613f5a1a89c13770998047.jpg"
+              />
+                        <Product
+                name="sofa"
+                price={123}
+                image="https://cdn.wamiz.fr/cdn-cgi/image/format=auto,quality=80,width=400,height=400,fit=cover/animal/breed/pictures/613f5a1a89c13770998047.jpg"
+              />
+                        <Product
+                name="sofa"
+                price={123}
+                image="https://cdn.wamiz.fr/cdn-cgi/image/format=auto,quality=80,width=400,height=400,fit=cover/animal/breed/pictures/613f5a1a89c13770998047.jpg"
+              />
+              
+            </Grid>
+
+          </div>
+
+          <a className="button button--centered" href="#">All Products</a>
+
+        </div>
+
+      </StandaloneSection>
+
+      <StandaloneSection backgroundID={2} isProtruding={true}>
+
+        <div className="max-width">
+
+          <Siblings>
+
+            <h2 className="heading heading--no-shrink heading--medium heading--no-margin heading--color-2 heading-and-paragraph__heading">Custom Furniture <br/> Built Only For You</h2>
+            <p className="paragraph paragraph--width-cap paragraph--no-margin paragraph--color-2 heading-and-paragraph__paragraph">
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe dolorum debitis consectetur
+              reprehenderit non aliquam voluptates dolore aut vero consequuntur.
+            </p>
+
+          </Siblings>
+
+          <VerticalGap
+            data={[{ mediaQuery: '(max-width: 1199px)', height: 50 }]}
           />
-                    <Product
-            name="sofa"
-            price={123}
-            image="https://cdn.wamiz.fr/cdn-cgi/image/format=auto,quality=80,width=400,height=400,fit=cover/animal/breed/pictures/613f5a1a89c13770998047.jpg"
-          />
-                    <Product
-            name="sofa"
-            price={123}
-            image="https://cdn.wamiz.fr/cdn-cgi/image/format=auto,quality=80,width=400,height=400,fit=cover/animal/breed/pictures/613f5a1a89c13770998047.jpg"
-          />
-          
-        </Grid>
 
-      </section>
+          <Grid>
+
+            <Card
+              heading="Mission"
+              text="Lorem ipsum, dolor sit amet consectetur adipisicing elit. Voluptates, ea. Perferendis corrupti reiciendis nesciunt rerum velit autem unde numquam nisi"
+              Icon={Compass}
+            />
+
+            <Card
+              heading="Vision"
+              text="Lorem ipsum, dolor sit amet consectetur adipisicing elit. Voluptates, ea. Perferendis corrupti reiciendis nesciunt rerum velit autem unde numquam nisi"
+              Icon={Mining}
+            />
+
+            <Card
+              heading="History"
+              text="Lorem ipsum, dolor sit amet consectetur adipisicing elit. Voluptates, ea. Perferendis corrupti reiciendis nesciunt rerum velit autem unde numquam nisi"
+              Icon={Scroll}
+            />
+
+          </Grid>
+
+        </div>
+        
+      </StandaloneSection>
       
     </main>
   );

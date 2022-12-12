@@ -27,7 +27,7 @@ FancyPics.propTypes = {
     src: PropTypes.string,
     alt: PropTypes.string
   }).isRequired,
-  backgroundColor: PropTypes.string
+  backgroundColor: PropTypes.string,
 };
 
 export default FancyPics;
