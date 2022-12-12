@@ -1,0 +1,72 @@
+import React, { useState, useRef } from 'react';
+import PropTypes from 'prop-types';
+import { ReactComponent as ShoppingCart } from '../../assets/shopping-cart.svg';
+import { ReactComponent as AddPerson } from '../../assets/add-person.svg';
+import { ReactComponent as MenuClose } from '../../assets/menu-close.svg';
+import Logo from '../Logo/Logo.js';
+import css from './HeaderNav.module.css';
+import useFocusTrap from '../../hooks/useFocusTrap';
+import useAppearanceTransition from '../../hooks/useAppearanceTransition';
+
+const phases = [
+  css['nav'],
+  css['nav--available'],
+  css['nav--visible']
+];
+
+function HeaderNav({ shouldBeVisible, close }) {
+  const [navClasses, setNavClasses] = useState(phases[0]);
+
+  const firstFocusableRef = useRef();
+  const defaultFocusableRef = useRef();
+  const lastFocusableRef = useRef();
+
+  useFocusTrap(close, firstFocusableRef.current, lastFocusableRef.current);
+  useAppearanceTransition(shouldBeVisible, setNavClasses, phases, 300, defaultFocusableRef.current);
+  
+  return (
+    <nav className={navClasses}>
+
+      <div className={css['nav-top']}>
+        <Logo 
+          width={175}
+          ref={firstFocusableRef}
+        />
+        <button 
+          className="icon-button icon-button--color-1"
+          onClick={close}
+          ref={defaultFocusableRef}
+        >
+          <MenuClose/>
+        </button>
+      </div>
+
+      <ul className={css["pages-list"]}>
+        <li><a className={css["pages-link"]} href="#">Home</a></li>
+        <li><a className={css["pages-link"]} href="#">About</a></li>
+        <li><a className={css["pages-link"]} href="#">Products</a></li>
+      </ul>
+
+      <ul className={css["profile-list"]}>
+        <li><a className={css["profile-link"]} href="#">Cart <ShoppingCart/></a></li>
+        <li>
+          <a 
+            className={css["profile-link"]} 
+            href="#"
+            ref={lastFocusableRef}
+          >
+            Login <AddPerson/>
+          </a>
+        </li>
+      </ul>
+      
+    </nav>
+  );
+}
+
+HeaderNav.propTypes = {
+  shouldBeVisible: PropTypes.bool,
+  close: PropTypes.func
+};
+
+export default HeaderNav;

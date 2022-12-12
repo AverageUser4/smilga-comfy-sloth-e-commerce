@@ -1,0 +1,26 @@
+.header {
+  height: 80px;
+  padding: 0 16px 0 0;
+
+  box-sizing: border-box;
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  height: inherit;
+  margin: auto;
+  max-width: var(--max-width);
+}
+
+@media(min-width: 980px) {
+  .header {
+    padding: 0 32px 0 16px;
+  }
+  
+  .open-button {
+    display: none;
+  }
+}

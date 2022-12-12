@@ -1,21 +1,6 @@
-.header {
-  height: 80px;
-  padding: 0 16px 0 0;
-
-  box-sizing: border-box;
-}
-
-.header-content {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-
-  height: inherit;
-  margin: auto;
-  max-width: var(--max-width);
-}
-
-.header__nav {
+.nav,
+.nav--available,
+.nav--visible {
   display: none;
 
   position: fixed;
@@ -32,14 +17,15 @@
 
   transition: 300ms;
 }
-.header__nav--available {
+.nav--available {
   display: block;
 }
-.header__nav--visible {
+.nav--visible {
+  display: block;
   left: 0;
 }
 
-.header__nav-top {
+.nav-top {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -47,31 +33,14 @@
   padding: 16px 16px 16px 0;
 }
 
-.header__menu-button {
-  padding: 0;
-  width: 32px;
-  height: 32px;
-
-  border: none;
-  background-color: transparent;
-  color: var(--brown-main);
-}
-.header__menu-button--close {
-  color: var(--red-dark);
-}
-.header__menu-button svg {
-  width: 100%;
-  height: 100%;
-}
-
-.header__pages-list {
+.pages-list {
   margin: 0;
   padding: 0;
 
   list-style: none;
 }
 
-.header__pages-link {
+.pages-link {
   display: block;
   padding: 14px 16px;
 
@@ -81,13 +50,13 @@
 
   transition: padding 500ms;
 }
-.header__pages-link:hover {
+.pages-link:hover {
   padding-left: 30px;
   color: var(--gray-darker);
   background-color: var(--gray-light);
 }
 
-.header__profile-list {
+.profile-list {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -99,7 +68,7 @@
   list-style: none;
 }
 
-.header__profile-link {
+.profile-link {
   display: flex;
   align-items: center;
   gap: 8px;
@@ -110,41 +79,31 @@
 }
 
 @media(min-width: 980px) {
-  .header {
-    padding: 16px 32px 16px 16px;
-  }
-
-  .header__nav {
+  .nav {
     position: static;
     
     display: contents;
-    /* justify-content: space-between; */
-    
     width: auto;
     height: auto;
   }
 
-  .header__nav-top {
-    display: none;
-  }
-  
-  .header__menu-button--open {
+  .nav-top {
     display: none;
   }
 
-  .header__pages-list {
+  .pages-list {
     display: flex;
     align-items: center;
   }
 
-  .header__pages-link:hover {
+  .pages-link:hover {
     padding-left: 16px;
     background-color: transparent;
     text-decoration: 2px underline var(--brown-main);
     text-underline-offset: 5px;
   }
 
-  .header__profile-list {
+  .profile-list {
     margin: 0;
     gap: 24px;
   }

@@ -128,6 +128,23 @@ button:hover {
   background-color: var(--brown-main);
 }
 
+.icon-button {
+  padding: 0;
+  width: 32px;
+  height: 32px;
+
+  border: none;
+  background-color: transparent;
+  color: var(--brown-main);
+}
+.icon-button--color-1 {
+  color: var(--red-dark);
+}
+.icon-button svg {
+  width: 100%;
+  height: 100%;
+}
+
 .input {
   padding: 8px 12px;
 
