@@ -79,7 +79,9 @@
 }
 
 @media(min-width: 980px) {
-  .nav {
+  .nav,
+  .nav--available,
+  .nav--visible {
     position: static;
     
     display: contents;

@@ -1,9 +1,6 @@
 .section {
   padding: 72px 16px;
 }
-.section--protruding {
-  margin-bottom: 75px;
-}
 .section--background-1 {
   background-color: var(--gray-light);
 }
@@ -19,6 +16,7 @@
 @media(min-width: 1200px) {
   .section--protruding {
     padding: 90px 32px 0;
+    margin-bottom: 75px;
   }
   .section--protruding > :last-child > :last-child {
     position: relative;

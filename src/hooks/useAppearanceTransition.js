@@ -14,7 +14,10 @@ export default function useAppearanceTransition(
   // duration of transition in milliseconds
   transitionDuration,
   // DOM node that should be focused when element appears on screen
-  defaultFocusable = null
+  defaultFocusable = null,
+  // indicates whether html element's overflow property should be set to hidden
+  // when the modal is visible
+  lockScroll = true
 ) {
   useEffect(() => {
     if(shouldBeVisible) {
@@ -22,16 +25,22 @@ export default function useAppearanceTransition(
       var timeoutA = setTimeout(() => {
         setClasses(phases[2]);
         defaultFocusable?.focus();
+        if(lockScroll)
+          document.documentElement.style.overflow = 'hidden';
       }, 50);
     }
     else {
       setClasses(phases[1]);
       var timeoutB = setTimeout(() => setClasses(phases[0]), transitionDuration);
+      if(lockScroll)
+        document.documentElement.style.overflow = 'visible';
     }
 
     return () => {
       clearTimeout(timeoutA);
       clearTimeout(timeoutB);
+      if(lockScroll)
+        document.documentElement.style.overflow = 'visible';
     };
   }, [shouldBeVisible]);
 }

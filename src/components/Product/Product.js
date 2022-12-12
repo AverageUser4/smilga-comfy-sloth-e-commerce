@@ -1,14 +1,28 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import './product.css';
+import { ReactComponent as Search } from '../../assets/magnyfing-glass.svg';
+import css from './Product.module.css';
 
 function Product({ image, price, name }) {
   return (
-    <article className="product">
+    <article>
 
-      <img className="product__image" src={image} alt={name}/>
-      <span className="product__name">{name}</span>
-      <span className="product__price">${price}</span>
+      <a className={css["product"]} href="#">
+
+        <div href="#" className={css['top']}>
+
+          <div className={css["search"]} href="#">
+            <Search/>
+          </div>
+
+          <img className={css["image"]} src={image} alt={name}/>
+
+        </div>
+
+        <span className={css["name"]}>{name}</span>
+        <span className={css["price"]}>${price}</span>
+        
+      </a>
       
     </article>
   );

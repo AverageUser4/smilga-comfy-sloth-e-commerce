@@ -1,0 +1,18 @@
+.button {
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  padding: 6px 16px;
+  
+  color: white;
+  background-color: black;
+  font-size: 20px;
+  text-transform: uppercase;
+  opacity: 0;
+
+  pointer-events: none;
+}
+.button:focus {
+  opacity: 1;
+}
