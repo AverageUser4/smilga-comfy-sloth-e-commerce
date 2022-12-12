@@ -21,6 +21,9 @@
   --red-dark: rgb(187, 37, 37);
 
   --max-width: 1170px;
+
+  --footer-height: 80px;
+  --header-height: 80px;
 }
 
 /* GLOBAL STYLES */
@@ -45,6 +48,8 @@ button:hover {
 .heading--underline {
   max-width: max-content;
   margin: auto;
+
+  text-align: center;
 }
 .heading--underline::after {
   content: '';
@@ -97,7 +102,6 @@ button:hover {
   font-size: 14px;
   background-color: var(--brown-main);
   color: var(--beige-light);
-  text-transform: uppercase;
   box-shadow: 0 1px 3px rgba(0,0,0,.2);
   text-decoration: none;
   border-radius: 3px;
@@ -108,10 +112,28 @@ button:hover {
   background-color: var(--brown-light);
   color: var(--brown-dark);
 }
+.button--uppercase {
+  text-transform: uppercase;
+}
 .button--centered {
   display: block;
   width: max-content;
   margin: auto;
+}
+.button--color-1 {
+  color: var(--black);
+}
+.button--color-1:hover {
+  color: white;
+  background-color: var(--brown-main);
+}
+
+.input {
+  padding: 8px 12px;
+
+  font-size: 16px;
+  border: 2px solid var(--black);
+  border-radius: 3px;
 }
 
 .max-width {

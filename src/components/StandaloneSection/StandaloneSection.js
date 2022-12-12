@@ -9,7 +9,9 @@ function StandaloneSection({ children, backgroundID, isProtruding }) {
 
   return (
     <section className={sectionClasses}>
-      {children}
+      <div className="max-width">
+        {children}
+      </div>
     </section>
   );
 }
