@@ -92,9 +92,7 @@ function Home() {
 
           </Siblings>
 
-          <VerticalGap
-            data={[{ mediaQuery: '(max-width: 1199px)', height: 50 }]}
-          />
+          <VerticalGap typeID={1}/>
 
           <Grid>
 

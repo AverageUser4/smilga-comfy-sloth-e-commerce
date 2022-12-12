@@ -1,0 +1,8 @@
+.type-1 {
+  height: 75px;
+}
+@media(min-width: 1200px) {
+  .type-1 {
+    display: none;
+  }
+}
