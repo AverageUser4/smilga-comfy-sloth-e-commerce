@@ -20,21 +20,27 @@ export default function useAppearanceTransition(
   lockScroll = true
 ) {
   useEffect(() => {
-    if(shouldBeVisible) {
+    var timeoutA, timeoutB;
+
+    function makeVisible() {
       setClasses(phases[1]);
-      var timeoutA = setTimeout(() => {
+      
+      timeoutA = setTimeout(() => {
         setClasses(phases[2]);
         defaultFocusable?.focus();
-        if(lockScroll)
-          document.documentElement.style.overflow = 'hidden';
       }, 50);
     }
-    else {
+
+    function makeHidden() {
       setClasses(phases[1]);
-      var timeoutB = setTimeout(() => setClasses(phases[0]), transitionDuration);
-      if(lockScroll)
-        document.documentElement.style.overflow = 'visible';
+
+      timeoutB = setTimeout(() => setClasses(phases[0]), transitionDuration);
     }
+
+    if(shouldBeVisible)
+      makeVisible();
+    else
+      makeHidden();
 
     return () => {
       clearTimeout(timeoutA);
