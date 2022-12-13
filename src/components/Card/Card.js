@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import './card.css';
+import css from './Card.module.css';
 
 function Card({ heading, text, Icon }) {
   return (
-    <article className="card">
+    <article className={css['card']}>
 
-      <Icon className="card__icon"/>
+      <Icon className={css['icon']}/>
       <h3 className="heading heading--no-margin heading--color-2 heading--small">{heading}</h3>
       <p className="paragraph paragraph--no-margin paragraph--color-2">{text}</p>
 

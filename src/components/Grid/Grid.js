@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import './grid.css';
+import css from './Grid.module.css';
 
 function Grid({ children }) {
   return (
-    <div className="grid">
+    <div className={css['grid']}>
       {children}
     </div>
   );

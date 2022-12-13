@@ -1,11 +1,11 @@
-.photos-container {
+.container {
   position: relative;
 
   width: 100%;
   max-width: 520px;
   aspect-ratio: 1/1;
 }
-.photos-container::before {
+.container::before {
   content: '';
 
   position: absolute;
@@ -20,7 +20,7 @@
   border-radius: 3px;
 }
 
-.photos-container__photo {
+.photo {
   position: absolute;
   bottom: 0;
   
@@ -32,14 +32,14 @@
   object-position: center;
 }
 
-.photos-container__photo--small {
+.photo--small {
   left: 0;
 
   width: 50%;
   height: 30%;
 }
 
-.photos-container__photo--big {
+.photo--big {
   right: 0;
 
   width: 80%;
