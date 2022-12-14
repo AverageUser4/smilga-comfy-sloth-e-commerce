@@ -15,6 +15,7 @@ import Siblings from '../../components/Siblings/Siblings.js';
 import BlockAndText from '../../components/BlockAndText/BlockAndText';
 import VerticalGap from '../../components/VerticalGap/VerticalGap';
 import DualInput from '../../components/DualInput/DualInput';
+import { Link } from 'react-router-dom';
 
 function Home() {
   return (
@@ -27,7 +28,7 @@ function Home() {
           <div>
             <h1 className="heading heading--no-margin">Design Your <br/> Comfort Zone</h1>
             <p className="paragraph paragraph--width-cap paragraph--growing paragraph--big-line-height">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Iusto, at sed omnis corporis doloremque possimus velit! Repudiandae nisi odit, aperiam odio ducimus, obcaecati libero et quia tempora excepturi quis alias?</p>
-            <a className="button" href="#">Shop now</a>
+            <Link to="products" className="button">Shop now</Link>
           </div>
 
           <FancyPics
@@ -67,7 +68,7 @@ function Home() {
 
         </div>
 
-        <a className="button button--centered button--uppercase" href="#">All Products</a>
+        <Link to="/products" className="button button--centered button--uppercase">All Products</Link>
 
       </StandaloneSection>
 

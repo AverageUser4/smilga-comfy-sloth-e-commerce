@@ -2,16 +2,17 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { ReactComponent as Search } from '../../assets/magnyfing-glass.svg';
 import css from './Product.module.css';
+import { Link } from 'react-router-dom';
 
-function Product({ image, price, name }) {
+function Product({ image, price, name, id }) {
   return (
     <article>
 
-      <a className={css["product"]} href="#">
+      <Link to={`/products/${id}`} className={css["product"]}>
 
-        <div href="#" className={css['top']}>
+        <div className={css['top']}>
 
-          <div className={css["search"]} href="#">
+          <div className={css["search"]}>
             <Search/>
           </div>
 
@@ -22,7 +23,7 @@ function Product({ image, price, name }) {
         <span className={css["name"]}>{name}</span>
         <span className={css["price"]}>${price}</span>
         
-      </a>
+      </Link>
       
     </article>
   );
@@ -31,7 +32,8 @@ function Product({ image, price, name }) {
 Product.propTypes = {
   image: PropTypes.string,
   price: PropTypes.number,
-  name: PropTypes.string
+  name: PropTypes.string,
+  id: PropTypes.string
 };
 
 export default Product;

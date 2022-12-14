@@ -1,5 +1,6 @@
 import React, { forwardRef } from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 import logo from '../../assets/logo.svg';
 
@@ -11,13 +12,13 @@ function logoBody(props, ref) {
     logoStyle.height = props.height;
 
   return (
-    <a ref={ref} href="#">
+    <Link to="/" ref={ref}>
       <img
         src={logo}
         alt="ComfySloth logo"
         style={logoStyle}
       />
-    </a>
+    </Link>
   );
 }
 

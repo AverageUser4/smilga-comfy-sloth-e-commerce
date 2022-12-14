@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import { ReactComponent as ShoppingCart } from '../../assets/shopping-cart.svg';
 import { ReactComponent as AddPerson } from '../../assets/add-person.svg';
 import { ReactComponent as MenuClose } from '../../assets/menu-close.svg';
@@ -42,21 +43,21 @@ function HeaderNav({ shouldBeVisible, close }) {
       </div>
 
       <ul className={css["pages-list"]}>
-        <li><a className={css["pages-link"]} href="#">Home</a></li>
-        <li><a className={css["pages-link"]} href="#">About</a></li>
-        <li><a className={css["pages-link"]} href="#">Products</a></li>
+        <li><Link to="/" className={css["pages-link"]}>Home</Link></li>
+        <li><Link to="/about" className={css["pages-link"]}>About</Link></li>
+        <li><Link to="/products" className={css["pages-link"]}>Products</Link></li>
       </ul>
 
       <ul className={css["profile-list"]}>
-        <li><a className={css["profile-link"]} href="#">Cart <ShoppingCart/></a></li>
+        <li><Link to="/cart" className={css["profile-link"]}>Cart <ShoppingCart/></Link></li>
         <li>
-          <a 
+          <Link 
+            to="/login"
             className={css["profile-link"]} 
-            href="#"
             ref={lastFocusableRef}
           >
             Login <AddPerson/>
-          </a>
+          </Link>
         </li>
       </ul>
       
