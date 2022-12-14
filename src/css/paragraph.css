@@ -1,0 +1,20 @@
+.paragraph {
+  color: var(--gray-main);
+  line-height: 1.8;
+  font-size: 16px;
+}
+.paragraph--no-margin {
+  margin: 0;
+}
+.paragraph--color-2 {
+  color: var(--brown);
+}
+.paragraph--big-line-height {
+  line-height: 2;
+}
+.paragraph--growing {
+  font-size: clamp(16px, 2.5vw, 18px);
+}
+.paragraph--width-cap {
+  max-width: 585px;
+}

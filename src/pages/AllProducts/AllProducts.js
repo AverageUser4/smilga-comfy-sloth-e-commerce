@@ -15,23 +15,23 @@ function AllProducts() {
 
           <form>
 
-            <input placeholder='Search'/>
+            <input className="inputs-1__input" placeholder='Search'/>
 
             <section>
-              <h3>Category</h3>
-              <ul>
-                <li><button>All</button></li>
-                <li><button>Office</button></li>
-                <li><button>Living room</button></li>
-                <li><button>Kitchen</button></li>
-                <li><button>Bedroom</button></li>
-                <li><button>Dining room</button></li>
-                <li><button>For kids</button></li>
+              <h3 className="heading heading--nano">Category</h3>
+              <ul className="list">
+                <li><button className="plain-text plain-text--fancy">All</button></li>
+                <li><button className="plain-text plain-text--fancy">Office</button></li>
+                <li><button className="plain-text plain-text--fancy">Living room</button></li>
+                <li><button className="plain-text plain-text--fancy">Kitchen</button></li>
+                <li><button className="plain-text plain-text--fancy">Bedroom</button></li>
+                <li><button className="plain-text plain-text--fancy">Dining room</button></li>
+                <li><button className="plain-text plain-text--fancy">For kids</button></li>
               </ul>
             </section>
 
             <section>
-              <h3>Company</h3>
+              <h3 className="heading heading--nano">Company</h3>
               <select>
                 <option>All</option>
                 <option>Marcos</option>
@@ -42,7 +42,7 @@ function AllProducts() {
             </section>
 
             <section>
-              <h3>Colors</h3>
+              <h3 className="heading heading--nano">Colors</h3>
               <input type="radio" name="color" value=""/>
               <input type="radio" name="color" value="red"/>
               <input type="radio" name="color" value="green"/>
@@ -52,7 +52,7 @@ function AllProducts() {
             </section>
 
             <section>
-              <h3>Price</h3>
+              <h3 className="heading heading--nano">Price</h3>
               <input type="range" min="0" max="3100"/>
             </section>
 
@@ -62,7 +62,7 @@ function AllProducts() {
               type="checkbox"
             />
 
-            <button>Clear filters</button>
+            <button className="button button--danger button--little-padding">Clear Filters</button>
 
           </form>
           

@@ -1,0 +1,26 @@
+:root {
+  --beige: rgb(196, 183, 175);
+  --beige-light: rgb(234, 222, 215);
+  --beige-medium: rgb(222, 203, 192);
+
+  --brown: rgb(121, 87, 68);
+  --brown-dark: rgb(69, 50, 39);
+  --brown-light: rgb(197, 164, 145);
+  --brown-main: rgb(171, 122, 95);
+  --brown-medium: rgb(95, 68, 53);
+  
+  --black: rgb(34, 34, 34);
+  --black-main: rgb(16, 42, 66);
+
+  --gray-main: rgb(97, 125, 152);
+  --gray-dark: rgb(50, 77, 103);
+  --gray-darker: rgb(36, 58, 82);
+  --gray-light: rgb(241, 245, 248);
+
+  --red-dark: rgb(187, 37, 37);
+
+  --max-width: 1170px;
+
+  --footer-height: 80px;
+  --header-height: 80px;
+}

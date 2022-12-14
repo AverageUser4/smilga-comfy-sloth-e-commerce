@@ -1,0 +1,9 @@
+body {
+  margin: 0;
+  /* TODO: get proper font families */
+  font-family: Ubuntu, sans-serif;
+}
+
+button:hover {
+  cursor: pointer;
+}

@@ -1,0 +1,47 @@
+.heading {
+  font-size: clamp(32px, 3.5vw, 42px);
+  color: var(--black-main);
+  letter-spacing: 0.1rem;
+}
+.heading--no-margin {
+  margin: 0;
+}
+.heading--underline {
+  max-width: max-content;
+  margin: auto;
+
+  text-align: center;
+}
+.heading--underline::after {
+  content: '';
+
+  display: block;
+  width: 35%;
+  height: 0.10em;
+  margin: 0.33em auto 0;
+
+  background-color: var(--brown-main);
+}
+.heading--underline-alt {
+  margin-left: 0;
+  margin-right: 0;
+}
+.heading--underline-alt::after {
+  width: 45%;
+  margin: 0.33em 0 0;
+}
+.heading--medium {
+  font-size: clamp(26px, 3vw, 34px);
+}
+.heading--small {
+  font-size: clamp(22px, 3vw, 26px);
+}
+.heading--nano {
+  font-size: 16px;
+}
+.heading--color-2 {
+  color: var(--brown-dark);
+}
+.heading--no-shrink {
+  flex-shrink: 0;
+}
