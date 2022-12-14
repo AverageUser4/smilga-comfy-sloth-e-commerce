@@ -5,7 +5,6 @@ import FancyPics from '../../components/FancyPics/FancyPics.js';
 import Grid from '../../components/Grid/Grid.js';
 import Product from '../../components/Product/Product';
 import Card from '../../components/Card/Card';
-import Main from '../../components/Main/Main.js';
 import { ReactComponent as Compass } from '../../assets/compass.svg';
 import { ReactComponent as Mining } from '../../assets/mining-diamond.svg';
 import { ReactComponent as Scroll } from '../../assets/scroll.svg';
@@ -19,7 +18,7 @@ import { Link } from 'react-router-dom';
 
 function Home() {
   return (
-    <Main>
+    <>
 
       <StandaloneSection>
 
@@ -142,7 +141,7 @@ function Home() {
 
       </StandaloneSection>
       
-    </Main>
+    </>
   );
 }
 

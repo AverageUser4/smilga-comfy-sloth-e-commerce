@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { ReactComponent as ShoppingCart } from '../../assets/shopping-cart.svg';
 import { ReactComponent as AddPerson } from '../../assets/add-person.svg';
 import { ReactComponent as MenuClose } from '../../assets/menu-close.svg';
@@ -43,21 +43,30 @@ function HeaderNav({ shouldBeVisible, close }) {
       </div>
 
       <ul className={css["pages-list"]}>
-        <li><Link to="/" className={css["pages-link"]}>Home</Link></li>
-        <li><Link to="/about" className={css["pages-link"]}>About</Link></li>
-        <li><Link to="/products" className={css["pages-link"]}>Products</Link></li>
+        <li><NavLink exact to="/" className={css["pages-link"]} activeClassName={css["pages-link--active"]}>Home</NavLink></li>
+        <li><NavLink to="/about" className={css["pages-link"]} activeClassName={css["pages-link--active"]}>About</NavLink></li>
+        <li><NavLink to="/products" className={css["pages-link"]} activeClassName={css["pages-link--active"]}>Products</NavLink></li>
       </ul>
 
       <ul className={css["profile-list"]}>
-        <li><Link to="/cart" className={css["profile-link"]}>Cart <ShoppingCart/></Link></li>
         <li>
-          <Link 
+          <NavLink 
+            to="/cart"
+            className={css["profile-link"]}
+            activeClassName={css["profile-link--active"]}
+          >
+            Cart <ShoppingCart/>
+          </NavLink>
+        </li>
+        <li>
+          <NavLink 
             to="/login"
             className={css["profile-link"]} 
+            activeClassName={css["profile-link--active"]} 
             ref={lastFocusableRef}
           >
             Login <AddPerson/>
-          </Link>
+          </NavLink>
         </li>
       </ul>
       

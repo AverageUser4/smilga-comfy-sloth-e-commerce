@@ -8,6 +8,7 @@ import AllProducts from './pages/AllProducts/AllProducts.js';
 import About from './pages/About/About.js';
 import Header from './components/Header/Header.js';
 import Footer from './components/Footer/Footer.js';
+import Main from './components/Main/Main.js';
 
 export default function App() {
   return (
@@ -15,29 +16,31 @@ export default function App() {
 
       <Header/>
 
-      <Switch>
+      <Main>
+        <Switch>
 
-        <Route path="/products/:id">
-          <ProductPage/>
-        </Route>
+          <Route path="/products/:id">
+            <ProductPage/>
+          </Route>
 
-        <Route path="/products">
-          <AllProducts/>
-        </Route>
+          <Route path="/products">
+            <AllProducts/>
+          </Route>
 
-        <Route path="/about">
-          <About/>
-        </Route>
+          <Route path="/about">
+            <About/>
+          </Route>
 
-        <Route exact path="/">
-          <Home/>
-        </Route>
+          <Route exact path="/">
+            <Home/>
+          </Route>
 
-        <Route path="*">
-          <Error message="404 page not found."/>
-        </Route>
+          <Route path="*">
+            <Error message="404 page not found."/>
+          </Route>
 
-      </Switch>
+        </Switch>
+      </Main>
 
       <Footer/>
 

@@ -1,5 +1,4 @@
 import React from 'react';
-import Main from '../../components/Main/Main.js';
 import CurrentPath from '../../components/CurrentPath/CurrentPath.js';
 import StandaloneSection from '../../components/StandaloneSection/StandaloneSection.js';
 import furniture from '../../assets/furniture.jpeg';
@@ -7,7 +6,7 @@ import css from './temporary.module.css';
 
 function About() {
   return (
-    <Main>
+    <>
       
       <CurrentPath/>
 
@@ -21,7 +20,7 @@ function About() {
         </div>
       </StandaloneSection>
       
-    </Main>
+    </>
   );
 }
 

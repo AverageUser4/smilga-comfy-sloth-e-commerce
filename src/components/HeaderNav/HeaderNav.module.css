@@ -50,7 +50,8 @@
 
   transition: padding 500ms;
 }
-.pages-link:hover {
+.pages-link:hover,
+.pages-link--active {
   padding-left: 30px;
   color: var(--gray-darker);
   background-color: var(--gray-light);
@@ -77,6 +78,11 @@
   color: var(--black-main);
   text-decoration: none;
 }
+.profile-link:hover,
+.profile-link--active {
+  text-decoration: 2px underline currentColor;
+  text-underline-offset: 8px;
+}
 
 @media(min-width: 980px) {
   .nav,
@@ -98,7 +104,8 @@
     align-items: center;
   }
 
-  .pages-link:hover {
+  .pages-link:hover,
+  .pages-link--active {
     padding-left: 16px;
     background-color: transparent;
     text-decoration: 2px underline var(--brown-main);
