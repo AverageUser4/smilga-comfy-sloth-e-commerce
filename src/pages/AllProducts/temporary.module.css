@@ -1,0 +1,10 @@
+.siblings {
+  display: flex;
+  flex-direction: column;
+  gap: 48px 24px;
+}
+@media(min-width: 760px) {
+  .siblings {
+    flex-direction: row;
+  }
+}

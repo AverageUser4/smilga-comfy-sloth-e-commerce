@@ -6,7 +6,10 @@ function ProductsFilterForm(props) {
   return (
     <form className={css['products-form']}>
 
-      <input className="input" placeholder='Search'/>
+      <label>
+        <span className="heading heading--nano heading--only-bottom-margin">Search</span>
+        <input className="input" placeholder='Search'/>
+      </label>
 
       <fieldset className="fieldset">
         <legend className="heading heading--nano heading--no-margin">Category</legend>
