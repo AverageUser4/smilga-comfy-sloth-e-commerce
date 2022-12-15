@@ -1,3 +1,7 @@
+.block {
+  display: block;
+}
+
 .list {
   margin: 0;
   padding: 0;
@@ -5,15 +9,10 @@
   list-style: none;
 }
 
-.dope-list {
-  display: flex;
-  flex-direction: column;
-  gap: 8px 12px;
-}
-
 .horizontal-list {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   gap: 8px;
 }
 
@@ -26,7 +25,6 @@
 .standalone-element {
   margin: 64px 0;
 }
-
-.small-standalone-element {
+.standalone-element--small {
   margin: 24px 0;
 }

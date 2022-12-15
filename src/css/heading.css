@@ -1,4 +1,7 @@
 .heading {
+  display: block;
+  margin: 0.7em 0;
+  
   font-size: clamp(32px, 3.5vw, 42px);
   color: var(--black-main);
   letter-spacing: 0.1rem;
@@ -6,6 +9,9 @@
 }
 .heading--no-margin {
   margin: 0;
+}
+.heading--only-bottom-margin {
+  margin-top: 0;
 }
 .heading--underline {
   max-width: max-content;
