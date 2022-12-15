@@ -1,0 +1,17 @@
+.product {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 24px;
+
+  margin-top: 32px;
+}
+.product > :nth-child(1) {
+  flex-shrink: 0;
+}
+
+@media(min-width: 980px) {
+  .product {
+    flex-direction: row;
+  }
+}

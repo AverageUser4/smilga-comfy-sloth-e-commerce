@@ -36,11 +36,11 @@
   color: var(--black);
   font-size: 16px;
   letter-spacing: 0.1rem;
-  background-color: var(--brown-main);
   border: 2px solid var(--black);
 }
 .button--type-1:hover {
   color: white;
+  background-color: var(--brown-main);
 }
 
 .button--danger,
@@ -82,4 +82,24 @@
 .text-button:hover,
 .text-button--active {
   text-decoration: underline;
+}
+
+.toggle-button {
+  width: 24px;
+  height: 24px;
+  padding: 4px;
+  border-radius: 3px;
+  border: 1px solid var(--black);
+  color: var(--black);
+  background-color: white;
+
+  box-sizing: border-box;
+}
+.toggle-button svg {
+  width: 100%;
+  height: 100%;
+}
+.toggle-button--active {
+  background-color: var(--black);
+  color: white;
 }

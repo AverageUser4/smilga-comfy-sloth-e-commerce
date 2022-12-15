@@ -1,0 +1,47 @@
+.gallery {
+
+}
+
+.main-photo {
+  display: block;
+  width: 100%;
+  height: 500px;
+  margin-bottom: 16px;
+
+  object-fit: cover;
+  object-position: center;
+}
+
+.thumbnails {
+  display: flex;
+  gap: 16px;
+
+  width: 100%;
+  height: 50px;
+}
+.thumbnails img {
+  display: block;
+
+  width: 100%;
+  height: 100%;
+  border-radius: 3px;
+
+  object-fit: cover;
+  object-position: center;
+}
+
+@media(min-width: 540px) {
+  .thumbnails {
+    height: 100px;
+  }
+}
+
+@media(min-width: 980px) {
+  .main-photo,
+  .thumbnails {
+    max-width: 540px;
+  }
+  .thumbnails {
+    height: 75px;
+  }
+}

@@ -63,6 +63,7 @@
 @media(min-width: 760px) {
   .products-form {
     width: 200px;
+    flex-shrink: 0;
   }
   .products-form :nth-child(4),
   .products-form :nth-child(5) {
