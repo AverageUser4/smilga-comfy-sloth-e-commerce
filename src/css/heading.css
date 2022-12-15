@@ -2,6 +2,7 @@
   font-size: clamp(32px, 3.5vw, 42px);
   color: var(--black-main);
   letter-spacing: 0.1rem;
+  font-weight: bold;
 }
 .heading--no-margin {
   margin: 0;

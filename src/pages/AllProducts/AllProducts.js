@@ -15,46 +15,64 @@ function AllProducts() {
 
           <form>
 
-            <input className="inputs-1__input" placeholder='Search'/>
+            <input className="input" placeholder='Search'/>
 
-            <section>
-              <h3 className="heading heading--nano">Category</h3>
-              <ul className="list">
-                <li><button className="plain-text plain-text--fancy">All</button></li>
-                <li><button className="plain-text plain-text--fancy">Office</button></li>
-                <li><button className="plain-text plain-text--fancy">Living room</button></li>
-                <li><button className="plain-text plain-text--fancy">Kitchen</button></li>
-                <li><button className="plain-text plain-text--fancy">Bedroom</button></li>
-                <li><button className="plain-text plain-text--fancy">Dining room</button></li>
-                <li><button className="plain-text plain-text--fancy">For kids</button></li>
+            <fieldset className="fieldset small-standalone-element">
+              <legend className="heading heading--nano">Category</legend>
+              <ul className="list dope-list">
+                <li><button className="text-button">All</button></li>
+                <li><button className="text-button">Office</button></li>
+                <li><button className="text-button">Living room</button></li>
+                <li><button className="text-button">Kitchen</button></li>
+                <li><button className="text-button">Bedroom</button></li>
+                <li><button className="text-button">Dining room</button></li>
+                <li><button className="text-button">For kids</button></li>
               </ul>
-            </section>
+            </fieldset>
 
-            <section>
-              <h3 className="heading heading--nano">Company</h3>
-              <select>
+            <fieldset className="fieldset small-standalone-element">
+              <legend className="heading heading--nano">Company</legend>
+              <select className="input">
                 <option>All</option>
                 <option>Marcos</option>
                 <option>Liddy</option>
                 <option>Ikea</option>
                 <option>Caressa</option>
               </select>
-            </section>
+            </fieldset>
 
-            <section>
-              <h3 className="heading heading--nano">Colors</h3>
-              <input type="radio" name="color" value=""/>
-              <input type="radio" name="color" value="red"/>
-              <input type="radio" name="color" value="green"/>
-              <input type="radio" name="color" value="purple"/>
-              <input type="radio" name="color" value="black"/>
-              <input type="radio" name="color" value="yellow"/>
-            </section>
+            <fieldset className="fieldset small-standalone-element horizontal-list">
+              <legend className="heading heading--nano">Colors</legend>
+              <label className="focus-label">
+                <input defaultChecked className="hidden-radio" type="radio" name="color" value=""/>
+                <span className="text-button">All</span>
+              </label>
+              <label className="focus-label">
+                <input className="hidden-radio" type="radio" name="color" value="red"/>
+                <span className="color"></span>
+              </label>
+              <label className="focus-label">
+                <input className="hidden-radio" type="radio" name="color" value="green"/>
+                <span className="color color--green"></span>
+              </label>
+              <label className="focus-label">
+                <input className="hidden-radio" type="radio" name="color" value="purple"/>
+                <span className="color color--blue"></span>
+              </label>
+              <label className="focus-label">
+                <input className="hidden-radio" type="radio" name="color" value="black"/>
+                <span className="color color--black"></span>
+              </label>
+              <label className="focus-label">
+                <input className="hidden-radio" type="radio" name="color" value="orange"/>
+                <span className="color color--orange"></span>
+              </label>
+            </fieldset>
 
-            <section>
-              <h3 className="heading heading--nano">Price</h3>
+            <fieldset className="fieldset small-standalone-element">
+              <legend className="heading heading--nano">Price</legend>
               <input type="range" min="0" max="3100"/>
-            </section>
+            </fieldset>
 
             <label htmlFor="freeShipping">Free shipping</label>
             <input

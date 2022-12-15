@@ -126,11 +126,11 @@ function Home() {
             <DualInput>
               <input
                 type="email"
-                className="input"
+                className="input input--type-1"
                 placeholder="Enter Email"
               />
               <button 
-                className="input button button--color-1"
+                className="button button--type-1"
               >
                 Subscribe
               </button>

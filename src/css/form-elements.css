@@ -1,0 +1,99 @@
+.input {
+  padding: 8px 12px;
+  min-width: 0;
+
+  background-color: var(--gray-light);
+  font-size: 13px;
+  border: 1px solid var(--black);
+  border-radius: 3px;
+  letter-spacing: 0.1rem;
+}
+
+.input--type-1 {
+  font-size: 16px;
+  border: 2px solid var(--black);
+  border-radius: 3px;
+}
+
+.fieldset {
+  padding: 12px 0 0;
+
+  border: none;
+}
+.fieldset legend {
+  padding: 0;
+}
+
+.hidden-radio {
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  width: 0;
+  height: 0;
+  margin: 0;
+
+  opacity: 0;
+  
+  pointer-events: none;
+}
+
+.color {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+  position: relative;
+  
+  width: 16px;
+  height: 16px;
+
+  background-color: red;
+  opacity: 0.5;
+  border-radius: 50%;
+}
+.color--green {
+  background-color: green; 
+}
+.color--blue {
+  background-color: blue; 
+}
+.color--black {
+  background-color: black; 
+}
+.color--orange {
+  background-color: orange; 
+}
+
+.focus-label {
+  position: relative;
+  
+  display: inline-block;
+  min-width: 16px;
+  height: 16px;
+}
+.focus-label:focus-within {
+  outline: 2px solid olivedrab;
+  outline-offset: 1px;
+  border-radius: 3px;
+}
+.focus-label:focus-within .color,
+.focus-label .hidden-radio:checked ~ .color {
+  opacity: 1;
+}
+.focus-label:focus-within .color::after,
+.focus-label .hidden-radio:checked ~ .color::after {
+  content: '';
+
+  display: block;  
+  width: 3.2px;
+  height: 5.3px;
+  border-right: 2px solid white;
+  border-bottom: 2px solid white;
+
+  transform: rotate(45deg) translate(-0.6px, -1.4px);
+}
+.focus-label:focus-within .text-button,
+.focus-label .hidden-radio:checked ~ .text-button {
+  text-decoration: underline;
+}
