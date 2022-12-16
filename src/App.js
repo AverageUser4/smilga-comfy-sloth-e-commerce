@@ -6,6 +6,7 @@ import Error from './pages/Error/Error.js';
 import ProductPage from './pages/ProductPage/ProductPage.js';
 import AllProducts from './pages/AllProducts/AllProducts.js';
 import About from './pages/About/About.js';
+import Cart from './pages/Cart/Cart.js';
 import Header from './components/Header/Header.js';
 import Footer from './components/Footer/Footer.js';
 import Main from './components/Main/Main.js';
@@ -29,6 +30,10 @@ export default function App() {
 
           <Route path="/about">
             <About/>
+          </Route>
+
+          <Route path="/cart">
+            <Cart/>
           </Route>
 
           <Route exact path="/">

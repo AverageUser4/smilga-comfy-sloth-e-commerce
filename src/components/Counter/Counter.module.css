@@ -1,0 +1,23 @@
+.container {
+  display: flex;
+  align-items: center;
+  gap: 1em;
+  
+  color: var(--black-main);
+  font-size: var(--font-size-huge);
+  font-weight: bold;
+}
+
+.button {
+  width: var(--font-size-huge);
+  height: var(--font-size-huge);
+  padding: 0;
+
+  background-color: transparent;
+  border: none;
+  color: inherit;
+}
+.button svg {
+  width: 50%;
+  height: 50%;
+}

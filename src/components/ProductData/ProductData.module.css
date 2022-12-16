@@ -1,0 +1,41 @@
+.container {
+  display: grid;
+  align-content: start;
+  justify-items: start;
+  gap: 16px;
+
+  color: var(--gray-dark);
+  font-size: var(--font-size-small);
+}
+
+.price {
+  font-weight: bold;
+  font-size: var(--font-size-medium);
+  color: var(--brown-main);
+}
+
+.margin {
+  margin: 16px 0;
+}
+.margin-bottom {
+  margin-bottom: 16px;
+}
+
+.sibling {
+  display: flex;
+  gap: 8px 12px;
+  flex-wrap: wrap;
+}
+
+.data {
+  display: grid;
+  gap: 4px 12px;
+}
+.data > :first-child {
+  font-weight: bold;
+}
+@media(min-width: 400px) {
+  .data {
+    grid-template-columns: 160px 1fr;
+  }
+}

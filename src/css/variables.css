@@ -19,9 +19,15 @@
   --gray-medium: rgb(188, 204, 220);
 
   --red-dark: rgb(187, 37, 37);
+  --yellow: rgb(255, 185, 0);
 
   --max-width: 1170px;
 
   --footer-height: 80px;
   --header-height: 80px;
+
+  --font-size-small: clamp(14px, 2vw, 16px);
+  --font-size-medium: clamp(16px, 2vw, 18px);
+  --font-size-big: clamp(26px, 3vw, 32px);
+  --font-size-huge: clamp(30px, 3vw, 42px);
 }

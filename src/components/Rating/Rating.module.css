@@ -1,0 +1,9 @@
+.container {
+  display: flex;
+  gap: 4px;
+  color: var(--yellow);
+}
+.container svg {
+  width: 16px;
+  height: 16px;
+}

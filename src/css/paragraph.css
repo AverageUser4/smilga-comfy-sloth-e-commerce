@@ -6,6 +6,9 @@
 .paragraph--no-margin {
   margin: 0;
 }
+.paragraph--color-1 {
+  color: var(--gray-dark);
+}
 .paragraph--color-2 {
   color: var(--brown);
 }
@@ -14,6 +17,9 @@
 }
 .paragraph--growing {
   font-size: clamp(16px, 2.5vw, 18px);
+}
+.paragraph--small {
+  font-size: var(--font-size-small);
 }
 .paragraph--width-cap {
   max-width: 585px;

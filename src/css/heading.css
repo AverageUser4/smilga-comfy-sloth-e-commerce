@@ -19,6 +19,9 @@
 
   text-align: center;
 }
+.heading--capitalized {
+  text-transform: capitalize;
+}
 .heading--underline::after {
   content: '';
 

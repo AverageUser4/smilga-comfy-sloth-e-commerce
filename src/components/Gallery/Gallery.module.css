@@ -8,6 +8,8 @@
   height: 500px;
   margin-bottom: 16px;
 
+  border-radius: 3px;
+
   object-fit: cover;
   object-position: center;
 }
