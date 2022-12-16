@@ -32,6 +32,19 @@
   padding: 0.4em 0.8em;
 }
 
+.button--square {
+  width: 20px;
+  height: 20px;
+  padding: 2px;
+
+  flex-shrink: 0;
+  box-sizing: content-box;
+}
+.button--square svg {
+  width: 70%;
+  height: 70%;
+}
+
 .button--type-1 {
   color: var(--black);
   font-size: 16px;

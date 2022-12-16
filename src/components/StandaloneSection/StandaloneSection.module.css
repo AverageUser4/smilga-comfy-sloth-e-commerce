@@ -8,6 +8,14 @@
   background-color: var(--beige-light);
 }
 
+.section--centered {
+  display: grid;
+  justify-content: center;
+  justify-items: center;
+  
+  text-align: center;
+}
+
 @media(min-width: 980px) {
   .section {
     padding: 90px 32px;

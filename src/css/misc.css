@@ -35,3 +35,8 @@
   background-color: var(--gray-medium);
   flex-shrink: 2;
 }
+
+.annoying-garbage-icon {
+  position: relative;
+  top: 8%;
+}

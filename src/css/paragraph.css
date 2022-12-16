@@ -21,6 +21,9 @@
 .paragraph--small {
   font-size: var(--font-size-small);
 }
+.paragraph--big {
+  font-size: var(--font-size-goodly);
+}
 .paragraph--width-cap {
   max-width: 585px;
 }

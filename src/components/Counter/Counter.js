@@ -4,7 +4,10 @@ import css from './Counter.module.css';
 import { ReactComponent as Plus } from '../../assets/plus.svg';
 import { ReactComponent as Minus } from '../../assets/minus.svg';
 
-function Counter({ count, setCount, step = 1, min = 1, max = 999 }) {
+function Counter({ count, setCount, step = 1, min = 1, max = 999, fontSize = "clamp(30px, 3vw, 42px)" }) {
+  const containerStyle = { fontSize };
+  const buttonStyle = { width: fontSize, height: fontSize };
+  
   function decrease() {
     if(count === min)
       return;
@@ -19,13 +22,13 @@ function Counter({ count, setCount, step = 1, min = 1, max = 999 }) {
   }
 
   return (
-    <div className={css['container']}>
+    <div style={containerStyle} className={css['container']}>
 
-      <button className={css['button']} onClick={decrease}><Minus/></button>
+      <button style={buttonStyle} onClick={decrease}><Minus/></button>
       
       <span>{count}</span>
 
-      <button className={css['button']} onClick={increase}><Plus/></button>
+      <button style={buttonStyle} onClick={increase}><Plus/></button>
       
     </div>
   );
@@ -36,7 +39,8 @@ Counter.propTypes = {
   setCount: PropTypes.func.isRequired,
   step: PropTypes.number,
   min: PropTypes.number,
-  max: PropTypes.number
+  max: PropTypes.number,
+  fontSize: PropTypes.string,
 };
 
 export default Counter;
