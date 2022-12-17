@@ -5,6 +5,7 @@ import ProductInCart from '../../components/ProductInCart/ProductInCart.js';
 import StandaloneSection from '../../components/StandaloneSection/StandaloneSection.js';
 import CartProductsTableHead from '../../components/CartProductsTableHead/CartProductsTableHead.js';
 import TotalPrice from '../../components/TotalPrice/TotalPrice.js';
+import css from './temp.module.css';
 
 function Cart() {
   return (
@@ -40,14 +41,14 @@ function Cart() {
 
         <div className="line"></div>
 
-        <div className="distant-twins-layout standalone-element standalone-element--small">
+        <div className="distant-twins-layout standalone standalone--small">
           <Link to="/products" className="button">Continue Shopping</Link>
           <button className="button button--color-1">Clear Shopping Cart</button>
         </div>
 
-        <div className="standalone-element standalone-element--medium push-right">
+        <div className={`standalone standalone--medium standalone--no-bottom-margin ${css['total-container']}`}>
           <TotalPrice subtotal={1239.89} shipping={12.32} />
-          <Link to="/login" className="button button--uppercase">Login</Link>
+          <Link to="/login" className="button button--uppercase button--block">Login</Link>
         </div>
 
       </StandaloneSection>

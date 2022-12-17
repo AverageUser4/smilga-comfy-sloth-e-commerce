@@ -39,30 +39,29 @@
   }
 
   /******************************/
-  .standalone-element {
+  .standalone {
     margin-top: 64px;
     margin-bottom: 64px;
   }
-  .standalone-element--medium {
+  .standalone--medium {
     margin-top: 48px;
     margin-bottom: 48px;
   }
-  .standalone-element--small {
+  .standalone--small {
     margin-top: 24px;
     margin-bottom: 24px;
   }
+  .standalone--no-top-margin {
+    margin-top: 0;
+  }
+  .standalone--no-bottom-margin {
+    margin-bottom: 0;
+  }
+  .standalone--block {
+    display: block;
+  }
 
   /******************************/
-  .push-right {
-    display: grid;
-    justify-items: end;
-    justify-content: end;
-  }
-  /* .push-right {
-    direction: rtl;
-  }
-  .push-right > * {
-    direction: ltr;
-  } */
+
  
 }

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import css from './SkipToContent.module.css';
 
 function SkipToContent({ lastFocusableInNav }) {
-  console.log(lastFocusableInNav)
+  // console.log(lastFocusableInNav)
 
   return (
     <button

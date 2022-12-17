@@ -1,1 +1,4 @@
 - 'skip to content' is buggy
+- css clean up:
+  - ideally there should be no css modules for pages
+- ProductInCart: change layout to table

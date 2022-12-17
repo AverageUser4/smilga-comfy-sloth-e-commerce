@@ -3,11 +3,13 @@ import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
 import { ReactComponent as ShoppingCart } from '../../assets/shopping-cart.svg';
 import { ReactComponent as AddPerson } from '../../assets/add-person.svg';
+import { ReactComponent as RemovePerson } from '../../assets/remove-person.svg';
 import { ReactComponent as MenuClose } from '../../assets/menu-close.svg';
 import Logo from '../Logo/Logo.js';
 import css from './HeaderNav.module.css';
 import useFocusTrap from '../../hooks/useFocusTrap';
 import useAppearanceTransition from '../../hooks/useAppearanceTransition';
+import { useAuthContext } from '../../utils/AuthContext';
 
 const phases = [
   css['nav'],
@@ -16,6 +18,7 @@ const phases = [
 ];
 
 function HeaderNav({ shouldBeVisible, close }) {
+  const { isLoggedIn, logout } = useAuthContext();
   const [navClasses, setNavClasses] = useState(phases[0]);
 
   const firstFocusableRef = useRef();
@@ -59,14 +62,24 @@ function HeaderNav({ shouldBeVisible, close }) {
           </NavLink>
         </li>
         <li>
-          <NavLink 
-            to="/login"
-            className={css["profile-link"]} 
-            activeClassName={css["profile-link--active"]} 
-            ref={lastFocusableRef}
-          >
-            Login <AddPerson/>
-          </NavLink>
+          {
+            isLoggedIn ?
+              <button 
+                className={css["profile-link"]} ref={lastFocusableRef}
+                onClick={logout}
+              >
+                Logout <RemovePerson/>
+              </button>
+            :
+              <NavLink 
+                to="/login"
+                className={css["profile-link"]} 
+                activeClassName={css["profile-link--active"]} 
+                ref={lastFocusableRef}
+              >
+                Login <AddPerson/>
+              </NavLink>
+          }
         </li>
       </ul>
       

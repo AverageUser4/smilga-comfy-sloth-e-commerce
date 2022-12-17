@@ -77,6 +77,8 @@
   font-size: 24px;
   color: var(--black-main);
   text-decoration: none;
+  border: none;
+  background-color: transparent;
 }
 .profile-link:hover,
 .profile-link--active {

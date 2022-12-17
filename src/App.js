@@ -7,9 +7,11 @@ import ProductPage from './pages/ProductPage/ProductPage.js';
 import AllProducts from './pages/AllProducts/AllProducts.js';
 import About from './pages/About/About.js';
 import Cart from './pages/Cart/Cart.js';
+import Login from './pages/Login/Login.js';
 import Header from './components/Header/Header.js';
 import Footer from './components/Footer/Footer.js';
 import Main from './components/Main/Main.js';
+import { useAuthContext } from './utils/AuthContext.js';
 
 export default function App() {
   return (
@@ -34,6 +36,10 @@ export default function App() {
 
           <Route path="/cart">
             <Cart/>
+          </Route>
+
+          <Route path="/login">
+            <Login/>
           </Route>
 
           <Route exact path="/">

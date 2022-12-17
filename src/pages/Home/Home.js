@@ -43,7 +43,7 @@ function Home() {
 
         <h2 className="heading heading--no-margin heading--centered heading--underline">Featured Products</h2>
 
-        <div className="standalone-element">
+        <div className="standalone">
 
           <Grid>
 

@@ -20,12 +20,19 @@ function ProductInCart({ image, name, color, price, quantity, setQuantity }) {
       <div className={css['first-part']}>
 
         {/* <img className={css['image']} src={image}/> */}
-        <img className={css['image']} src={furniture}/>
+        <img className={css['image']} src={furniture} alt={name}/>
 
         <div>
 
           <h4 className="heading heading--no-margin heading--pico heading--capitalized">{name}</h4>
-          <div className={css['color-container']}>Color: <span className={css['color']}></span></div>
+
+          <div className={css['color-container']}>
+            Color: 
+            <span 
+              style={{ backgroundColor: color }}
+              className={css['color']}></span>
+          </div>
+
           <div className="text text--color-1 text--bold">${price}</div>
 
         </div>
