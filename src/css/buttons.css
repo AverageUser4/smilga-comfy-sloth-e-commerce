@@ -1,118 +1,129 @@
-/* .button */
-.button {
-  display: inline-block;
-  padding: 0.6em 1.2em;
+@layer {
 
-  font-size: 14px;
-  background-color: var(--brown-main);
-  color: var(--beige-light);
-  box-shadow: 0 1px 3px rgba(0,0,0,.2);
-  text-decoration: none;
-  border-radius: 3px;
-  border: none;
+  /* .button */
+  .button {
+    display: inline-block;
+    padding: 0.6em 1.2em;
+  
+    font-size: 14px;
+    background-color: var(--brown-main);
+    color: var(--beige-light);
+    box-shadow: 0 1px 3px rgba(0,0,0,.2);
+    text-decoration: none;
+    border-radius: 3px;
+    border: none;
+    text-align: center;
+  
+    transition: 500ms;
+  }
+  .button:hover {
+    background-color: var(--brown-light);
+    color: var(--brown-dark);
+  }
+  
+  .button--uppercase {
+    text-transform: uppercase;
+  }
+  
+  .button--centered {
+    display: block;
+    width: max-content;
+    margin: auto;
+  }
+  
+  .button--little-padding {
+    padding: 0.4em 0.8em;
+  }
+  
+  .button--square {
+    width: 20px;
+    height: 20px;
+    padding: 2px;
+  
+    flex-shrink: 0;
+    box-sizing: content-box;
+  }
+  .button--square svg {
+    width: 70%;
+    height: 70%;
+  }
+  
+  .button--type-1 {
+    color: var(--black);
+    font-size: 16px;
+    letter-spacing: 0.1rem;
+    border: 2px solid var(--black);
+  }
+  .button--type-1:hover {
+    color: white;
+    background-color: var(--brown-main);
+  }
+  
+  .button--danger,
+  .button--danger:hover {
+    box-shadow: none;
+    background-color: var(--red-dark);
+    color: white;
+  }
 
-  transition: 500ms;
-}
-.button:hover {
-  background-color: var(--brown-light);
-  color: var(--brown-dark);
-}
-
-.button--uppercase {
-  text-transform: uppercase;
-}
-
-.button--centered {
-  display: block;
-  width: max-content;
-  margin: auto;
-}
-
-.button--little-padding {
-  padding: 0.4em 0.8em;
-}
-
-.button--square {
-  width: 20px;
-  height: 20px;
-  padding: 2px;
-
-  flex-shrink: 0;
-  box-sizing: content-box;
-}
-.button--square svg {
-  width: 70%;
-  height: 70%;
-}
-
-.button--type-1 {
-  color: var(--black);
-  font-size: 16px;
-  letter-spacing: 0.1rem;
-  border: 2px solid var(--black);
-}
-.button--type-1:hover {
-  color: white;
-  background-color: var(--brown-main);
-}
-
-.button--danger,
-.button--danger:hover {
-  box-shadow: none;
-  background-color: var(--red-dark);
-  color: white;
-}
-
-/* .icon-button */
-.icon-button {
-  padding: 0;
-  width: 32px;
-  height: 32px;
-
-  border: none;
-  background-color: transparent;
-  color: var(--brown-main);
-}
-.icon-button--color-1 {
-  color: var(--red-dark);
-}
-.icon-button svg {
-  width: 100%;
-  height: 100%;
-}
-
-/* text-button */
-.text-button {
-  padding: 0;
-
-  background-color: transparent;
-  border: none;
-  font-size: 14px;
-  color: var(--gray-main);
-  letter-spacing: 0.1rem;
-  text-underline-offset: 3px;
-}
-.text-button:hover,
-.text-button--active {
-  text-decoration: underline;
-}
-
-.toggle-button {
-  width: 24px;
-  height: 24px;
-  padding: 4px;
-  border-radius: 3px;
-  border: 1px solid var(--black);
-  color: var(--black);
-  background-color: white;
-
-  box-sizing: border-box;
-}
-.toggle-button svg {
-  width: 100%;
-  height: 100%;
-}
-.toggle-button--active {
-  background-color: var(--black);
-  color: white;
+  .button--color-1,
+  .button--color-1:hover {
+    background-color: var(--black);
+    color: white;
+  }
+  
+  /* .icon-button */
+  .icon-button {
+    padding: 0;
+    width: 32px;
+    height: 32px;
+  
+    border: none;
+    background-color: transparent;
+    color: var(--brown-main);
+  }
+  .icon-button--color-1 {
+    color: var(--red-dark);
+  }
+  .icon-button svg {
+    width: 100%;
+    height: 100%;
+  }
+  
+  /* text-button */
+  .text-button {
+    padding: 0;
+  
+    background-color: transparent;
+    border: none;
+    font-size: 14px;
+    color: var(--gray-main);
+    letter-spacing: 0.1rem;
+    text-underline-offset: 3px;
+  }
+  .text-button:hover,
+  .text-button--active {
+    text-decoration: underline;
+  }
+  
+  .toggle-button {
+    width: 24px;
+    height: 24px;
+    padding: 4px;
+    border-radius: 3px;
+    border: 1px solid var(--black);
+    color: var(--black);
+    background-color: white;
+  
+    box-sizing: border-box;
+  }
+  .toggle-button svg {
+    width: 100%;
+    height: 100%;
+  }
+  .toggle-button--active {
+    background-color: var(--black);
+    color: white;
+  }
+  
 }

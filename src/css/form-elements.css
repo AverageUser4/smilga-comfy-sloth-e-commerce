@@ -1,74 +1,78 @@
-.input {
-  padding: 8px 12px;
-  min-width: 0;
-  width: 100%;
+@layer {
 
-  background-color: var(--gray-light);
-  font-size: 13px;
-  border: 1px solid var(--black);
-  border-radius: 3px;
-  letter-spacing: 0.1rem;
-
-  box-sizing: border-box;
-}
-
-.input--type-1 {
-  font-size: 16px;
-  border: 2px solid var(--black);
-  border-radius: 3px;
-  background-color: white;
-}
-
-.fieldset {
-  padding: 12px 0 0;
-
-  border: none;
-}
-.fieldset legend {
-  padding: 0;
-}
-
-.range {
-  width: 120px;
-}
-
-.hidden-radio {
-  position: absolute;
-  top: 0;
-  left: 0;
-
-  width: 0;
-  height: 0;
-  margin: 0;
-
-  opacity: 0;
+  .input {
+    padding: 8px 12px;
+    min-width: 0;
+    width: 100%;
   
-  pointer-events: none;
-}
-
-.color {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+    background-color: var(--gray-light);
+    font-size: 13px;
+    border: 1px solid var(--black);
+    border-radius: 3px;
+    letter-spacing: 0.1rem;
   
-  position: relative;
+    box-sizing: border-box;
+  }
   
-  width: 16px;
-  height: 16px;
-
-  background-color: red;
-  opacity: 0.5;
-  border-radius: 50%;
-}
-.color--green {
-  background-color: green; 
-}
-.color--blue {
-  background-color: blue; 
-}
-.color--black {
-  background-color: black; 
-}
-.color--orange {
-  background-color: orange; 
+  .input--type-1 {
+    font-size: 16px;
+    border: 2px solid var(--black);
+    border-radius: 3px;
+    background-color: white;
+  }
+  
+  .fieldset {
+    padding: 12px 0 0;
+  
+    border: none;
+  }
+  .fieldset legend {
+    padding: 0;
+  }
+  
+  .range {
+    width: 120px;
+  }
+  
+  .hidden-radio {
+    position: absolute;
+    top: 0;
+    left: 0;
+  
+    width: 0;
+    height: 0;
+    margin: 0;
+  
+    opacity: 0;
+    
+    pointer-events: none;
+  }
+  
+  .color {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    position: relative;
+    
+    width: 16px;
+    height: 16px;
+  
+    background-color: red;
+    opacity: 0.5;
+    border-radius: 50%;
+  }
+  .color--green {
+    background-color: green; 
+  }
+  .color--blue {
+    background-color: blue; 
+  }
+  .color--black {
+    background-color: black; 
+  }
+  .color--orange {
+    background-color: orange; 
+  }
+  
 }

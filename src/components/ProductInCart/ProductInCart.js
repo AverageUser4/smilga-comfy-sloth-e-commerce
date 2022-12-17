@@ -15,7 +15,7 @@ function ProductInCart({ image, name, color, price, quantity, setQuantity }) {
   const total = (quantity * price).toFixed(2);
 
   return (
-    <article className={css['container']}>
+    <article className={`cart-products-layout ${css['container']}`}>
 
       <div className={css['first-part']}>
 
@@ -26,19 +26,19 @@ function ProductInCart({ image, name, color, price, quantity, setQuantity }) {
 
           <h4 className="heading heading--no-margin heading--pico heading--capitalized">{name}</h4>
           <div className={css['color-container']}>Color: <span className={css['color']}></span></div>
-          <div className={css['price']}>${price}</div>
+          <div className="text text--color-1 text--bold">${price}</div>
 
         </div>
         
       </div>
 
-      <div className={css['price-desktop']}>${price}</div>
+      <div className={`${css['medium-screen']} text text--color-1`}>${price}</div>
 
       <div className={css['second-part']}>
 
         <Counter count={quantity} setCount={setQuantity} fontSize={'clamp(20px, 2.5vw, 24px)'}/>
 
-        <div className={css['total']}>${total}</div>
+        <div className={css['medium-screen']}>${total}</div>
 
         <button className="button button--danger button--square">
           <TrashIcon className="annoying-garbage-icon"/>

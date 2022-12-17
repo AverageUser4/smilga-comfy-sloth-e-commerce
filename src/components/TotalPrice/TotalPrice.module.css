@@ -1,0 +1,38 @@
+.container {
+  display: grid;
+  gap: 16px;
+
+  padding: 32px;
+
+  border: var(--border);
+  border-radius: var(--border-radius);
+  font-size: var(--font-size-small);
+  font-weight: bold;
+  color: var(--black-main);
+  letter-spacing: 0.1rem;
+
+  box-sizing: border-box;
+}
+
+.data {
+  display: flex;
+  flex-direction: column;
+  gap: 6px 64px;
+}
+@media(min-width: 400px) {
+  .data {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+
+.total {
+  margin-top: 0.6em;
+  
+  font-size: var(--font-size-goodly);
+}
+
+.normal-weight {
+  font-weight: normal;
+}

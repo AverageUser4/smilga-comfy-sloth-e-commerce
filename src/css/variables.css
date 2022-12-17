@@ -31,4 +31,8 @@
   --font-size-goodly: clamp(20px, 2.5vw, 24px);
   --font-size-big: clamp(26px, 3vw, 32px);
   --font-size-huge: clamp(30px, 3vw, 42px);
+
+  --border: 1px solid var(--gray-medium);
+
+  --border-radius: 3px;
 }

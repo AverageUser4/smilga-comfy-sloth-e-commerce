@@ -1,32 +1,36 @@
-.paragraph {
-  color: var(--gray-main);
-  line-height: 1.8;
-  font-size: 16px;
-}
-.paragraph--no-margin {
-  margin: 0;
-}
-.paragraph--color-1 {
-  color: var(--gray-dark);
-}
-.paragraph--color-2 {
-  color: var(--brown);
-}
-.paragraph--big-line-height {
-  line-height: 2;
-}
-.paragraph--growing {
-  font-size: clamp(16px, 2.5vw, 18px);
-}
-.paragraph--small {
-  font-size: var(--font-size-small);
-}
-.paragraph--big {
-  font-size: var(--font-size-goodly);
-}
-.paragraph--width-cap {
-  max-width: 585px;
-}
-.paragraph--1-line-height {
-  line-height: 1;
+@layer {
+  
+  .paragraph {
+    color: var(--gray-main);
+    line-height: 1.8;
+    font-size: 16px;
+  }
+  .paragraph--no-margin {
+    margin: 0;
+  }
+  .paragraph--color-1 {
+    color: var(--gray-dark);
+  }
+  .paragraph--color-2 {
+    color: var(--brown);
+  }
+  .paragraph--big-line-height {
+    line-height: 2;
+  }
+  .paragraph--growing {
+    font-size: clamp(16px, 2.5vw, 18px);
+  }
+  .paragraph--small {
+    font-size: var(--font-size-small);
+  }
+  .paragraph--big {
+    font-size: var(--font-size-goodly);
+  }
+  .paragraph--width-cap {
+    max-width: 585px;
+  }
+  .paragraph--1-line-height {
+    line-height: 1;
+  }
+
 }

@@ -1,0 +1,12 @@
+.container {
+  display: none;
+}
+
+@media(min-width: 780px) {
+  .container {
+    display: grid;
+    gap: 24px;
+
+    margin-bottom: 48px;;
+  }
+}
