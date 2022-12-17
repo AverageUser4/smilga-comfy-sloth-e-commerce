@@ -1,4 +1,22 @@
-.container {
+.product {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 32px 64px;
+
+  margin-top: 32px;
+}
+.product > :nth-child(1) {
+  flex-shrink: 0;
+}
+
+@media(min-width: 980px) {
+  .product {
+    flex-direction: row;
+  }
+}
+
+.text-container {
   display: grid;
   align-content: start;
   justify-items: start;

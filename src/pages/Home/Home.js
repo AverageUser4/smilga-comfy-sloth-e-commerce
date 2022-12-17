@@ -2,8 +2,6 @@ import React from 'react';
 import manWorking from '../../assets/man-working.jpeg';
 import furniture from '../../assets/furniture.jpeg';
 import FancyPics from '../../components/FancyPics/FancyPics.js';
-import Grid from '../../components/Grid/Grid.js';
-import Product from '../../components/Product/Product';
 import Card from '../../components/Card/Card';
 import { ReactComponent as Compass } from '../../assets/compass.svg';
 import { ReactComponent as Mining } from '../../assets/mining-diamond.svg';
@@ -15,6 +13,7 @@ import BlockAndText from '../../components/BlockAndText/BlockAndText';
 import VerticalGap from '../../components/VerticalGap/VerticalGap';
 import DualInput from '../../components/DualInput/DualInput';
 import { Link } from 'react-router-dom';
+import ProductsGrid from '../../components/ProductsGrid/ProductsGrid';
 
 function Home() {
   return (
@@ -43,29 +42,7 @@ function Home() {
 
         <h2 className="heading heading--no-margin heading--centered heading--underline">Featured Products</h2>
 
-        <div className="standalone">
-
-          <Grid>
-
-            <Product
-              name="sofa"
-              price={123}
-              image="https://cdn.wamiz.fr/cdn-cgi/image/format=auto,quality=80,width=400,height=400,fit=cover/animal/breed/pictures/613f5a1a89c13770998047.jpg"
-            />
-            <Product
-              name="sofa"
-              price={123}
-              image="https://cdn.wamiz.fr/cdn-cgi/image/format=auto,quality=80,width=400,height=400,fit=cover/animal/breed/pictures/613f5a1a89c13770998047.jpg"
-            />
-            <Product
-              name="sofa"
-              price={123}
-              image="https://cdn.wamiz.fr/cdn-cgi/image/format=auto,quality=80,width=400,height=400,fit=cover/animal/breed/pictures/613f5a1a89c13770998047.jpg"
-            />
-            
-          </Grid>
-
-        </div>
+        <ProductsGrid featuredOnly={true}/>
 
         <Link to="/products" className="button button--centered button--uppercase">All Products</Link>
 
@@ -85,7 +62,7 @@ function Home() {
 
         <VerticalGap typeID={1}/>
 
-        <Grid>
+        <div className="grid">
 
           <Card
             heading="Mission"
@@ -105,7 +82,7 @@ function Home() {
             Icon={Scroll}
           />
 
-        </Grid>
+        </div>
 
       </StandaloneSection>
       

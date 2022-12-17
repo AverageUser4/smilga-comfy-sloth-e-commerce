@@ -7,27 +7,9 @@
   flex-grow: 1;
 }
 
-.grid {
-  display: grid;
-  gap: 24px;
-
-  width: 100%;
-}
-
 @media(min-width: 760px) {
   .siblings {
     flex-direction: row;
   }
 }
 
-@media(min-width: 980px) {
-  .grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media(min-width: 1200px) {
-  .grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}

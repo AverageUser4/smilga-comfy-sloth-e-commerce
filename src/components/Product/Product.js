@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { ReactComponent as Search } from '../../assets/magnyfing-glass.svg';
 import css from './Product.module.css';
 import { Link } from 'react-router-dom';
+import { stringifyPrice } from '../../utils/utils';
 
 function Product({ image, price, name, id }) {
   return (
@@ -21,7 +22,7 @@ function Product({ image, price, name, id }) {
         </div>
 
         <span className={css["name"]}>{name}</span>
-        <span className={css["price"]}>${price}</span>
+        <span className={css["price"]}>{stringifyPrice(price)}</span>
         
       </Link>
       

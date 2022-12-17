@@ -5,6 +5,7 @@ import StandaloneSection from '../../components/StandaloneSection/StandaloneSect
 import Product from '../../components/Product/Product.js';
 import css from './temporary.module.css';
 import ProductsGridTop from '../../components/ProductsGridTop/ProductsGridTop.js';
+import ProductsGrid from '../../components/ProductsGrid/ProductsGrid.js';
 
 function AllProducts() {
   return (
@@ -21,14 +22,7 @@ function AllProducts() {
 
             <ProductsGridTop/>
 
-            <div className={css['grid']}>
-              <Product name="sofa" price={123} image="https://cdn.wamiz.fr/cdn-cgi/image/format=auto,quality=80,width=400,height=400,fit=cover/animal/breed/pictures/613f5a1a89c13770998047.jpg"/>
-              <Product name="sofa" price={123} image="https://cdn.wamiz.fr/cdn-cgi/image/format=auto,quality=80,width=400,height=400,fit=cover/animal/breed/pictures/613f5a1a89c13770998047.jpg"/>
-              <Product name="sofa" price={123} image="https://cdn.wamiz.fr/cdn-cgi/image/format=auto,quality=80,width=400,height=400,fit=cover/animal/breed/pictures/613f5a1a89c13770998047.jpg"/>
-              <Product name="sofa" price={123} image="https://cdn.wamiz.fr/cdn-cgi/image/format=auto,quality=80,width=400,height=400,fit=cover/animal/breed/pictures/613f5a1a89c13770998047.jpg"/>
-              <Product name="sofa" price={123} image="https://cdn.wamiz.fr/cdn-cgi/image/format=auto,quality=80,width=400,height=400,fit=cover/animal/breed/pictures/613f5a1a89c13770998047.jpg"/>
-              <Product name="sofa" price={123} image="https://cdn.wamiz.fr/cdn-cgi/image/format=auto,quality=80,width=400,height=400,fit=cover/animal/breed/pictures/613f5a1a89c13770998047.jpg"/>
-            </div>
+            <ProductsGrid/>
 
           </div>
 
