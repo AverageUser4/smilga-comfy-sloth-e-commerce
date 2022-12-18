@@ -5,36 +5,69 @@ import StandaloneSection from '../../components/StandaloneSection/StandaloneSect
 import ProductsGridTop from '../../components/ProductsGridTop/ProductsGridTop.js';
 import useProducts from '../../hooks/useProducts';
 import Product from '../Product/Product';
+import Loading from '../Loading/Loading';
+
+const initialFilters = {
+  queryString: '',
+  category: '',
+  company: '',
+  color: '',
+  price: Number.MAX_SAFE_INTEGER,
+  orderBy: 'priceAsc',
+  freeShippingOnly: false
+};
 
 function ProductsBrowser() {
   const [showDetails, setShowDetails] = useState(false);
-  const [orderBy, setOrderBy] = useState('priceAsc');
-  const products = useProducts({ orderBy });
+  const [filters, setFilters] = useState(initialFilters);
+  const { products } = useProducts({ ...filters });
+
+  function setSingleFilter(which, value) {
+    setFilters(prev => ({ ...prev, [which]: value }));
+  }
 
   return (
     <StandaloneSection>
 
       <div className={css['siblings']}>
 
-        <ProductsFilterForm/>
+        <ProductsFilterForm
+          queryString={filters.queryString}
+          setQueryString={setSingleFilter.bind(null, 'queryString')}
+          category={filters.category}
+          setCategory={setSingleFilter.bind(null, 'category')}
+          company={filters.company}
+          setCompany={setSingleFilter.bind(null, 'company')}
+          color={filters.color}
+          setColor={setSingleFilter.bind(null, 'color')}
+          price={filters.price}
+          setPrice={setSingleFilter.bind(null, 'price')}
+          freeShippingOnly={filters.freeShippingOnly}
+          setFreeShippingOnly={setSingleFilter.bind(null, 'freeShippingOnly')}
+        />
 
         <div>
 
           <ProductsGridTop
             showDetails={showDetails}
             setShowDetails={setShowDetails}
-            orderBy={orderBy}
-            setOrderBy={setOrderBy}
+            orderBy={filters.orderBy}
+            setOrderBy={(val) => setFilters(prev => ({ ...prev, orderBy: val }))}
           />
 
-          <div className={showDetails ? 'vertical-grid' : 'small-grid'}>
-            {products.map(product => 
-              <Product 
-                key={product.id}
-                {...product}
-                showDetails={showDetails}
-              />)}
-          </div>
+          {
+            products.length ?
+              <div className={showDetails ? 'vertical-grid' : 'small-grid'}>
+                {products.map(product => 
+                  <Product 
+                    key={product.id}
+                    {...product}
+                    showDetails={showDetails}
+                  />)}
+              </div>
+            :
+              <Loading/>
+          }
 
         </div>
 

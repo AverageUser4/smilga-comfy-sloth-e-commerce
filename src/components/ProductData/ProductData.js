@@ -4,6 +4,7 @@ import Gallery from '../Gallery/Gallery';
 import css from './ProductData.module.css';
 import Rating from '../Rating/Rating.js';
 import Counter from '../Counter/Counter.js';
+import Loading from '../Loading/Loading.js';
 import useProductData from '../../hooks/useProductData';
 import { stringifyPrice } from '../../utils/utils';
 
@@ -13,7 +14,7 @@ function ProductData() {
   const product = useProductData(id);
 
   if(!product)
-    return <p>loading...</p>;
+    return <Loading/>;
 
   const { name, stock, price, shipping, reviews, stars, colors, images, description, company } = product;
 

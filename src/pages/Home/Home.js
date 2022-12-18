@@ -14,9 +14,10 @@ import VerticalGap from '../../components/VerticalGap/VerticalGap';
 import DualInput from '../../components/DualInput/DualInput';
 import useProducts from '../../hooks/useProducts';
 import Product from '../../components/Product/Product';
+import Loading from '../../components/Loading/Loading';
 
 function Home() {
-  const featuredProducts = useProducts({ featuredOnly: true, orderBy: 'shuffle' }).slice(0, 3);
+  const { products } = useProducts({ featuredOnly: true, orderBy: 'shuffle' }).slice(0, 3);
 
   return (
     <>
@@ -45,9 +46,14 @@ function Home() {
         <h2 className="heading heading--no-margin heading--centered heading--underline">Featured Products</h2>
 
         <div className="standalone">
-          <div className="grid">
-            {featuredProducts.map(product => <Product key={product.id} {...product}/>)}
-          </div>
+          {
+            products.length ?
+              <div className="grid">
+                {products.map(product => <Product key={product.id} {...product}/>)}
+              </div>
+            :
+              <Loading/>
+          }
         </div>
 
         <Link to="/products" className="button button--centered button--uppercase">All Products</Link>

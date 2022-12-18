@@ -6,9 +6,27 @@ const API_ENDPOINT = 'https://course-api.com/react-store-products';
 function useProducts(options = { featuredOnly: false, orderBy: '' }) {
   const [productsOriginal, setProductsOriginal] = useState([]);
   const [products, setProducts] = useState([]);
+  const [categories, setCategories] = useState([]);
 
   useEffect(() => {
     let newProducts = [...productsOriginal];
+
+    function sortByName(arr, desc = false) {
+      const names = arr.map(product => product.name);
+      names.sort();
+      const sorted = [];
+      
+      for(let i = 0; i < names.length; i++) {
+        const index = arr.findIndex(product => product.name === names[i]);
+        sorted.push(arr[index]);
+        arr.splice(index, 1);
+      }
+  
+      if(desc)
+        sorted.reverse();
+  
+      return sorted;
+    }
 
     if(options.featuredOnly)
       newProducts = newProducts.filter(product => product.featured);
@@ -26,12 +44,13 @@ function useProducts(options = { featuredOnly: false, orderBy: '' }) {
         newProducts.sort((a, b) => b.price - a.price);
         break;
 
-      case 'nameAsc':
-        console.error('sorting by name not implemented')
+      case 'nameAsc': {
+        newProducts = sortByName(newProducts);
         break;
+      }
 
       case 'nameDesc':
-        console.error('sorting by name not implemented')
+        newProducts = sortByName(newProducts, true);
         break;
         
       case '':
@@ -56,6 +75,7 @@ function useProducts(options = { featuredOnly: false, orderBy: '' }) {
           return;
 
         setProductsOriginal(json);
+        setCategories([...new Set(json.map(product => product.category))]);
       } catch(error) {
         console.error(error);
       }
@@ -66,7 +86,7 @@ function useProducts(options = { featuredOnly: false, orderBy: '' }) {
     return () => ignore = true;
   }, []);
 
-  return products;
+  return { products, categories };
 }
 
 export default useProducts;

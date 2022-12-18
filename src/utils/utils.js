@@ -27,3 +27,17 @@ export function cutText(text, length) {
 
   return `${text.slice(0, length)}...`;
 }
+
+export function spacesToCamelCase(text) {
+  if(typeof text !== 'string')
+    throw new Error('Text has to be a string!');
+
+  const arr = text.split(' ');
+
+  for(let i = 0; i < arr.length - 1; i++) {
+    if(arr[i] === ' ')
+      arr[i + 1] = arr[i + 1].toUpperCase();
+  }
+
+  return arr.filter(character => character !== ' ').join('');
+}

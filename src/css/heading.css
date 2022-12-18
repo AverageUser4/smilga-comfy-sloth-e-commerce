@@ -73,5 +73,9 @@
   .heading--normal-weight {
     font-weight: normal;
   }
+
+  .heading--1-line-height {
+    line-height: 1;
+  }
   
 }

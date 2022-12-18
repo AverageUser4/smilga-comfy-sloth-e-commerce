@@ -47,6 +47,12 @@
   text-decoration: underline;
 }
 
+.radio-label:focus-within {
+  outline: 2px solid olivedrab;
+  outline-offset: 1px;
+  border-radius: 3px;
+}
+
 .categories-list {
   display: flex;
   flex-wrap: wrap;

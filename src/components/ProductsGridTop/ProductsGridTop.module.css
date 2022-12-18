@@ -21,6 +21,8 @@
   gap: 8px;
   align-items: center;
   flex-shrink: 0;
+  
+  min-width: 220px;
 }
 
 @media(min-width: 560px) {

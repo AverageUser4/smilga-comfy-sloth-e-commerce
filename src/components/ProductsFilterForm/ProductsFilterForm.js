@@ -1,26 +1,59 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import css from './ProductsFilterForm.module.css';
+import { spacesToCamelCase } from '../../utils/utils';
+import useProducts from '../../hooks/useProducts';
 
 function ProductsFilterForm(props) {
+  const categories = [''].concat(useProducts().categories);
+  
+  function handleChange(event) {
+    const { value, name, type, checked } = event.target;
+    const funcName = 'set' + name.slice(0, 1).toUpperCase() + name.slice(1);
+
+    console.log(funcName)
+
+    props[funcName](type === 'checkbox' ? checked : value);
+  }
+
+  const { queryString, category, company, color, price, freeShippingOnly, resetFilters } = props;
+  
+  const categoryInputs = categories.map(cat =>
+    <li key={cat}>
+      <label className={css['radio-label']}>
+        <span className={`text-button ${category === spacesToCamelCase(cat) ? 'text-button--active' : ''}`}>
+          {cat ? cat : 'All'}
+        </span>
+        <input
+          type="radio"
+          name="category"
+          value={spacesToCamelCase(cat)}
+          checked={category === spacesToCamelCase(cat)}
+          onChange={handleChange}
+          className="hidden-radio"
+        />
+      </label>            
+    </li>
+  );
+  
   return (
-    <form className={css['products-form']}>
+    <form className={css['products-form']} onSubmit={(e) => e.preventDefault()}>
 
       <label>
         <span className="heading heading--nano heading--only-bottom-margin">Search</span>
-        <input className="input" placeholder='Search'/>
+        <input
+          className="input"
+          placeholder='Search'
+          name="queryString"
+          value={queryString}
+          onChange={handleChange}
+        />
       </label>
 
       <fieldset className="fieldset">
         <legend className="heading heading--nano heading--no-margin">Category</legend>
         <ul className={`list ${css['categories-list']}`}>
-          <li><button className="text-button">All</button></li>
-          <li><button className="text-button">Office</button></li>
-          <li><button className="text-button">Living room</button></li>
-          <li><button className="text-button">Kitchen</button></li>
-          <li><button className="text-button">Bedroom</button></li>
-          <li><button className="text-button">Dining room</button></li>
-          <li><button className="text-button">For kids</button></li>
+          {categoryInputs}
         </ul>
       </fieldset>
 
@@ -84,7 +117,19 @@ function ProductsFilterForm(props) {
 }
 
 ProductsFilterForm.propTypes = {
-
+  queryString: PropTypes.string,
+  setQueryString: PropTypes.func,
+  category: PropTypes.string,
+  setCategory: PropTypes.func,
+  company: PropTypes.string,
+  setCompany: PropTypes.func,
+  color: PropTypes.string,
+  setColor: PropTypes.func,
+  price: PropTypes.number,
+  setPrice: PropTypes.func,
+  freeShippingOnly: PropTypes.bool,
+  setFreeShippingOnly: PropTypes.func,
+  resetFilters: PropTypes.func,
 };
 
 export default ProductsFilterForm;

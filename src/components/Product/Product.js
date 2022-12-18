@@ -24,8 +24,10 @@ function Product({ image, price, name, id, description, showDetails = false }) {
 
           </div>
 
-          <h4 className={`${css["plain__name"]} heading heading--nano heading--no-margin heading--normal-weight heading--capitalized`}>{name}</h4>
-          <span className={css["plain__price"]}>{stringifyPrice(price)}</span>
+          <div className={css['plain__bottom']}>
+            <h4 className={`${css["plain__name"]} heading heading--nano heading--no-margin heading--normal-weight heading--capitalized`}>{name}</h4>
+            <span className={css["plain__price"]}>{stringifyPrice(price)}</span>
+          </div>
           
         </Link>
         
@@ -42,7 +44,7 @@ function Product({ image, price, name, id, description, showDetails = false }) {
       <div>
 
         <Link to={url} className="clean-link">
-          <h4 className={`${css["detailed__name"]} heading heading--small heading--capitalized`}>{name}</h4>
+          <h4 className={`${css["detailed__name"]} heading heading--small heading--capitalized heading--1-line-height`}>{name}</h4>
         </Link>
 
         <div className={css['detailed__price']}>{stringifyPrice(price)}</div>
