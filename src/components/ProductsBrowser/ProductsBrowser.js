@@ -12,7 +12,7 @@ const initialFilters = {
   category: '',
   company: '',
   color: '',
-  price: Number.MAX_SAFE_INTEGER,
+  price: 9_999_999,
   orderBy: 'priceAsc',
   freeShippingOnly: false
 };
@@ -44,6 +44,7 @@ function ProductsBrowser() {
           setPrice={setSingleFilter.bind(null, 'price')}
           freeShippingOnly={filters.freeShippingOnly}
           setFreeShippingOnly={setSingleFilter.bind(null, 'freeShippingOnly')}
+          resetFilters={() => setFilters(prev => ({ ...initialFilters, orderBy: prev.orderBy }))}
         />
 
         <div>
@@ -53,6 +54,7 @@ function ProductsBrowser() {
             setShowDetails={setShowDetails}
             orderBy={filters.orderBy}
             setOrderBy={(val) => setFilters(prev => ({ ...prev, orderBy: val }))}
+            productsCount={products.length}
           />
 
           {

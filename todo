@@ -6,3 +6,4 @@
 - create useFetch hook, used by  both useProductData and useProducts
 - make controls in products browser sticky
 - toggle-buttons in ProductsGridTop could be changed to radio inputs
+- in mobile view menu should close itself when the page is changed

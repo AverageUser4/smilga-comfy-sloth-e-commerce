@@ -17,7 +17,8 @@ import Product from '../../components/Product/Product';
 import Loading from '../../components/Loading/Loading';
 
 function Home() {
-  const { products } = useProducts({ featuredOnly: true, orderBy: 'shuffle' }).slice(0, 3);
+  let { products } = useProducts({ featuredOnly: true, orderBy: 'shuffle' });
+  products = products.slice(0, 3);
 
   return (
     <>
