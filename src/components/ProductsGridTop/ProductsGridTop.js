@@ -6,13 +6,23 @@ import css from './ProductsGridTop.module.css';
 import { ReactComponent as Blocks } from '../../assets/blocks.svg';
 import { ReactComponent as Bars } from '../../assets/menu-bars.svg';
 
-function ProductsGridTop() {
+function ProductsGridTop({ showDetails, setShowDetails, orderBy, setOrderBy }) {
   return (
     <div className={css['container']}>
 
       <div className={css['buttons']}>
-        <button className="toggle-button"><Blocks/></button>
-        <button className="toggle-button"><Bars/></button>
+        <button 
+          className={"toggle-button" + (!showDetails ? ' toggle-button--active' : '')}
+          onClick={() => setShowDetails(false)}
+        >
+          <Blocks/>
+        </button>
+        <button 
+          className={"toggle-button" + (showDetails ? ' toggle-button--active' : '')}
+          onClick={() => setShowDetails(true)}
+        >
+          <Bars/>
+        </button>
       </div>
 
       <span>23 products found</span>
@@ -21,11 +31,11 @@ function ProductsGridTop() {
 
       <label className={css["label"]}>
         <span>Sort by</span>
-        <select className="input">
-          <option>price (lowest)</option>
-          <option>price (highest)</option>
-          <option>name (a-z)</option>
-          <option>name (z-a)</option>
+        <select value={orderBy} onChange={(e) => setOrderBy(e.target.value)} className="input">
+          <option value={'priceAsc'}>price (lowest)</option>
+          <option value={'priceDesc'}>price (highest)</option>
+          <option value={'nameAsc'}>name (a-z)</option>
+          <option value={'nameDesc'}>name (z-a)</option>
         </select>
       </label>
 
@@ -34,7 +44,10 @@ function ProductsGridTop() {
 }
 
 ProductsGridTop.propTypes = {
-
+  showDetails: PropTypes.bool.isRequired,
+  setShowDetails: PropTypes.func.isRequired,
+  orderBy: PropTypes.string.isRequired,
+  setOrderBy: PropTypes.func.isRequired
 };
 
 export default ProductsGridTop;

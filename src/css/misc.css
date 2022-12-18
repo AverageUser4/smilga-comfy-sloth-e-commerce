@@ -1,5 +1,9 @@
 @layer {
 
+  .clean-link {
+    text-decoration: none;
+  }
+  
   .block {
     display: block;
   }

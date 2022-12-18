@@ -4,3 +4,5 @@
 - ProductInCart: change layout to table
 - AllProducts: there should be way to show more detailed product component
 - create useFetch hook, used by  both useProductData and useProducts
+- make controls in products browser sticky
+- toggle-buttons in ProductsGridTop could be changed to radio inputs

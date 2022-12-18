@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import manWorking from '../../assets/man-working.jpeg';
 import furniture from '../../assets/furniture.jpeg';
 import FancyPics from '../../components/FancyPics/FancyPics.js';
@@ -6,16 +7,17 @@ import Card from '../../components/Card/Card';
 import { ReactComponent as Compass } from '../../assets/compass.svg';
 import { ReactComponent as Mining } from '../../assets/mining-diamond.svg';
 import { ReactComponent as Scroll } from '../../assets/scroll.svg';
-
 import StandaloneSection from '../../components/StandaloneSection/StandaloneSection.js';
 import Siblings from '../../components/Siblings/Siblings.js';
 import BlockAndText from '../../components/BlockAndText/BlockAndText';
 import VerticalGap from '../../components/VerticalGap/VerticalGap';
 import DualInput from '../../components/DualInput/DualInput';
-import { Link } from 'react-router-dom';
-import ProductsGrid from '../../components/ProductsGrid/ProductsGrid';
+import useProducts from '../../hooks/useProducts';
+import Product from '../../components/Product/Product';
 
 function Home() {
+  const featuredProducts = useProducts({ featuredOnly: true, orderBy: 'shuffle' }).slice(0, 3);
+
   return (
     <>
 
@@ -42,7 +44,11 @@ function Home() {
 
         <h2 className="heading heading--no-margin heading--centered heading--underline">Featured Products</h2>
 
-        <ProductsGrid featuredOnly={true}/>
+        <div className="standalone">
+          <div className="grid">
+            {featuredProducts.map(product => <Product key={product.id} {...product}/>)}
+          </div>
+        </div>
 
         <Link to="/products" className="button button--centered button--uppercase">All Products</Link>
 

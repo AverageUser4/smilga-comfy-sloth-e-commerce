@@ -98,5 +98,11 @@
       grid-template-columns: repeat(3, calc(33.33333% - var(--gap) / 1.5));
     }
   }
+
+  /******************************/
+  .vertical-grid {
+    display: grid;
+    gap: 48px;
+  }
  
 }
