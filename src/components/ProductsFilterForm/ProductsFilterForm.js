@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import css from './ProductsFilterForm.module.css';
 import useProducts from '../../hooks/useProducts';
+import ColorInput from '../ColorInput/ColorInput';
 
 function ProductsFilterForm(props) {
   let { categories, companies, colors } = useProducts();
@@ -22,7 +23,7 @@ function ProductsFilterForm(props) {
 
     props[funcName](type === 'checkbox' ? checked : value);
   }
-  
+
   const categoryInputs = categories.map(cat =>
     <li key={cat} className={css['hidden-radio-container']}>
       <label className={css['radio-label']}>
@@ -42,22 +43,13 @@ function ProductsFilterForm(props) {
   );
 
   const colorInputs = colors.map(col =>
-    <label key={col} className="focus-label">
-      <input 
-        className="hidden-radio"
-        type="radio"
-        name="color"
-        value={col}
-        checked={col === color}
-        onChange={handleChange}
-      />
-      {
-        col ?
-          <span className="color" style={{ backgroundColor: col }}></span>
-        :
-          <span className="text-button">All</span>
-      }
-    </label>
+    <ColorInput
+      key={col}
+      value={col}
+      currentValue={color}
+      name="color"
+      handleChange={handleChange}
+    />
   );
   
   return (
@@ -141,7 +133,7 @@ function ProductsFilterForm(props) {
         />
       </label>
 
-      <button className="button button--danger button--little-padding" onClick={resetFilters}>Clear Filters</button>
+      <button type="button" className="button button--danger button--little-padding" onClick={resetFilters}>Clear Filters</button>
 
     </form>
   );

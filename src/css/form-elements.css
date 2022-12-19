@@ -34,6 +34,19 @@
     width: 120px;
   }
   
+  .hidden-radio-label {
+    position: relative;
+    
+    display: inline-block;
+    min-width: 16px;
+    height: 16px;
+  }
+  .hidden-radio-label:focus-within {
+    outline: 2px solid olivedrab;
+    outline-offset: 1px;
+    border-radius: 3px;
+  }
+
   .hidden-radio {
     position: absolute;
     top: 0;
@@ -48,52 +61,5 @@
     pointer-events: none;
   }
 
-  .focus-label {
-    position: relative;
-    
-    display: inline-block;
-    min-width: 16px;
-    height: 16px;
-  }
-  .focus-label:focus-within {
-    outline: 2px solid olivedrab;
-    outline-offset: 1px;
-    border-radius: 3px;
-  }
-  .focus-label:focus-within .color,
-  .focus-label .hidden-radio:checked ~ .color {
-    opacity: 1;
-  }
-  .focus-label:focus-within .color::after,
-  .focus-label .hidden-radio:checked ~ .color::after {
-    content: '';
-  
-    display: block;  
-    width: 3.2px;
-    height: 5.3px;
-    border-right: 2px solid white;
-    border-bottom: 2px solid white;
-  
-    transform: rotate(45deg) translate(-0.4px, -1.2px);
-  }
-  .focus-label:focus-within .text-button,
-  .focus-label .hidden-radio:checked ~ .text-button {
-    text-decoration: underline;
-  }
-  
-  .color {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    
-    position: relative;
-    
-    width: 16px;
-    height: 16px;
-  
-    background-color: red;
-    opacity: 0.5;
-    border-radius: 50%;
-  }
   
 }
