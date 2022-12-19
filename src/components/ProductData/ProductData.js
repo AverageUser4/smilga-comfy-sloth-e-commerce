@@ -40,7 +40,12 @@ function ProductData() {
 
         <div className={css['data']}>
           <span>Availability:</span>
-          <span>{stock > 0 ? 'in stock' : 'sold out'}</span>
+          {
+            stock ?
+              <span>in stock ( {stock} )</span>
+            :
+              <span>sold out</span>
+          }
         </div>
 
         <div className={css['data']}>
@@ -60,9 +65,16 @@ function ProductData() {
           <span>TODO: here should be color inputs</span>
         </div>
 
-        <Counter count={count} setCount={setCount} max={stock}/>
+        {
+          stock ?
+            <>
+              <Counter count={count} setCount={setCount} max={stock}/>
+              <Link to="/cart" className="button button--uppercase">Add to cart</Link>
+            </>
+          :
+            <span className={css['sold-out']}>Sold out!</span>
+        }
         
-        <Link to="/cart" className="button button--uppercase">Add to cart</Link>
         
       </div>
 

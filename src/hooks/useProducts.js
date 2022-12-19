@@ -3,27 +3,39 @@ import { shuffleArray } from '../utils/utils';
 
 const API_ENDPOINT = 'https://course-api.com/react-store-products';
 
-function useProducts(options = { 
-  featuredOnly: false,
-  queryString: '',
-  category: '',
-  company: '',
-  color: '',
-  price: Number.MAX_SAFE_INTEGER,
-  orderBy: '',
-  freeShippingOnly: false
-}) {
-  const [productsOriginal, setProductsOriginal] = useState([]);
-  const [products, setProducts] = useState([]);
-  const [categories, setCategories] = useState([]);
-  const [companies, setCompanies] = useState([]);
-  const [colors, setColors] = useState([]);
-  const [biggestPrice, setBiggestPrice] = useState(9_999_999);
+const defaultOptions = { 
+  featuredOnly: false, queryString: '', category: '', company: '', color: '',
+  priceMin: '', priceMax: '', orderBy: '', freeShippingOnly: false
+};
+const optionKeys = [];
+for(let key in defaultOptions)
+  optionKeys.push(key);
 
-  const { featuredOnly, queryString, category, company, color, price, orderBy, freeShippingOnly } = options;
+const initialData = {
+  productsOriginal: [],
+  products: [],
+  categories: [],
+  companies: [],
+  colors: []
+};
 
+function useProducts(options = defaultOptions) {
+  const [isLoading, setIsLoading] = useState(true);
+  const [data, setData] = useState(initialData);
+  // const [productsOriginal, setProductsOriginal] = useState([]);
+  // const [products, setProducts] = useState([]);
+  // const [categories, setCategories] = useState([]);
+  // const [companies, setCompanies] = useState([]);
+  // const [colors, setColors] = useState([]);
+
+  const { 
+    featuredOnly, queryString, category, company, color, 
+    priceMin, priceMax, orderBy, freeShippingOnly
+  } = options;
+
+  const dependencyArrayForFirstEffect = [data.productsOriginal].concat(optionKeys.map(key => options[key]));
   useEffect(() => {
-    let newProducts = [...productsOriginal];
+    let newProducts = [...data.productsOriginal];
 
     function sortByName(arr, desc = false) {
       const names = arr.map(product => product.name);
@@ -53,8 +65,10 @@ function useProducts(options = {
       checks.push(product => product.company === company);
     if(color)
       checks.push(product => product.colors.includes(color));
-    if(price)
-      checks.push(product => product.price <= options.price);
+    if(priceMin)
+      checks.push(product => product.price >= priceMin * 100);
+    if(priceMax)
+      checks.push(product => product.price <= priceMax * 100);
     if(freeShippingOnly)
       checks.push(product => product.shipping);
 
@@ -66,7 +80,7 @@ function useProducts(options = {
       return true;
     });
 
-    switch(options.orderBy) {
+    switch(orderBy) {
       case 'shuffle':
         newProducts = shuffleArray(newProducts);
         break;
@@ -92,11 +106,12 @@ function useProducts(options = {
         break;
 
       default:
-        throw new Error(`Unrecognized "orderBy" argument: "${options.orderBy}"`)
+        throw new Error(`Unrecognized "orderBy" argument: "${orderBy}"`)
     }
 
-    setProducts(newProducts);
-  }, [productsOriginal, featuredOnly, queryString, category, company, color, price, orderBy, freeShippingOnly]);
+    setData(prev => ({ ...prev, products: newProducts }));
+  }, dependencyArrayForFirstEffect);
+  //[productsOriginal, featuredOnly, queryString, category, company, color, priceMin, priceMax, orderBy, freeShippingOnly]
   
   useEffect(() => {
     let ignore = false;
@@ -109,18 +124,17 @@ function useProducts(options = {
         if(ignore)
           return;
 
-        setProductsOriginal(json);
-        setCategories([...new Set(json.map(product => product.category))]);
-        setCompanies([...new Set(json.map(product => product.company))]);
-        setColors([...new Set(json.map(product => product.colors).flat(1))]);
-
-        let biggest = 0;
-        for(let i = 0; i < json.length; i++)
-          biggest = Math.max(biggest, json[i].price);
-
-        setBiggestPrice(biggest);
+        setData(prev => ({
+          ...prev,
+          productsOriginal: json,
+          categories: [...new Set(json.map(product => product.category))],
+          companies: [...new Set(json.map(product => product.company))],
+          colors: [...new Set(json.map(product => product.colors).flat(1))]
+        }));
       } catch(error) {
         console.error(error);
+      } finally {
+        setIsLoading(false);
       }
     }
 
@@ -129,7 +143,10 @@ function useProducts(options = {
     return () => ignore = true;
   }, []);
 
-  return { products, categories, companies, colors, biggestPrice };
+  return { 
+    products: data.products, categories: data.categories, companies: data.companies,
+    colors: data.colors, isLoading
+  };
 }
 
 export default useProducts;

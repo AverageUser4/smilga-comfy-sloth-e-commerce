@@ -2,24 +2,26 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import css from './ProductsFilterForm.module.css';
 import useProducts from '../../hooks/useProducts';
-import { stringifyPrice } from '../../utils/utils';
 
 function ProductsFilterForm(props) {
-  let { categories, companies, colors, biggestPrice } = useProducts();
+  let { categories, companies, colors } = useProducts();
   categories = [''].concat(categories);
   colors = [''].concat(colors);
+  
+  const { queryString, category, company, color, priceMin, priceMax, freeShippingOnly, resetFilters } = props;
   
   function handleChange(event) {
     let { value, name, type, checked } = event.target;
     const funcName = 'set' + name.slice(0, 1).toUpperCase() + name.slice(1);
 
-    if(name === 'price')
-      value = parseInt(value);
+    if(name === 'priceMin' || name === 'priceMax') {
+      const parsed = parseInt(value);
+      if(value && Number.isNaN(parsed))
+        return;
+    }
 
     props[funcName](type === 'checkbox' ? checked : value);
   }
-
-  const { queryString, category, company, color, price, freeShippingOnly, resetFilters } = props;
   
   const categoryInputs = categories.map(cat =>
     <li key={cat} className={css['hidden-radio-container']}>
@@ -101,19 +103,33 @@ function ProductsFilterForm(props) {
         {colorInputs}
       </fieldset>
 
-      <label className="vertical-list">
-        <span className="heading heading--nano heading--only-bottom-margin">Price</span>
-        <span className="block paragraph paragraph--1-line-height">{stringifyPrice(price)}</span>
-        <input 
-          className="block range"
-          type="range"
-          min="0"
-          max={biggestPrice || 9999999}
-          name="price"
-          value={price}
-          onChange={handleChange}
-        />
-      </label>
+      <fieldset className="fieldset">
+        <legend className="heading heading--nano heading--no-margin">Price</legend>
+        <label className={css['price-label']}>
+          <span>min.</span>
+          <input 
+            type="number"
+            className="input"
+            min="0"
+            max="999999999"
+            name="priceMin"
+            value={priceMin}
+            onChange={handleChange}
+          />
+        </label>
+        <label className={css['price-label']}>
+          <span>max.</span>
+          <input 
+            type="number"
+            className="input"
+            min="0"
+            max="999999999"
+            name="priceMax"
+            value={priceMax}
+            onChange={handleChange}
+          />
+        </label>
+      </fieldset>
 
       <label className={css['free-shipping']}>
         <span>Free shipping</span>
@@ -140,7 +156,10 @@ ProductsFilterForm.propTypes = {
   setCompany: PropTypes.func,
   color: PropTypes.string,
   setColor: PropTypes.func,
-  price: PropTypes.number,
+  priceMin: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  setPriceMin: PropTypes.func,
+  priceMax: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  setPriceMax: PropTypes.func,
   setPrice: PropTypes.func,
   freeShippingOnly: PropTypes.bool,
   setFreeShippingOnly: PropTypes.func,

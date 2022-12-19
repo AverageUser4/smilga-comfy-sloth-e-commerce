@@ -6,7 +6,7 @@ import css from './ProductsGridTop.module.css';
 import { ReactComponent as Blocks } from '../../assets/blocks.svg';
 import { ReactComponent as Bars } from '../../assets/menu-bars.svg';
 
-function ProductsGridTop({ showDetails, setShowDetails, orderBy, setOrderBy, productsCount }) {
+function ProductsGridTop({ showDetails, setShowDetails, orderBy, setOrderBy, productsCount, isLoading }) {
   return (
     <div className={css['container']}>
 
@@ -25,7 +25,12 @@ function ProductsGridTop({ showDetails, setShowDetails, orderBy, setOrderBy, pro
         </button>
       </div>
 
-      <span>{productsCount || 'no'} products found</span>
+      {
+        isLoading ?
+          <span>loading...</span>
+        :
+          <span>{productsCount || 'no'} products found</span>
+      }
 
       <div className="line"></div>
 
@@ -49,6 +54,7 @@ ProductsGridTop.propTypes = {
   orderBy: PropTypes.string.isRequired,
   setOrderBy: PropTypes.func.isRequired,
   productsCount: PropTypes.number.isRequired,
+  isLoading: PropTypes.bool.isRequired
 };
 
 export default ProductsGridTop;

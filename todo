@@ -7,3 +7,4 @@
 - make controls in products browser sticky
 - toggle-buttons in ProductsGridTop could be changed to radio inputs
 - in mobile view menu should close itself when the page is changed
+- plus button on Counter changes place when there is more or less digits, should stay at the same position

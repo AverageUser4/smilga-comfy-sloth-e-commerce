@@ -12,7 +12,8 @@ const initialFilters = {
   category: '',
   company: '',
   color: '',
-  price: 9_999_999,
+  priceMin: '',
+  priceMax: '',
   orderBy: 'priceAsc',
   freeShippingOnly: false
 };
@@ -20,7 +21,7 @@ const initialFilters = {
 function ProductsBrowser() {
   const [showDetails, setShowDetails] = useState(false);
   const [filters, setFilters] = useState(initialFilters);
-  const { products } = useProducts({ ...filters });
+  const { products, isLoading } = useProducts({ ...filters });
 
   function setSingleFilter(which, value) {
     setFilters(prev => ({ ...prev, [which]: value }));
@@ -40,8 +41,10 @@ function ProductsBrowser() {
           setCompany={setSingleFilter.bind(null, 'company')}
           color={filters.color}
           setColor={setSingleFilter.bind(null, 'color')}
-          price={filters.price}
-          setPrice={setSingleFilter.bind(null, 'price')}
+          priceMin={filters.priceMin}
+          setPriceMin={setSingleFilter.bind(null, 'priceMin')}
+          priceMax={filters.priceMax}
+          setPriceMax={setSingleFilter.bind(null, 'priceMax')}
           freeShippingOnly={filters.freeShippingOnly}
           setFreeShippingOnly={setSingleFilter.bind(null, 'freeShippingOnly')}
           resetFilters={() => setFilters(prev => ({ ...initialFilters, orderBy: prev.orderBy }))}
@@ -55,10 +58,11 @@ function ProductsBrowser() {
             orderBy={filters.orderBy}
             setOrderBy={(val) => setFilters(prev => ({ ...prev, orderBy: val }))}
             productsCount={products.length}
+            isLoading={isLoading}
           />
 
           {
-            products.length ?
+            !isLoading ?
               <div className={showDetails ? 'vertical-grid' : 'small-grid'}>
                 {products.map(product => 
                   <Product 
