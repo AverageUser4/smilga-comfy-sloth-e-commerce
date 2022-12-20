@@ -11,7 +11,6 @@ import Login from './pages/Login/Login.js';
 import Header from './components/Header/Header.js';
 import Footer from './components/Footer/Footer.js';
 import Main from './components/Main/Main.js';
-import { useAuthContext } from './utils/AuthContext.js';
 
 export default function App() {
   return (

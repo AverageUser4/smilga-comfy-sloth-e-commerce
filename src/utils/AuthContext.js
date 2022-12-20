@@ -1,67 +1,43 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
-function getCart(username) {
-  if(typeof username !== 'string')
-    throw new Error('First argument provided to "getCart" has to be a string.');
-
-  return JSON.parse(localStorage.getItem(`${username}-cart`) || '[]');
-}
-
 const AuthContext = createContext();
 
 function AuthProvider({ children }) {
-  // note usage of both sessionStorage and localStorage in this component
-
-  const [user, setUser] = useState({
-    name: '',
-    isLoggedIn: false,
-    cart: []
-  });
+  const [name, setName] = useState('');
+  const isLoggedIn = name ? true : false;
 
   useEffect(() => {
-    const name = sessionStorage.getItem('user') || '';
-    const isLoggedIn = name ? true : false;
-    const cart = getCart(name);
-
-    setUser({ name, isLoggedIn, cart });
+    const name = sessionStorage.getItem('user');
+    if(name)
+      setName(name);
   }, []);
 
-  // function cartAdd(product, count) {
-  //  const existingIndex = user.cart.findIndex(p => p.id === product.id)
-  // }
+  useEffect(() => {
+    sessionStorage.setItem('user', name);
+  }, [name]);
 
-  // function cartSubtract(id, color) {
-
-  // }
-
-  function login(username, password) {
+  function login(username) {
     if(typeof username !== 'string' || username.length < 3)
       throw new Error('Invalid username provided to login function.');
 
-    // silence unused vars warning
-    password;
-
-    setUser({ name: username, isLoggedIn: true, cart: getCart(username) });
-    sessionStorage.setItem('user', username);
+    setName(username);
   }
 
   function logout() {
-    if(!user.isLoggedIn)
+    if(!isLoggedIn)
       console.error('logout() function called although it appears user is not logged in.');
 
-    setUser({ name: '', isLoggedIn: true, cart: getCart('') });
-    sessionStorage.setItem('user', '');
+    setName('');
   }
   
   return (
     <AuthContext.Provider 
       value={{
-        username: user.name,
-        isLoggedIn: user.isLoggedIn,
-        cart: user.cart,
+        username: name,
+        isLoggedIn,
         login,
-        logout
+        logout,
       }}
     >
       {children}

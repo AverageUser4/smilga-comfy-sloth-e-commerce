@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import Gallery from '../Gallery/Gallery';
 import css from './ProductData.module.css';
 import Rating from '../Rating/Rating.js';
@@ -8,12 +8,14 @@ import Loading from '../Loading/Loading.js';
 import useProductData from '../../hooks/useProductData';
 import { stringifyPrice } from '../../utils/utils';
 import ColorInput from '../ColorInput/ColorInput';
+import { useCartContext } from '../../utils/CartContext';
 
 function ProductData() {
   const [count, setCount] = useState(1);
   const [color, setColor] = useState('');
   const { id } = useParams();
   const product = useProductData(id);
+  const { cartChangeCount } = useCartContext();
 
   useEffect(() => {
     if(product?.colors?.[0])
@@ -25,7 +27,7 @@ function ProductData() {
 
   const { name, stock, price, shipping, reviews, stars, colors, images, description, company } = product;
 
-  const colorInputs = colors.map((col, i) =>
+  const colorInputs = colors.map(col =>
     <ColorInput
       key={col}
       name="color"
@@ -89,7 +91,7 @@ function ProductData() {
           stock ?
             <>
               <Counter count={count} setCount={setCount} max={stock}/>
-              <Link to="/cart" className="button button--uppercase">Add to cart</Link>
+              <button className="button button--uppercase">Add to cart</button>
             </>
           :
             <span className={css['sold-out']}>Sold out!</span>
