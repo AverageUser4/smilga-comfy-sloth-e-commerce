@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import css from './Counter.module.css';
 import { ReactComponent as Plus } from '../../assets/plus.svg';
@@ -8,8 +8,22 @@ function Counter({ count, setCount, step = 1, min = 1, max = 999, fontSize = "cl
   if(min > max)
     console.error(`Min value provided to counter (${min}) is greater than max value (${max}).`);
 
+  const [pressedButton, setPressedButton] = useState('');
   const containerStyle = { fontSize };
   const buttonStyle = { width: fontSize, height: fontSize };
+
+  useEffect(() => {
+    function onMouseUp() {
+      if(pressedButton)
+        setPressedButton('');
+    }
+
+    window.addEventListener('mouseup', onMouseUp);
+
+    return () => {
+      window.removeEventListener('mouseup', onMouseUp);
+    };
+  }, [pressedButton]);
   
   function decrease() {
     if(count === min)
@@ -24,15 +38,28 @@ function Counter({ count, setCount, step = 1, min = 1, max = 999, fontSize = "cl
     setCount(sum < max ? sum : max);
   }
 
+  if(pressedButton === 'minus')
+    setTimeout(decrease, 100);
+  else if(pressedButton === 'plus')
+    setTimeout(increase, 100);
+
   return (
     <div style={containerStyle} className={css['container']}>
+      <button 
+        style={buttonStyle}
+        onMouseDown={() => setPressedButton('minus')}
+      >
+        <Minus/>
+      </button>
 
-      <button style={buttonStyle} onClick={decrease}><Minus/></button>
-      
       <span>{count}</span>
 
-      <button style={buttonStyle} onClick={increase}><Plus/></button>
-      
+      <button 
+        style={buttonStyle}
+        onMouseDown={() => setPressedButton('plus')}
+      >
+        <Plus/>
+      </button>
     </div>
   );
 }
