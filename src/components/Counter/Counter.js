@@ -13,15 +13,17 @@ function Counter({ count, setCount, step = 1, min = 1, max = 999, fontSize = "cl
   const buttonStyle = { width: fontSize, height: fontSize };
 
   useEffect(() => {
-    function onMouseUp() {
-      if(pressedButton)
+    function stopCountChange(event) {
+      if(pressedButton && (!event.key || event.key === 'Enter'))
         setPressedButton('');
     }
 
-    window.addEventListener('mouseup', onMouseUp);
+    window.addEventListener('mouseup', stopCountChange);
+    window.addEventListener('keyup', stopCountChange);
 
     return () => {
-      window.removeEventListener('mouseup', onMouseUp);
+      window.removeEventListener('mouseup', stopCountChange);
+      window.removeEventListener('keyup', stopCountChange);
     };
   }, [pressedButton]);
   
@@ -48,6 +50,7 @@ function Counter({ count, setCount, step = 1, min = 1, max = 999, fontSize = "cl
       <button 
         style={buttonStyle}
         onMouseDown={() => setPressedButton('minus')}
+        onKeyDown={(e) => e.key === 'Enter' && setPressedButton('minus')}
       >
         <Minus/>
       </button>
@@ -57,6 +60,7 @@ function Counter({ count, setCount, step = 1, min = 1, max = 999, fontSize = "cl
       <button 
         style={buttonStyle}
         onMouseDown={() => setPressedButton('plus')}
+        onKeyDown={(e) => e.key === 'Enter' && setPressedButton('plus')}
       >
         <Plus/>
       </button>
