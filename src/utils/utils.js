@@ -41,3 +41,14 @@ export function spacesToCamelCase(text) {
 
   return arr.filter(character => character !== ' ').join('');
 }
+
+// export function verifyColorString(color, type = 'hex') {
+//   if(type !== 'hex')
+//     throw new Error(`Currently you can only verify 'hex' colors, provided type: '${type}'.`);
+//   if(typeof color !== 'string')
+//     throw new Error(`Color has to be a string, provided: '${color}'`);
+
+//    always false
+
+//   return color.startsWith('#') && color.length === 7 && !color.match(/[^0-9a-f]/)?.length;
+// }

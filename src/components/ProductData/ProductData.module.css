@@ -47,9 +47,11 @@
   font-weight: bold;
 }
 
-.sold-out {
-  color: var(--red-dark);
+.alert {
   font-size: 24px;
+}
+.alert--danger {
+  color: var(--red-dark);
   text-transform: uppercase;
 }
 

@@ -29,30 +29,52 @@ function CartProvider({ children }) {
   }, [username]);
 
   useEffect(() => {
+    console.log(cart)
     saveCartToStorage(username, cart);
   }, [username, cart]);
   
-  function getItemIndex(id, color, count) {
+  function checkArgs(id, color, count) {
     if(!id)
       throw new Error(`Incorrect id provided: '${id}'`);
     if(!color)
       throw new Error(`Incorrect color provided: '${color}'`);
     if(!Number.isInteger(count) || count === 0)
       throw new Error(`'count' argument has to be an integer !== 0 , provided: '${count}'`);
-
+  }
+  
+  function getItemIndex(id, color) {
     const index = cart.findIndex(product => product.id === id && product.color === color);
     const itemExists = index !== -1;
       
     return { index, itemExists };
   }
 
+  function cartGetItemCount(id, color) {
+    checkArgs(id, color, 1);
+    const { index } = getItemIndex(id, color, 1);
+
+    return cart?.[index].count || 0;
+  }
+
+  function cartGetItemTypeCount(id) {
+    checkArgs(id, '#000000', 1);
+    const items = cart.filter(product => product.id === id);
+    let count = 0;
+    
+    for(let i = 0; i < items.length; i++)
+      count += items[i].count;
+
+    return count;
+  }
+
   function cartChangeCount(id, color, count) {
+    checkArgs(id, color, count);
     const { index, itemExists } = getItemIndex(id, color, count);
 
     if(!itemExists && count < 0)
       throw new Error(`Tried to subtract from count of item that does not exist. id: '${id}', color: '${color}'`);
 
-    const currentCount = cart?.[index].count || 0;
+    const currentCount = cart?.[index]?.count || 0;
     const copy = [...cart];
 
     if(currentCount + count <= 0) {
@@ -60,7 +82,11 @@ function CartProvider({ children }) {
       return;
     }
 
-    copy[index] = { id, color, count: currentCount + count };
+    if(itemExists)
+      copy[index] = { id, color, count: currentCount + count };
+    else
+      copy.push({ id, color, count });
+
     setCart(copy);
   }
   
@@ -69,6 +95,7 @@ function CartProvider({ children }) {
   }
 
   function cartRemove(id, color) {
+    checkArgs(id, color, 1);
     const { index, itemExists } = getItemIndex(id, color, 1);
 
     if(!itemExists)
@@ -85,6 +112,8 @@ function CartProvider({ children }) {
     <CartContext.Provider 
       value={{
         cart,
+        cartGetItemCount,
+        cartGetItemTypeCount,
         cartChangeCount,
         cartRemove,
         cartEmpty

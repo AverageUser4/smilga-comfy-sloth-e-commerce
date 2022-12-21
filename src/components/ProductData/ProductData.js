@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import Gallery from '../Gallery/Gallery';
 import css from './ProductData.module.css';
 import Rating from '../Rating/Rating.js';
@@ -15,7 +15,8 @@ function ProductData() {
   const [color, setColor] = useState('');
   const { id } = useParams();
   const product = useProductData(id);
-  const { cartChangeCount } = useCartContext();
+  const { cartChangeCount, cartGetItemTypeCount } = useCartContext();
+  const inCartCount = id ? cartGetItemTypeCount(id) : 0;
 
   useEffect(() => {
     if(product?.colors?.[0])
@@ -26,6 +27,7 @@ function ProductData() {
     return <Loading/>;
 
   const { name, stock, price, shipping, reviews, stars, colors, images, description, company } = product;
+  const availableCount = stock - inCartCount;
 
   const colorInputs = colors.map(col =>
     <ColorInput
@@ -88,13 +90,32 @@ function ProductData() {
         </div>
 
         {
-          stock ?
+          availableCount ?
             <>
-              <Counter count={count} setCount={setCount} max={stock}/>
-              <button className="button button--uppercase">Add to cart</button>
+              <Counter count={count} setCount={setCount} max={availableCount}/>
+              <div className="distant-twins-layout">
+                <button 
+                  className="button button--uppercase"
+                  onClick={() => cartChangeCount(id, color, count)}
+                >
+                  Add to cart
+                </button>
+                {/* <Link 
+                  to="/cart"
+                  className="button button--uppercase"
+                >
+                  Buy now
+                </Link> */}
+              </div>
             </>
           :
-            <span className={css['sold-out']}>Sold out!</span>
+          stock ?
+            <>
+              <span className={css['alert']}>All in your cart!</span>
+              <Link to="/cart" className="button button--uppercase">Go to cart</Link>
+            </>
+          :
+            <span className={`${css['alert']} ${css['alert--danger']}`}>Sold out!</span>
         }
         
       </div>

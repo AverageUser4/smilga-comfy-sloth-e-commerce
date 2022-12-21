@@ -9,3 +9,4 @@
 - in mobile view menu should close itself when the page is changed
 - plus button on Counter changes place when there is more or less digits, should stay at the same position
 - you should be able to change which photo is big in gallery
+- data seems to be fetched more times than needed

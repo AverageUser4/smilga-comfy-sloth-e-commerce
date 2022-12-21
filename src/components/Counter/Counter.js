@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import css from './Counter.module.css';
 import { ReactComponent as Plus } from '../../assets/plus.svg';
@@ -26,6 +26,11 @@ function Counter({ count, setCount, step = 1, min = 1, max = 999, fontSize = "cl
       window.removeEventListener('keyup', stopCountChange);
     };
   }, [pressedButton]);
+
+  useEffect(() => {
+    count > max && setCount(max);
+    count < min && setCount(min);
+  }, [count, min, max]);
   
   function decrease() {
     if(count === min)
