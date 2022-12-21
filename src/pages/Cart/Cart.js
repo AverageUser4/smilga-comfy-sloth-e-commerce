@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import CurrentPath from '../../components/CurrentPath/CurrentPath.js';
 import ProductInCart from '../../components/ProductInCart/ProductInCart.js';
@@ -17,7 +17,6 @@ function Cart() {
         the available propert is not correct
   */
   const { cart, cartChangeCount, cartRemove, cartEmpty } = useCartContext();
-  // const lastRenderAllIDsRef = useRef([]);
   const allIDs = [...(new Set(cart.map(product => product.id)))];
   const [IDsToData, setIDsToData] = useState(new Map());
 
@@ -32,7 +31,6 @@ function Cart() {
 
     subtotal += product.count * data.price;
   }
-
 
   const productElements = [];
   for(let i = 0; i < cart.length; i++) {
@@ -123,7 +121,12 @@ function Cart() {
 
         <div className="distant-twins-layout standalone standalone--small">
           <Link to="/products" className="button">Continue Shopping</Link>
-          <button onClick={cartEmpty} className="button button--color-1">Clear Shopping Cart</button>
+          <button 
+            onClick={cartEmpty}
+            className="button button--color-1"
+          >
+            Clear Shopping Cart
+          </button>
         </div>
 
         {

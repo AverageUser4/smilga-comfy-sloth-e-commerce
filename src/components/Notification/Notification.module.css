@@ -1,0 +1,42 @@
+.container {
+  display: grid;
+  justify-items: end;
+  align-content: start;
+  gap: 10px;
+
+  position: fixed;
+  left: 0;
+  top: 0;
+
+  width: 100%;
+  height: 95vh;
+  padding: 10px;
+
+  pointer-events: none;
+  box-sizing: border-box;
+}
+
+.notification {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+  max-height: 100px;
+  max-width: 300px;
+  padding: 8px 16px;
+
+  background-color: var(--gray-light);
+  color: var(--black-main);
+  border: 3px solid var(--black-main);
+  border-radius: var(--border-radius);
+  font-size: 18px;
+  text-align: center;
+  line-height: 1.2;
+  
+  box-sizing: border-box;
+  pointer-events: all;
+}
+
+.button {
+  pointer-events: all;
+}
