@@ -15,7 +15,11 @@ function saveCartToStorage(username, cart) {
   if(!Array.isArray(cart))
     throw new Error(`Second argument provided to "saveCartToStorage" has to be an array, provided: ${cart}`)
 
-  localStorage.setItem(`${username}-cart`, JSON.stringify(cart));
+  try {
+    localStorage.setItem(`${username}-cart`, JSON.stringify(cart));
+  } catch(error) {
+    console.error(error);
+  }
 }
 
 const CartContext = createContext();
@@ -27,11 +31,6 @@ function CartProvider({ children }) {
   useEffect(() => {
     setCart(getCartFromStorage(username));
   }, [username]);
-
-  useEffect(() => {
-    console.log(cart)
-    saveCartToStorage(username, cart);
-  }, [username, cart]);
   
   function checkArgs(id, color, count) {
     if(!id)
@@ -88,10 +87,12 @@ function CartProvider({ children }) {
       copy.push({ id, color, count });
 
     setCart(copy);
+    saveCartToStorage(username, copy);
   }
   
   function cartEmpty() {
     setCart([]);
+    saveCartToStorage(username, []);
   }
 
   function cartRemove(id, color) {
@@ -101,11 +102,10 @@ function CartProvider({ children }) {
     if(!itemExists)
       throw new Error(`Tried to remove item that is not in the cart. id: ${id}, color: ${color}`);
 
-    setCart(prev => {
-      const copy = [...prev];
-      copy.splice(index, 1);
-      return copy;
-    });
+    const copy = [...cart];
+    copy.splice(index, 1);
+    setCart(copy);
+    saveCartToStorage(username, copy);
   }
   
   return (

@@ -1,17 +1,15 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import PropTypes, { string } from 'prop-types';
 import css from './ProductInCart.module.css';
 import Counter from '../Counter/Counter.js';
 import { ReactComponent as TrashIcon } from '../../assets/trash.svg';
-
-// temporary
-import furniture from '../../assets/furniture.jpeg';
+import { stringifyPrice } from '../../utils/utils';
 
 /*
   changing this layout to actual html table is a good idea
 */
 
-function ProductInCart({ image, name, color, price, quantity, setQuantity }) {
+function ProductInCart({ image, name, color, price, quantity, setQuantity, available, remove }) {
   const total = (quantity * price).toFixed(2);
 
   return (
@@ -19,8 +17,7 @@ function ProductInCart({ image, name, color, price, quantity, setQuantity }) {
 
       <div className={css['first-part']}>
 
-        {/* <img className={css['image']} src={image}/> */}
-        <img className={css['image']} src={furniture} alt={name}/>
+        <img className={css['image']} src={image} alt={name}/>
 
         <div>
 
@@ -33,21 +30,21 @@ function ProductInCart({ image, name, color, price, quantity, setQuantity }) {
               className={css['color']}></span>
           </div>
 
-          <div className="text text--color-1 text--bold">${price}</div>
+          <div className="text text--color-1 text--bold">{stringifyPrice(price)}</div>
 
         </div>
         
       </div>
 
-      <div className={`${css['medium-screen']} text text--color-1`}>${price}</div>
+      <div className={`${css['medium-screen']} text text--color-1`}>{stringifyPrice(price)}</div>
 
       <div className={css['second-part']}>
 
-        <Counter count={quantity} setCount={setQuantity} fontSize={'clamp(20px, 2.5vw, 24px)'}/>
+        <Counter count={quantity} setCount={setQuantity} fontSize={'clamp(20px, 2.5vw, 24px)'} max={available}/>
 
-        <div className={css['medium-screen']}>${total}</div>
+        <div className={css['medium-screen']}>{stringifyPrice(total)}</div>
 
-        <button className="button button--danger button--square">
+        <button className="button button--danger button--square" onClick={remove}>
           <TrashIcon className="annoying-garbage-icon"/>
         </button>
 
@@ -63,7 +60,9 @@ ProductInCart.propTypes = {
   color: PropTypes.string,
   price: PropTypes.number,
   quantity: PropTypes.number,
-  setQuantity: PropTypes.func
+  setQuantity: PropTypes.func,
+  available: PropTypes.number,
+  remove: PropTypes.func
 };
 
 export default ProductInCart;

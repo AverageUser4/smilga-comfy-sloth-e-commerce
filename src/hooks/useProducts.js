@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { shuffleArray } from '../utils/utils';
-
-const API_ENDPOINT = 'https://course-api.com/react-store-products';
+import { ALL_PRODUCTS } from '../utils/API_Endpoints';
 
 const defaultOptions = { 
   featuredOnly: false, queryString: '', category: '', company: '', color: '',
@@ -118,7 +117,7 @@ function useProducts(options = defaultOptions) {
 
     async function fetchProducts() {
       try {
-        const data = await fetch(API_ENDPOINT);
+        const data = await fetch(ALL_PRODUCTS);
         let json = await data.json();
   
         if(ignore)

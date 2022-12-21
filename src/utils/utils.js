@@ -42,6 +42,17 @@ export function spacesToCamelCase(text) {
   return arr.filter(character => character !== ' ').join('');
 }
 
+export function arrayIsSubsetOf(subset, whole) {
+  if(!Array.isArray(subset) || !Array.isArray(whole))
+    throw new Error(`Non-array provided: firstArg: '${subset}', secondArg: '${whole}'`);
+
+  for(let i = 0; i < subset.length; i++)
+    if(!whole.includes(subset[i]))
+      return false;
+
+  return true;
+}
+
 // export function verifyColorString(color, type = 'hex') {
 //   if(type !== 'hex')
 //     throw new Error(`Currently you can only verify 'hex' colors, provided type: '${type}'.`);

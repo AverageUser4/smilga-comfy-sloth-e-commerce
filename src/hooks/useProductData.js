@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
-
-const API_ENDPOINT = 'https://course-api.com/react-store-single-product?id=';
+import { SINGLE_PRODUCT } from '../utils/API_Endpoints';
 
 function useProductData(id) {
   const [productData, setProductData] = useState();
@@ -10,7 +9,7 @@ function useProductData(id) {
 
     async function fetchProductData() {
       try {
-        const data = await fetch(API_ENDPOINT + id);
+        const data = await fetch(SINGLE_PRODUCT + id);
         const json = await data.json();
   
         if(ignore)

@@ -10,6 +10,7 @@ import css from './HeaderNav.module.css';
 import useFocusTrap from '../../hooks/useFocusTrap';
 import useAppearanceTransition from '../../hooks/useAppearanceTransition';
 import { useAuthContext } from '../../utils/AuthContext';
+import { useCartContext } from '../../utils/CartContext';
 
 const phases = [
   css['nav'],
@@ -19,6 +20,7 @@ const phases = [
 
 function HeaderNav({ shouldBeVisible, close }) {
   const { isLoggedIn, logout } = useAuthContext();
+  const { cart } = useCartContext();
   const [navClasses, setNavClasses] = useState(phases[0]);
 
   const firstFocusableRef = useRef();
@@ -58,7 +60,9 @@ function HeaderNav({ shouldBeVisible, close }) {
             className={css["profile-link"]}
             activeClassName={css["profile-link--active"]}
           >
-            Cart <ShoppingCart/>
+            Cart 
+            <ShoppingCart/>
+            {cart.length ? <span className={css['cart-count']}>{cart.length}</span> : null}
           </NavLink>
         </li>
         <li>

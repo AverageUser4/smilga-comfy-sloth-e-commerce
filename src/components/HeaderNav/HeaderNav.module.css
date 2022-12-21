@@ -70,6 +70,8 @@
 }
 
 .profile-link {
+  position: relative;
+
   display: flex;
   align-items: center;
   gap: 8px;
@@ -84,6 +86,24 @@
 .profile-link--active {
   text-decoration: 2px underline currentColor;
   text-underline-offset: 8px;
+}
+
+.cart-count {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  
+  width: 22px;
+  height: 22px;
+
+  border-radius: 50%;
+  background-color: var(--brown-main);
+  color: white;
+  font-size: 12px;
 }
 
 @media(min-width: 980px) {

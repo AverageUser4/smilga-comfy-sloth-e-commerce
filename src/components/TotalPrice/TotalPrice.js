@@ -1,28 +1,29 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import css from './TotalPrice.module.css';
+import { stringifyPrice } from '../../utils/utils';
 
 function TotalPrice({ subtotal, shipping }) {
-  const orderTotal = (subtotal + shipping).toFixed(2);
+  const orderTotal = subtotal + shipping;
 
   return (
     <article className={css['container']}>
 
       <div className={css['data']}>
         <span>Subtotal:</span>
-        <span>${subtotal}</span>
+        <span>{stringifyPrice(subtotal)}</span>
       </div>
 
       <div className={`${css['data']} ${css['normal-weight']}`}>
         <span>Shipping Fee:</span>
-        <span>${shipping}</span>
+        <span>{stringifyPrice(shipping)}</span>
       </div>
 
       <div className="line"></div>
 
       <div className={`${css['data']} ${css['total']}`}>
         <span>Order Total:</span>
-        <span>${orderTotal}</span>
+        <span>{stringifyPrice(orderTotal)}</span>
       </div>
 
     </article>
