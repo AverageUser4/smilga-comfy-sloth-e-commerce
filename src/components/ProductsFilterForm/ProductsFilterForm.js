@@ -1,15 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import css from './ProductsFilterForm.module.css';
-import useProducts from '../../hooks/useProducts';
 import ColorInput from '../ColorInput/ColorInput';
 
 function ProductsFilterForm(props) {
-  let { categories, companies, colors } = useProducts();
-  categories = [''].concat(categories);
-  colors = [''].concat(colors);
-  
-  const { queryString, category, company, color, priceMin, priceMax, freeShippingOnly, resetFilters } = props;
+  const { 
+    queryString, category, company, color, priceMin, priceMax, freeShippingOnly,
+    resetFilters, categories, companies, colors 
+  } = props;
+
+  const allCategories = [''].concat(categories);
+  const allColors = [''].concat(colors);
+  const allCompanies = companies;
   
   function handleChange(event) {
     let { value, name, type, checked } = event.target;
@@ -24,7 +26,7 @@ function ProductsFilterForm(props) {
     props[funcName](type === 'checkbox' ? checked : value);
   }
 
-  const categoryInputs = categories.map(cat =>
+  const categoryInputs = allCategories.map(cat =>
     <li key={cat} className={css['hidden-radio-container']}>
       <label className={css['radio-label']}>
         <span className={`text-button ${category === cat ? 'text-button--active' : ''}`}>
@@ -42,7 +44,7 @@ function ProductsFilterForm(props) {
     </li>
   );
 
-  const colorInputs = colors.map(col =>
+  const colorInputs = allColors.map(col =>
     <ColorInput
       key={col}
       value={col}
@@ -83,7 +85,7 @@ function ProductsFilterForm(props) {
         >
           <option value="">All</option>
           {
-            companies.map(company => 
+            allCompanies.map(company => 
               <option key={company} value={company}>{company}</option> 
             )
           }
@@ -156,6 +158,9 @@ ProductsFilterForm.propTypes = {
   freeShippingOnly: PropTypes.bool,
   setFreeShippingOnly: PropTypes.func,
   resetFilters: PropTypes.func,
+  categories: PropTypes.array,
+  companies: PropTypes.array,
+  colors: PropTypes.array,
 };
 
 export default ProductsFilterForm;

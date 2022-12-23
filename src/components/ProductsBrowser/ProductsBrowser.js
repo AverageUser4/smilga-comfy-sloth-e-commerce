@@ -21,7 +21,7 @@ const initialFilters = {
 function ProductsBrowser() {
   const [showDetails, setShowDetails] = useState(false);
   const [filters, setFilters] = useState(initialFilters);
-  const { products, isLoading } = useProducts({ ...filters });
+  const { products, isLoading, error, allCategories, allCompanies, allColors } = useProducts({ ...filters });
 
   function setSingleFilter(which, value) {
     setFilters(prev => ({ ...prev, [which]: value }));
@@ -48,31 +48,41 @@ function ProductsBrowser() {
           freeShippingOnly={filters.freeShippingOnly}
           setFreeShippingOnly={setSingleFilter.bind(null, 'freeShippingOnly')}
           resetFilters={() => setFilters(prev => ({ ...initialFilters, orderBy: prev.orderBy }))}
+          categories={allCategories}
+          companies={allCompanies}
+          colors={allColors}
         />
 
         <div>
 
-          <ProductsGridTop
-            showDetails={showDetails}
-            setShowDetails={setShowDetails}
-            orderBy={filters.orderBy}
-            setOrderBy={(val) => setFilters(prev => ({ ...prev, orderBy: val }))}
-            productsCount={products.length}
-            isLoading={isLoading}
-          />
-
           {
-            !isLoading ?
-              <div className={showDetails ? 'vertical-grid' : 'small-grid'}>
-                {products.map(product => 
-                  <Product 
-                    key={product.id}
-                    {...product}
-                    showDetails={showDetails}
-                  />)}
-              </div>
+            error ?
+              <p className="error">{error}</p>
             :
-              <Loading/>
+              <>
+                <ProductsGridTop
+                  showDetails={showDetails}
+                  setShowDetails={setShowDetails}
+                  orderBy={filters.orderBy}
+                  setOrderBy={(val) => setFilters(prev => ({ ...prev, orderBy: val }))}
+                  productsCount={products.length}
+                  isLoading={isLoading}
+                />
+
+                {
+                  !isLoading ?
+                    <div className={showDetails ? 'vertical-grid' : 'small-grid'}>
+                      {products.map(product => 
+                        <Product 
+                          key={product.id}
+                          {...product}
+                          showDetails={showDetails}
+                        />)}
+                    </div>
+                  :
+                    <Loading/>
+                }
+              </>
           }
 
         </div>

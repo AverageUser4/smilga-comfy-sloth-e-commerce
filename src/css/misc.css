@@ -52,4 +52,23 @@
     font-weight: bold;
   }
 
+  .error {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    
+    font-size: 20px;
+    text-align: center;
+    color: var(--red-dark);
+    border: 2px solid var(--red-dark);
+    border-radius: var(--border-radius);
+    background-color: white;
+  }
+  .error::before, .error::after {
+    content: '!';
+    
+    font-size: 2em;
+    font-weight: bold;
+  }
 }

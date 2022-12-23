@@ -53,6 +53,30 @@ export function arrayIsSubsetOf(subset, whole) {
   return true;
 }
 
+export function sortArrayOfObjectsByProperty(arr, property, desc = false) {
+  // sorts strings, won't work for numbers
+
+  if(!Array.isArray(arr))
+    throw new Error(`Non-array provided: '${arr}'.`);
+  if(!property || typeof property !== 'string')
+    throw new Error(`Property has to be non-empty string, provided: '${property}'.`);
+
+  const properties = arr.map(item => item[property]);
+  properties.sort();
+  const sorted = [];
+  
+  for(let i = 0; i < properties.length; i++) {
+    const index = arr.findIndex(item => item[property] === properties[i]);
+    sorted.push(arr[index]);
+    arr.splice(index, 1);
+  }
+
+  if(desc)
+    sorted.reverse();
+
+  return sorted;
+}
+
 // export function verifyColorString(color, type = 'hex') {
 //   if(type !== 'hex')
 //     throw new Error(`Currently you can only verify 'hex' colors, provided type: '${type}'.`);

@@ -17,7 +17,7 @@ import Product from '../../components/Product/Product';
 import Loading from '../../components/Loading/Loading';
 
 function Home() {
-  let { products } = useProducts({ featuredOnly: true, orderBy: 'shuffle' });
+  let { products, isLoading, error } = useProducts({ featuredOnly: true, orderBy: 'shuffle' });
   products = products.slice(0, 3);
 
   return (
@@ -48,12 +48,15 @@ function Home() {
 
         <div className="standalone">
           {
-            products.length ?
+            error ?
+              <p className="error">{error}</p>
+              :
+            isLoading ?
+              <Loading/>
+            :
               <div className="grid">
                 {products.map(product => <Product key={product.id} {...product}/>)}
               </div>
-            :
-              <Loading/>
           }
         </div>
 
