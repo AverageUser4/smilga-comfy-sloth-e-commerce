@@ -46,7 +46,10 @@
     outline-offset: 1px;
     border-radius: 3px;
   }
-
+  .hidden-radio-label--high {
+    height: 24px;
+  }
+  
   .hidden-radio {
     position: absolute;
     top: 0;

@@ -1,15 +1,10 @@
-- 'skip to content' is buggy
 - css clean up:
   - ideally there should be no css modules for pages
 - ProductInCart: change layout to table
-- AllProducts: there should be way to show more detailed product component
 - create useFetch hook, used by  both useProductData and useProducts
-- make controls in products browser sticky
-- toggle-buttons in ProductsGridTop could be changed to radio inputs
-- in mobile view menu should close itself when the page is changed
-- plus button on Counter changes place when there is more or less digits, should stay at the same position
-- you should be able to change which photo is big in gallery
-- data seems to be fetched more times than needed
-- change skip to content to just a link with href="#main"
 - add alt attributes to icons used in buttons without text (if there are any)
-- uncrontrollable fetches in cart
+- make proper use of accounts:
+  - cart for a given account should be saved to localStorage
+  - when you have something in cart as guest and then login
+  it should be added to the cart of the account you've logged in to
+- analize and decide whether or not certain PropTypes should use isRequired

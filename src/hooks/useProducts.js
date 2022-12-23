@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { shuffleArray } from '../utils/utils';
 import { ALL_PRODUCTS } from '../utils/API_Endpoints';
 import { sortArrayOfObjectsByProperty } from '../utils/utils';
+import useFetch from './useFetch';
 
 const defaultOptions = { 
   featuredOnly: false, queryString: '', category: '', company: '', color: '',
@@ -21,6 +22,7 @@ function useProducts(options = defaultOptions) {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState('');
   const [data, setData] = useState(initialData);
+  const { data: fetchedData, isError } = useFetch(ALL_PRODUCTS);
 
   const { 
     featuredOnly, queryString, category, company, color, 
@@ -28,33 +30,18 @@ function useProducts(options = defaultOptions) {
   } = options;
 
   useEffect(() => {
-    let ignore = false;
-
-    async function fetchProducts() {
-      try {
-        const data = await fetch(ALL_PRODUCTS);
-        let json = await data.json();
-  
-        if(ignore)
-          return;
-
-        setData(prev => ({
-          ...prev,
-          productsOriginal: json,
-          allCategories: [...new Set(json.map(product => product.category))],
-          allCompanies: [...new Set(json.map(product => product.company))],
-          allColors: [...new Set(json.map(product => product.colors).flat(1))]
-        }));
-      } catch(error) {
-        console.error(error);
-        setError('We were unable to get data of our products. Please, refresh the page or try again later.');
-      }
-    }
-
-    fetchProducts();
-
-    return () => ignore = true;
-  }, []);
+    // there may be some bugs in this effect
+    if(isError)
+      setError('We were unable to get data of our products. Please, refresh the page or try again later.');
+    if(fetchedData)
+      setData(prev => ({
+        ...prev,
+        productsOriginal: fetchedData,
+        allCategories: [...new Set(fetchedData.map(product => product.category))],
+        allCompanies: [...new Set(fetchedData.map(product => product.company))],
+        allColors: [...new Set(fetchedData.map(product => product.colors).flat(1))]
+      }));
+  }, [fetchedData, isError]);
   
   const dependencyArray = [data.productsOriginal].concat(optionKeys.map(key => options[key]));
   useEffect(() => {

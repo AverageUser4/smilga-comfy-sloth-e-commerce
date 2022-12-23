@@ -1,16 +1,27 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import css from './Gallery.module.css';
 
 function Gallery({ photos }) {
+  const [currentPhoto, setCurrentPhoto] = useState(photos[0]);
+
   return (
     <section className={css["gallery"]}>
 
-      <img className={css["main-photo"]} src={photos[0].src}/>
+      <img className={css["main-photo"]} src={currentPhoto.src} alt={currentPhoto.alt}/>
 
       <div className={css["thumbnails"]}>
 
-        {photos.map(photo => <img key={photo.src} src={photo.src} alt={photo.alt}/>)}
+        {
+          photos.map(photo => 
+            <button 
+              className={css['button']}
+              key={photo.src}
+              onClick={() => setCurrentPhoto(photo)}
+            >
+              <img src={photo.src} alt={photo.alt}/>
+            </button>)
+        }
         
       </div>
       

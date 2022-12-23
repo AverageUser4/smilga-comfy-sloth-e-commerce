@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 import Home from './pages/Home/Home.js';
-import Error from './pages/Error/Error.js';
+import ErrorPage from './pages/ErrorPage/ErrorPage.js';
 import ProductPage from './pages/ProductPage/ProductPage.js';
 import AllProducts from './pages/AllProducts/AllProducts.js';
 import About from './pages/About/About.js';
@@ -46,7 +46,7 @@ export default function App() {
           </Route>
 
           <Route path="*">
-            <Error message="404 page not found."/>
+            <ErrorPage message="404 page not found."/>
           </Route>
 
         </Switch>

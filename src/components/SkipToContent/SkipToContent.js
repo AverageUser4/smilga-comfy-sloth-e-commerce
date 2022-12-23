@@ -1,25 +1,15 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import css from './SkipToContent.module.css';
 
-function SkipToContent({ lastFocusableInNav }) {
-  // console.log(lastFocusableInNav)
-
+function SkipToContent() {
   return (
-    <button
-      className={css['button']}
-      onClick={() => {
-        console.log(lastFocusableInNav)
-        lastFocusableInNav?.focus();
-      }}
+    <a
+      className={css['skip']}
+      href="#main"
     >
       Skip To Content
-    </button>
+    </a>
   );
 }
-
-SkipToContent.propTypes = {
-  lastFocusableInNav: PropTypes.instanceOf(HTMLElement)
-};
 
 export default SkipToContent;

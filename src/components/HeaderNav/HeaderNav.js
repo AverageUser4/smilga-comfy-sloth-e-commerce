@@ -18,7 +18,7 @@ const phases = [
   css['nav--visible']
 ];
 
-function HeaderNav({ shouldBeVisible, close }) {
+function HeaderNav({ shouldBeVisible, close, shouldTrap }) {
   const { isLoggedIn, logout } = useAuthContext();
   const { cart } = useCartContext();
   const [navClasses, setNavClasses] = useState(phases[0]);
@@ -27,7 +27,7 @@ function HeaderNav({ shouldBeVisible, close }) {
   const defaultFocusableRef = useRef();
   const lastFocusableRef = useRef();
 
-  useFocusTrap(close, firstFocusableRef.current, lastFocusableRef.current);
+  useFocusTrap(close, firstFocusableRef.current, lastFocusableRef.current, shouldTrap);
   useAppearanceTransition(shouldBeVisible, setNavClasses, phases, 300, defaultFocusableRef.current);
   
   return (
@@ -50,7 +50,7 @@ function HeaderNav({ shouldBeVisible, close }) {
       <ul className={css["pages-list"]}>
         <li><NavLink exact to="/" className={css["pages-link"]} activeClassName={css["pages-link--active"]}>Home</NavLink></li>
         <li><NavLink to="/about" className={css["pages-link"]} activeClassName={css["pages-link--active"]}>About</NavLink></li>
-        <li><NavLink to="/products" className={css["pages-link"]} activeClassName={css["pages-link--active"]}>Products</NavLink></li>
+        <li><NavLink exact to="/products" className={css["pages-link"]} activeClassName={css["pages-link--active"]}>Products</NavLink></li>
       </ul>
 
       <ul className={css["profile-list"]}>
@@ -93,6 +93,7 @@ function HeaderNav({ shouldBeVisible, close }) {
 
 HeaderNav.propTypes = {
   shouldBeVisible: PropTypes.bool,
+  shouldTrap: PropTypes.bool,
   close: PropTypes.func
 };
 

@@ -52,7 +52,7 @@ function ProductInCart({ image, name, color, price, quantity, setQuantity, avail
         <div className={css['medium-screen']}>{stringifyPrice(total)}</div>
 
         <button className="button button--danger button--square" onClick={remove}>
-          <TrashIcon className="annoying-garbage-icon"/>
+          <TrashIcon className="annoying-garbage-icon" alt="Remove from cart."/>
         </button>
 
       </div>

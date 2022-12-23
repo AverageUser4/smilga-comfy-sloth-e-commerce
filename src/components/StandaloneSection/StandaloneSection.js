@@ -7,21 +7,22 @@ function StandaloneSection({ children, backgroundID, isProtruding, isCentered })
   sectionClasses += (backgroundID ? ` ${css[`section--background-${backgroundID}`]}` : '');
   sectionClasses += (isProtruding ? ` ${css[`section--protruding`]}` : '');
   sectionClasses += (isCentered ? ` ${css[`section--centered`]}` : '');
-
+  
   return (
-    <section className={sectionClasses}>
+    <div className={sectionClasses}>
       <div className="max-width">
         {children}
       </div>
-    </section>
+    </div>
   );
 }
 
 StandaloneSection.propTypes = {
-  children: PropTypes.node,
+  children: PropTypes.node.isRequired,
   backgroundID: PropTypes.number,
   isProtruding: PropTypes.bool,
-  isCentered: PropTypes.bool
+  isCentered: PropTypes.bool,
+  isSemanticSection: PropTypes.bool
 };
 
 export default StandaloneSection;

@@ -10,20 +10,24 @@ function ProductsGridTop({ showDetails, setShowDetails, orderBy, setOrderBy, pro
   return (
     <div className={css['container']}>
 
-      <div className={css['buttons']}>
-        <button 
-          className={"toggle-button" + (!showDetails ? ' toggle-button--active' : '')}
-          onClick={() => setShowDetails(false)}
-        >
-          <Blocks/>
-        </button>
-        <button 
-          className={"toggle-button" + (showDetails ? ' toggle-button--active' : '')}
-          onClick={() => setShowDetails(true)}
-        >
-          <Bars/>
-        </button>
-      </div>
+      <ul className={css['buttons']}>
+        <li>
+          <button 
+            className={"toggle-button" + (!showDetails ? ' toggle-button--active' : '')}
+            onClick={() => setShowDetails(false)}
+          >
+            <Blocks alt="Simple view."/>
+          </button>
+        </li>
+        <li>
+          <button 
+            className={"toggle-button" + (showDetails ? ' toggle-button--active' : '')}
+            onClick={() => setShowDetails(true)}
+          >
+            <Bars alt="Detailed view."/>
+          </button>
+        </li>
+      </ul>
 
       {
         isLoading ?

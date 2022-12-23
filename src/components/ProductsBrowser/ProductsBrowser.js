@@ -70,7 +70,10 @@ function ProductsBrowser() {
                 />
 
                 {
-                  !isLoading ?
+                  isLoading ?
+                    <Loading/>
+                  :
+                  products.length ?
                     <div className={showDetails ? 'vertical-grid' : 'small-grid'}>
                       {products.map(product => 
                         <Product 
@@ -80,7 +83,7 @@ function ProductsBrowser() {
                         />)}
                     </div>
                   :
-                    <Loading/>
+                    <p className="error">We cannot find any products that meet your expectations. Please, use other filters.</p>
                 }
               </>
           }

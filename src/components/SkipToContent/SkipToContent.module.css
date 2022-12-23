@@ -1,4 +1,4 @@
-.button {
+.skip {
   position: fixed;
   top: 0;
   left: 0;
@@ -13,6 +13,6 @@
 
   pointer-events: none;
 }
-.button:focus {
+.skip:focus {
   opacity: 1;
 }

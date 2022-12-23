@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import StandaloneSection from '../../components/StandaloneSection/StandaloneSection';
 
-function Error({ message = 'Unknown error.' }) {
+function ErrorPage({ message = 'Unknown error.' }) {
   return (
     <StandaloneSection isCentered={true}>
       <h1 className="heading heading--no-margin">Something went wrong...</h1>
@@ -13,8 +13,8 @@ function Error({ message = 'Unknown error.' }) {
   );
 }
 
-Error.propTypes = {
+ErrorPage.propTypes = {
   message: PropTypes.string
 };
 
-export default Error;
+export default ErrorPage;

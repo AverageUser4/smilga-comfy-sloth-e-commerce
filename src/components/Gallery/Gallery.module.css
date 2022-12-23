@@ -1,7 +1,3 @@
-.gallery {
-
-}
-
 .main-photo {
   display: block;
   width: 100%;
@@ -30,6 +26,15 @@
 
   object-fit: cover;
   object-position: center;
+}
+
+.button {
+  display: block;
+  width: 100%;
+  padding: 0;
+
+  border: none;
+  border-radius: var(--border-radius);
 }
 
 @media(min-width: 540px) {

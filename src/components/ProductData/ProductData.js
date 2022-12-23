@@ -5,17 +5,18 @@ import css from './ProductData.module.css';
 import Rating from '../Rating/Rating.js';
 import Counter from '../Counter/Counter.js';
 import Loading from '../Loading/Loading.js';
-import useProductData from '../../hooks/useProductData';
+import useFetch from '../../hooks/useFetch';
 import { stringifyPrice } from '../../utils/utils';
 import ColorInput from '../ColorInput/ColorInput';
 import { useCartContext } from '../../utils/CartContext';
 import useNotification from '../../hooks/useNotification';
+import { SINGLE_PRODUCT } from '../../utils/API_Endpoints';
 
 function ProductData() {
   const [count, setCount] = useState(1);
   const [color, setColor] = useState('');
   const { id } = useParams();
-  const product = useProductData(id);
+  const { data: product, isFetching, isError } = useFetch(SINGLE_PRODUCT + id);
   const { cartChangeCount, cartGetItemTypeCount } = useCartContext();
   const inCartCount = id ? cartGetItemTypeCount(id) : 0;
   const { NotificationElement, notifyUser } = useNotification();

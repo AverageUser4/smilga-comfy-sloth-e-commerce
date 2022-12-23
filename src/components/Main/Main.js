@@ -4,7 +4,7 @@ import css from './Main.module.css';
 
 function Main({ children }) {
   return (
-    <main className={css['main']}>
+    <main id="main" className={css['main']}>
       {children}
     </main>
   );

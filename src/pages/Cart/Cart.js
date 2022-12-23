@@ -9,12 +9,40 @@ import css from './temp.module.css';
 import { useCartContext } from '../../utils/CartContext.js';
 import { SINGLE_PRODUCT } from '../../utils/API_Endpoints';
 import Loading from '../../components/Loading/Loading';
+import useFetch from '../../hooks/useFetch.js';
 
 function Cart() {
   const { cart, cartChangeCount, cartRemove, cartEmpty } = useCartContext();
   const allIDs = [...(new Set(cart.map(product => product.id)))];
   const [IDsToData, setIDsToData] = useState(new Map());
   const fetchedIDsRef = useRef([]);
+
+  useEffect(() => {
+    /*
+      add way of setting errors for particular items
+    */
+    async function fetchProductsData(id) {
+      try {
+        const response = await fetch(SINGLE_PRODUCT + id);
+        const json = await response.json();
+
+        setIDsToData(prev => {
+          const newIDsToData = new Map(prev);
+          newIDsToData.set(id, json);
+          return newIDsToData;
+        });
+      } catch(error) {
+        console.log(error);
+      }
+    }
+
+    for(let id of allIDs) {
+      if(!fetchedIDsRef.current.includes(id)) {
+        fetchedIDsRef.current.push(id);
+        fetchProductsData(id);
+      }
+    }
+  });
 
   let subtotal = 0;
   for(let product of cart) {
@@ -60,30 +88,6 @@ function Cart() {
         />);
     }
   }
-  
-  useEffect(() => {
-    async function fetchProductsData(id) {
-      try {
-        const response = await fetch(SINGLE_PRODUCT + id);
-        const json = await response.json();
-
-        setIDsToData(prev => {
-          const newIDsToData = new Map(prev);
-          newIDsToData.set(id, json);
-          return newIDsToData;
-        });
-      } catch(error) {
-        console.log(error);
-      }
-    }
-
-    for(let id of allIDs) {
-      if(!fetchedIDsRef.current.includes(id)) {
-        fetchedIDsRef.current.push(id);
-        fetchProductsData(id);
-      }
-    }
-  });
 
   if(!cart.length)
     return (

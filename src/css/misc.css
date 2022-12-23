@@ -51,7 +51,7 @@
   .text--bold {
     font-weight: bold;
   }
-
+ 
   .error {
     display: flex;
     align-items: center;
@@ -71,4 +71,5 @@
     font-size: 2em;
     font-weight: bold;
   }
+  
 }
