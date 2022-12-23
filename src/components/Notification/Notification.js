@@ -2,16 +2,16 @@ import React, { useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import css from './Notification.module.css';
 
-function Notification({ message = '', dateNow = 0, style = "normal", timeout = 3000 }) {
+function Notification({ content = '', dateNow = 0, style = "normal", timeout = 3000 }) {
   const lastDate = useRef(0);
   const [notifications, setNotifications] = useState([]);
   const areThereVisible = notifications.findIndex(not => not !== null) !== -1;
-
+  
   useEffect(() => {
     if(dateNow === lastDate.current)
       return;
 
-    setNotifications(prev => [...prev, message]);
+    setNotifications(prev => [...prev, content]);
     const lastIndex = notifications.length;
     lastDate.current = dateNow;
 
@@ -19,7 +19,7 @@ function Notification({ message = '', dateNow = 0, style = "normal", timeout = 3
   });
 
   function hideAll() {
-    setNotifications(notifications.map(x => null));
+    setNotifications(notifications.map((x = null) => x));
   }
   
   function hideNotification(index) {
@@ -61,7 +61,7 @@ function Notification({ message = '', dateNow = 0, style = "normal", timeout = 3
 }
 
 Notification.propTypes = {
-  message: PropTypes.string.isRequired,
+  content: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
   dateNow: PropTypes.number.isRequired,
   style: PropTypes.string,
   timeout: PropTypes.number

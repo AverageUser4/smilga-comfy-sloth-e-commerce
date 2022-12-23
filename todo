@@ -10,3 +10,6 @@
 - plus button on Counter changes place when there is more or less digits, should stay at the same position
 - you should be able to change which photo is big in gallery
 - data seems to be fetched more times than needed
+- change skip to content to just a link with href="#main"
+- add alt attributes to icons used in buttons without text (if there are any)
+- sometimes when accesing ProductPage the app seems to start fetching data uncontrollably (until limit is exceeded)

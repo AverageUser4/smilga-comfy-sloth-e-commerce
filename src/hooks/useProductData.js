@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { SINGLE_PRODUCT } from '../utils/API_Endpoints';
 
 function useProductData(id) {
+  console.log(`useProductData(${id})`);
   const [productData, setProductData] = useState();
 
   useEffect(() => {

@@ -12,6 +12,7 @@ import { useCartContext } from '../../utils/CartContext';
 import useNotification from '../../hooks/useNotification';
 
 function ProductData() {
+  console.log('ProductData()');
   const [count, setCount] = useState(1);
   const [color, setColor] = useState('');
   const { id } = useParams();
@@ -110,12 +111,6 @@ function ProductData() {
                   >
                     Add to cart
                   </button>
-                  {/* <Link 
-                    to="/cart"
-                    className="button button--uppercase"
-                  >
-                    Buy now
-                  </Link> */}
                 </div>
               </>
             :

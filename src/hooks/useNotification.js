@@ -2,17 +2,17 @@ import React, { useState } from 'react';
 import Notification from '../components/Notification/Notification.js';
 
 function useNotification() {
-  const [message, setMessage] = useState('');
+  const [content, setContent] = useState('');
   const [date, setDate] = useState(Date.now());
 
   const NotificationElement = 
-    message ? 
-      <Notification message={message} dateNow={date}/>
+    content ? 
+      <Notification content={content} dateNow={date}/>
     :
       null;
 
-  function notifyUser(message = '') {
-    setMessage(message);
+  function notifyUser(cont = '') {
+    setContent(cont);
     setDate(Date.now());
   }
 
