@@ -12,7 +12,6 @@ import { useCartContext } from '../../utils/CartContext';
 import useNotification from '../../hooks/useNotification';
 
 function ProductData() {
-  console.log('ProductData()');
   const [count, setCount] = useState(1);
   const [color, setColor] = useState('');
   const { id } = useParams();
@@ -104,7 +103,6 @@ function ProductData() {
                   <button 
                     className="button button--uppercase"
                     onClick={() => {
-                      console.log('hi')
                       cartChangeCount(id, color, count);
                       notifyUser(`Added ${name} x${count} to your cart!`);
                     }}

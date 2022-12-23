@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import CurrentPath from '../../components/CurrentPath/CurrentPath.js';
 import ProductInCart from '../../components/ProductInCart/ProductInCart.js';
@@ -11,14 +11,10 @@ import { SINGLE_PRODUCT } from '../../utils/API_Endpoints';
 import Loading from '../../components/Loading/Loading';
 
 function Cart() {
-  /*
-    - currently there is a problem:
-      - if the same product is in cart with 2 different colors
-        the available propert is not correct
-  */
   const { cart, cartChangeCount, cartRemove, cartEmpty } = useCartContext();
   const allIDs = [...(new Set(cart.map(product => product.id)))];
   const [IDsToData, setIDsToData] = useState(new Map());
+  const fetchedIDsRef = useRef([]);
 
   let subtotal = 0;
   for(let product of cart) {
@@ -65,34 +61,27 @@ function Cart() {
   }
   
   useEffect(() => {
-    let ignore = false;
-
     async function fetchProductsData(id) {
       try {
         const response = await fetch(SINGLE_PRODUCT + id);
         const json = await response.json();
 
-        // always true for some reason
-        // if(ignore)
-        //   return;
-
-        const newIDsToData = new Map(IDsToData);
-        newIDsToData.set(id, json);
-        setIDsToData(newIDsToData);
+        setIDsToData(prev => {
+          const newIDsToData = new Map(prev);
+          newIDsToData.set(id, json);
+          return newIDsToData;
+        });
       } catch(error) {
         console.log(error);
       }
     }
 
-    for(let id of allIDs)
-      if(!IDsToData.has(id)) {
-        const newIDsToData = new Map(IDsToData);
-        newIDsToData.set(id, null);
-        setIDsToData(newIDsToData);
+    for(let id of allIDs) {
+      if(!fetchedIDsRef.current.includes(id)) {
+        fetchedIDsRef.current.push(id);
         fetchProductsData(id);
       }
-
-    return () => ignore = true;
+    }
   });
 
   if(!cart.length)
