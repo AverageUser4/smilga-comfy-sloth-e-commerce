@@ -22,7 +22,7 @@
 
   background-color: var(--gray-light);
   color: var(--black-main);
-  border: 2px solid var(--black-main);
+  border: 2px solid currentColor;
   border-radius: var(--border-radius);
   font-size: 16px;
   text-align: center;
@@ -30,6 +30,11 @@
   
   box-sizing: border-box;
   pointer-events: all;
+}
+.notification--danger {
+  color: white;
+  background-color: var(--red-dark);
+  border: none;
 }
 
 .button {

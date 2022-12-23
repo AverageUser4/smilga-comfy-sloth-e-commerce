@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import css from './Notification.module.css';
 
-function Notification({ content = '', dateNow = 0, style = "normal", timeout = 3000 }) {
+function Notification({ content = '', type = '', timeout = 3000, dateNow = 0 }) {
   const lastDate = useRef(0);
   const [notifications, setNotifications] = useState([]);
   const areThereVisible = notifications.findIndex(not => not !== null) !== -1;
@@ -11,9 +11,9 @@ function Notification({ content = '', dateNow = 0, style = "normal", timeout = 3
     if(dateNow === lastDate.current)
       return;
 
-    setNotifications(prev => [...prev, content]);
     const lastIndex = notifications.length;
     lastDate.current = dateNow;
+    setNotifications(prev => [...prev, { content, type }]);
 
     setTimeout(() => hideNotification(lastIndex), timeout);
   });
@@ -34,11 +34,11 @@ function Notification({ content = '', dateNow = 0, style = "normal", timeout = 3
     item &&
       <div 
         key={i}
-        className={css['notification']}
+        className={`${css['notification']} ${item.type ? css[`notification--${type}`] : ''}`}
         role="alert"
         onClick={() => hideNotification(i)}
       >
-        {item}
+        {item.content}
       </div>
   );
 
@@ -63,7 +63,7 @@ function Notification({ content = '', dateNow = 0, style = "normal", timeout = 3
 Notification.propTypes = {
   content: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
   dateNow: PropTypes.number.isRequired,
-  style: PropTypes.string,
+  type: PropTypes.string,
   timeout: PropTypes.number
 }
 
