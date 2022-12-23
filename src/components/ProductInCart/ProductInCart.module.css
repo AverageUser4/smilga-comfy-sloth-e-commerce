@@ -29,6 +29,11 @@
   object-position: center;
 }
 
+.heading-link {
+  color: var(--black-main);
+  text-decoration: none;
+}
+
 .color-container {
   display: flex;
   align-items: center;

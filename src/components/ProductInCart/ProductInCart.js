@@ -1,5 +1,6 @@
 import React from 'react';
-import PropTypes, { string } from 'prop-types';
+import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import css from './ProductInCart.module.css';
 import Counter from '../Counter/Counter.js';
 import { ReactComponent as TrashIcon } from '../../assets/trash.svg';
@@ -9,7 +10,7 @@ import { stringifyPrice } from '../../utils/utils';
   changing this layout to actual html table is a good idea
 */
 
-function ProductInCart({ image, name, color, price, quantity, setQuantity, available, remove }) {
+function ProductInCart({ image, name, color, price, quantity, setQuantity, available, remove, id }) {
   const total = (quantity * price).toFixed(2);
 
   return (
@@ -17,11 +18,17 @@ function ProductInCart({ image, name, color, price, quantity, setQuantity, avail
 
       <div className={css['first-part']}>
 
-        <img className={css['image']} src={image} alt={name}/>
+        <Link to={`/products/${id}`}>
+          <img className={css['image']} src={image} alt={name}/>
+        </Link>
 
         <div>
 
-          <h4 className="heading heading--no-margin heading--pico heading--capitalized">{name}</h4>
+          <h4 className="heading heading--no-margin heading--pico heading--capitalized">
+            <Link className={css['heading-link']} to={`/products/${id}`}>
+              {name}
+            </Link>
+          </h4>
 
           <div className={css['color-container']}>
             Color: 
@@ -62,7 +69,8 @@ ProductInCart.propTypes = {
   quantity: PropTypes.number,
   setQuantity: PropTypes.func,
   available: PropTypes.number,
-  remove: PropTypes.func
+  remove: PropTypes.func,
+  id: PropTypes.string
 };
 
 export default ProductInCart;

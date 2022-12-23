@@ -41,6 +41,7 @@ function Cart() {
       productElements.push(
         <ProductInCart
           key={`${cart[i].id} ${cart[i].color}`}
+          id={cart[i].id}
           name={data.name}
           color={cart[i].color}
           price={data.price}
