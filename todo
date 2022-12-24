@@ -1,10 +1,10 @@
 - css clean up:
   - ideally there should be no css modules for pages
 - ProductInCart: change layout to table
-- create useFetch hook, used by  both useProductData and useProducts
 - add alt attributes to icons used in buttons without text (if there are any)
 - make proper use of accounts:
   - cart for a given account should be saved to localStorage
   - when you have something in cart as guest and then login
   it should be added to the cart of the account you've logged in to
 - analize and decide whether or not certain PropTypes should use isRequired
+- hide all in Notification does not work

@@ -1,17 +1,51 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import css from './ProductInCart.module.css';
 import Counter from '../Counter/Counter.js';
 import { ReactComponent as TrashIcon } from '../../assets/trash.svg';
 import { stringifyPrice } from '../../utils/utils';
+import useFetch from '../../hooks/useFetch';
+import { SINGLE_PRODUCT } from '../../utils/API_Endpoints';
+import Loading from '../Loading/Loading';
 
 /*
   changing this layout to actual html table is a good idea
 */
 
-function ProductInCart({ image, name, color, price, quantity, setQuantity, available, remove, id }) {
+function ProductInCart({ color, quantity, setQuantity, sameOfDifferentColorInCart, remove, id, setPrice, setIsError }) {
+  const { data, isError } = useFetch(SINGLE_PRODUCT + id + 'penes');
+  const price = data?.price;
+
+  useEffect(() => {
+    if(price)
+      setPrice(price);
+  }, [price]);
+
+  useEffect(() => {
+    if(isError)
+      setIsError(isError)
+  }, [isError]);
+  
+  if(isError)
+    return (
+      <p className="error">
+        We were unable to find this product. Please, refresh the page or 
+        <button className="button button--danger" onClick={remove}>remove it from cart</button>
+      </p>
+    );
+  
+  if(!data)
+    return (
+      <Loading
+        style={{ width: 75, height: 75, margin: '0 auto 48px' }}
+      />
+    );
+
+  const { name, stock } = data;
+  const image = data.images[0].thumbnails.large.url
   const total = (quantity * price).toFixed(2);
+  const available = stock - sameOfDifferentColorInCart;
 
   return (
     <article className={`cart-products-layout ${css['container']}`}>
@@ -62,15 +96,14 @@ function ProductInCart({ image, name, color, price, quantity, setQuantity, avail
 }
 
 ProductInCart.propTypes = {
-  image: PropTypes.string,
-  name: PropTypes.string,
-  color: PropTypes.string,
-  price: PropTypes.number,
-  quantity: PropTypes.number,
-  setQuantity: PropTypes.func,
-  available: PropTypes.number,
-  remove: PropTypes.func,
-  id: PropTypes.string
+  id: PropTypes.string.isRequired,
+  color: PropTypes.string.isRequired,
+  quantity: PropTypes.number.isRequired,
+  setQuantity: PropTypes.func.isRequired,
+  sameOfDifferentColorInCart: PropTypes.number.isRequired,
+  remove: PropTypes.func.isRequired,
+  setPrice: PropTypes.func,
+  setIsError: PropTypes.func,
 };
 
 export default ProductInCart;

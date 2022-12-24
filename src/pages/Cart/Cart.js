@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import CurrentPath from '../../components/CurrentPath/CurrentPath.js';
 import ProductInCart from '../../components/ProductInCart/ProductInCart.js';
@@ -7,86 +7,45 @@ import CartProductsTableHead from '../../components/CartProductsTableHead/CartPr
 import TotalPrice from '../../components/TotalPrice/TotalPrice.js';
 import css from './temp.module.css';
 import { useCartContext } from '../../utils/CartContext.js';
-import { SINGLE_PRODUCT } from '../../utils/API_Endpoints';
 import Loading from '../../components/Loading/Loading';
-import useFetch from '../../hooks/useFetch.js';
 
 function Cart() {
   const { cart, cartChangeCount, cartRemove, cartEmpty } = useCartContext();
-  const allIDs = [...(new Set(cart.map(product => product.id)))];
-  const [IDsToData, setIDsToData] = useState(new Map());
-  const fetchedIDsRef = useRef([]);
-
-  useEffect(() => {
-    /*
-      add way of setting errors for particular items
-    */
-    async function fetchProductsData(id) {
-      try {
-        const response = await fetch(SINGLE_PRODUCT + id);
-        const json = await response.json();
-
-        setIDsToData(prev => {
-          const newIDsToData = new Map(prev);
-          newIDsToData.set(id, json);
-          return newIDsToData;
-        });
-      } catch(error) {
-        console.log(error);
-      }
-    }
-
-    for(let id of allIDs) {
-      if(!fetchedIDsRef.current.includes(id)) {
-        fetchedIDsRef.current.push(id);
-        fetchProductsData(id);
-      }
-    }
-  });
-
+  const [IDsToPrices, setIDsToPrices] = useState(new Map());
+  const [isError, setIsError] = useState(false);
   let subtotal = 0;
-  for(let product of cart) {
-    const data = IDsToData.get(product.id);
-
-    if(!data) {
-      subtotal = 0;
-      break;
-    }
-
-    subtotal += product.count * data.price;
-  }
 
   const productElements = [];
   for(let i = 0; i < cart.length; i++) {
-    const data = IDsToData.get(cart[i].id);
-
+    const item = cart[i];
+    
     let sameProductDiffColorsCount = 0;
-    const sameProductDiffColors = cart.filter(product => product.id === cart[i].id && product.color !== cart[i].color);
+    const sameProductDiffColors = cart.filter(product => product.id === item.id && product.color !== item.color);
+
     for(let product of sameProductDiffColors)
       sameProductDiffColorsCount += product.count;
 
-    if(data) {
-      productElements.push(
-        <ProductInCart
-          key={`${cart[i].id} ${cart[i].color}`}
-          id={cart[i].id}
-          name={data.name}
-          color={cart[i].color}
-          price={data.price}
-          quantity={cart[i].count}
-          setQuantity={(count) => cartChangeCount(cart[i].id, cart[i].color, count - cart[i].count)}
-          available={data.stock - sameProductDiffColorsCount}
-          image={data.images[0].thumbnails.large.url}
-          remove={() => cartRemove(cart[i].id, cart[i].color)}
-        />
-      );
-    } else {
-      productElements.push(
-        <Loading 
-          key={`${cart[i].id} ${cart[i].color}`}
-          style={{ width: 75, height: 75, margin: '0 auto 48px' }}
-        />);
-    }
+    productElements.push(
+      <ProductInCart
+        key={`${item.id} ${item.color}`}
+        id={item.id}
+        color={item.color}
+        quantity={item.count}
+        setQuantity={(count) => cartChangeCount(item.id, item.color, count - item.count)}
+        sameOfDifferentColorInCart={sameProductDiffColorsCount}
+        remove={() => cartRemove(item.id, item.color)}
+        setIsError={setIsError}
+        setPrice={(price) => {
+          setIDsToPrices(prev => {
+            const copy = new Map(prev);
+            copy.set(item.id, price);
+            return copy;
+          })
+        }}
+      />
+    );
+
+    subtotal += item.count * IDsToPrices.get(item.id);
   }
 
   if(!cart.length)
@@ -124,6 +83,9 @@ function Cart() {
         </div>
 
         {
+          isError ?
+            <p className="error">Oops... we have some trouble getting needed data. Please, refresh the page.</p>
+          :
           subtotal ?
             <div className={`standalone standalone--medium standalone--no-bottom-margin ${css['total-container']}`}>
               <TotalPrice subtotal={subtotal} shipping={999} />
