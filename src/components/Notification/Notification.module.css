@@ -1,4 +1,8 @@
 .container {
+  --container-padding: 10px;
+  --notification-width: 300px;
+  --transition-duration: 300ms;
+  
   display: grid;
   justify-items: end;
   align-content: start;
@@ -10,17 +14,18 @@
 
   width: auto;
   height: 95vh;
-  padding: 10px;
+  padding: var(--container-padding);
 
   pointer-events: none;
   box-sizing: border-box;
-  overflow: auto;
+  overflow: hidden auto;
+  z-index: 10;
 }
 
 .notification {
   position: relative;
 
-  max-width: 300px;
+  width: var(--notification-width);
   padding: 8px 28px 8px 16px;
 
   background-color: var(--gray-light);
@@ -33,15 +38,25 @@
   
   box-sizing: border-box;
   pointer-events: all;
+  transform: translateX(calc(var(--notification-width) + var(--container-padding)));
+  transition: transform var(--transition-duration);
 }
 .notification--danger {
   color: white;
   background-color: var(--red-dark);
   border: none;
 }
+.notification--visible {
+  transform: none;
+}
 
-.button {
+.hide-button {
   pointer-events: all;
+  transform: translateX(calc(var(--notification-width) + var(--container-padding)));
+  transition: transform var(--transition-duration);
+}
+.hide-button--visible {
+  transform: none;
 }
 
 .close-button {
