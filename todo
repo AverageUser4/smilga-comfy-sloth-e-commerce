@@ -8,3 +8,5 @@
   it should be added to the cart of the account you've logged in to
 - analize and decide whether or not certain PropTypes should use isRequired
 - hide all in Notification does not work
+- try to work out how to get rid of unnecessary fetches in Cart / ProductInCart
+- add animations to notifications and ability to remove them with swipe

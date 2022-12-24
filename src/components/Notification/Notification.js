@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import css from './Notification.module.css';
+import { ReactComponent as Close } from '../../assets/menu-close.svg';
 
 function Notification({ content = '', type = '', timeout = 3000, dateNow = 0 }) {
   const lastDate = useRef(0);
@@ -15,11 +16,11 @@ function Notification({ content = '', type = '', timeout = 3000, dateNow = 0 }) 
     lastDate.current = dateNow;
     setNotifications(prev => [...prev, { content, type }]);
 
-    setTimeout(() => hideNotification(lastIndex), timeout);
+    // setTimeout(() => hideNotification(lastIndex), timeout);
   });
 
   function hideAll() {
-    setNotifications(notifications.map((x = null) => x));
+    setNotifications(notifications.map(x => null && x));
   }
   
   function hideNotification(index) {
@@ -36,8 +37,13 @@ function Notification({ content = '', type = '', timeout = 3000, dateNow = 0 }) 
         key={i}
         className={`${css['notification']} ${item.type ? css[`notification--${type}`] : ''}`}
         role="alert"
-        onClick={() => hideNotification(i)}
       >
+        <button 
+          onClick={() => hideNotification(i)}
+          className={`icon-button icon-button--small icon-button--danger ${css['close-button']}`}
+        >
+          <Close/>
+        </button>
         {item.content}
       </div>
   );

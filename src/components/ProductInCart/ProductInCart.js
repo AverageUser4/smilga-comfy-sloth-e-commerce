@@ -14,7 +14,7 @@ import Loading from '../Loading/Loading';
 */
 
 function ProductInCart({ color, quantity, setQuantity, sameOfDifferentColorInCart, remove, id, setPrice, setIsError }) {
-  const { data, isError } = useFetch(SINGLE_PRODUCT + id + 'penes');
+  const { data, isError } = useFetch(SINGLE_PRODUCT + id);
   const price = data?.price;
 
   useEffect(() => {
@@ -52,7 +52,7 @@ function ProductInCart({ color, quantity, setQuantity, sameOfDifferentColorInCar
 
       <div className={css['first-part']}>
 
-        <Link to={`/products/${id}`}>
+        <Link tabIndex="-1" to={`/products/${id}`}>
           <img className={css['image']} src={image} alt={name}/>
         </Link>
 

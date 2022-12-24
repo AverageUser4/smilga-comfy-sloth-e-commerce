@@ -36,6 +36,10 @@
   border: none;
   border-radius: var(--border-radius);
 }
+.button:focus {
+  outline: 3px solid var(--brown-main);
+  filter: brightness(120%);
+}
 
 @media(min-width: 540px) {
   .thumbnails {

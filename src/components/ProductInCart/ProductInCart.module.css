@@ -56,6 +56,10 @@
 }
 
 @media(min-width: 500px) {
+  .first-part {
+    width: clamp(200px, 40vw, 260px);
+  }
+
   .second-part {
     display: contents;
   }

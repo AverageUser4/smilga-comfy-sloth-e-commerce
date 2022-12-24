@@ -96,6 +96,13 @@
     width: 100%;
     height: 100%;
   }
+  .icon-button--small {
+    width: 24px;
+    height: 24px;
+  }
+  .icon-button--danger {
+    color: var(--red-dark);
+  }
   
   /* text-button */
   .text-button {
