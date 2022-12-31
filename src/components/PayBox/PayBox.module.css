@@ -1,0 +1,35 @@
+.container {
+  display: grid;
+
+  padding: 40px;
+
+  background-color: white;
+  box-shadow: rgba(50, 50, 93, 0.1) 0px 0px 0px 0.5px, rgba(50, 50, 93, 0.1) 0px 2px 5px 0px, rgba(0, 0, 0, 0.07) 0px 1px 1.5px 0px;;
+  border-radius: 7px;
+}
+
+.input {
+  padding: 12px;
+
+  font-size: 16px;
+}
+
+.input--number {
+  border: 1px solid rgba(50, 50, 93, 0.1);
+  border-bottom: none;
+  border-radius: var(--border-radius) var(--border-radius) 0 0;
+}
+
+.input--submit {
+  color: white;
+  background-color: var(--purple);
+  font-weight: bold;
+  border: none;
+  border-radius: 0 0 var(--border-radius) var(--border-radius);
+}
+.input--submit:disabled {
+  opacity: 0.5;
+}
+.input--submit:disabled:hover {
+  cursor: default;
+}

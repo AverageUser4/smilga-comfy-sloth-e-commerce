@@ -20,7 +20,7 @@ const phases = [
 
 function HeaderNav({ shouldBeVisible, close, shouldTrap }) {
   const { isLoggedIn, logout } = useAuthContext();
-  const { cart } = useCartContext();
+  const { cartProductsData } = useCartContext();
   const [navClasses, setNavClasses] = useState(phases[0]);
 
   const firstFocusableRef = useRef();
@@ -51,6 +51,10 @@ function HeaderNav({ shouldBeVisible, close, shouldTrap }) {
         <li><NavLink exact to="/" className={css["pages-link"]} activeClassName={css["pages-link--active"]}>Home</NavLink></li>
         <li><NavLink to="/about" className={css["pages-link"]} activeClassName={css["pages-link--active"]}>About</NavLink></li>
         <li><NavLink exact to="/products" className={css["pages-link"]} activeClassName={css["pages-link--active"]}>Products</NavLink></li>
+        {
+          isLoggedIn &&
+            <li><NavLink to="/checkout" className={css["pages-link"]} activeClassName={css["pages-link--active"]}>Checkout</NavLink></li>
+        }
       </ul>
 
       <ul className={css["profile-list"]}>
@@ -62,7 +66,7 @@ function HeaderNav({ shouldBeVisible, close, shouldTrap }) {
           >
             Cart 
             <ShoppingCart/>
-            {cart.length ? <span className={css['cart-count']}>{cart.length}</span> : null}
+            {cartProductsData.length ? <span className={css['cart-count']}>{cartProductsData.length}</span> : null}
           </NavLink>
         </li>
         <li>

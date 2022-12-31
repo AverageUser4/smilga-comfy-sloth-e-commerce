@@ -5,8 +5,13 @@
 - make proper use of accounts:
   - cart for a given account should be saved to localStorage
   - when you have something in cart as guest and then login
-  it should be added to the cart of the account you've logged in to
+    it should be added to the cart of the account you've logged in to
+  - merging carts: 
+    - fetch data of all products
+    - if amount is exceeded notify the user
+    - existing cart for profile overrides non-logged cart
+      (3 red sofas for guest and 3 purple sofas for users: 
+      it will choose 1 red sofa and 3 purple sofas if there are only 4 sofas available)
+- add buy page, there it will check whether there's enough items in stock
 - analize and decide whether or not certain PropTypes should use isRequired
-- hide all in Notification does not work
-- try to work out how to get rid of unnecessary fetches in Cart / ProductInCart
-- add animations to notifications and ability to remove them with swipe
+- data of products is immediately fetched in CartContext, should make it so its only fetched when needed

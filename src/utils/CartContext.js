@@ -1,6 +1,7 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { useAuthContext } from './AuthContext';
+import { SINGLE_PRODUCT } from './API_Endpoints';
 
 function getCartFromStorage(username) {
   if(typeof username !== 'string')
@@ -27,6 +28,51 @@ const CartContext = createContext();
 function CartProvider({ children }) {
   const { username } = useAuthContext();
   const [cart, setCart] = useState([]);
+  const [IDsToData, setIDsToData] = useState(new Map());
+  const fetchedIDsRef = useRef([]);
+  const allIDs = [...(new Set(cart.map(product => product.id)))];
+  const cartProductsData = cart.map(item => ({ ...item, data: IDsToData.get(item.id) }));
+
+  let totalPrice = { products: 0, shipping: 0 };
+  for(let i = 0; i < cartProductsData.length; i++) {
+    const product = cartProductsData[i];
+    if(!product.data || product.data.isError) {
+      totalPrice = null;
+      break;
+    }
+
+    totalPrice.products += product.data.price * product.count;
+    totalPrice.shipping += product.shipping ? 0 : 299;
+  }
+
+  useEffect(() => {
+    async function fetchProductsData(id) {
+      try {
+        const response = await fetch(SINGLE_PRODUCT + id);
+        const json = await response.json();
+
+        setIDsToData(prev => {
+          const newIDsToData = new Map(prev);
+          newIDsToData.set(id, json);
+          return newIDsToData;
+        });
+      } catch(error) {
+        console.error(error);
+        setIDsToData(prev => {
+          const newIDsToData = new Map(prev);
+          newIDsToData.set(id, { isError: true });
+          return newIDsToData;
+        });
+      }
+    }
+
+    for(let id of allIDs) {
+      if(!fetchedIDsRef.current.includes(id)) {
+        fetchedIDsRef.current.push(id);
+        fetchProductsData(id);
+      }
+    }
+  });
 
   useEffect(() => {
     setCart(getCartFromStorage(username));
@@ -111,12 +157,13 @@ function CartProvider({ children }) {
   return (
     <CartContext.Provider 
       value={{
-        cart,
+        cartProductsData,
+        totalPrice,
         cartGetItemCount,
         cartGetItemTypeCount,
         cartChangeCount,
         cartRemove,
-        cartEmpty
+        cartEmpty,
       }}
     >
       {children}

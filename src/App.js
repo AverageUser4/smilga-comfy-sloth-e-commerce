@@ -11,6 +11,7 @@ import Login from './pages/Login/Login.js';
 import Header from './components/Header/Header.js';
 import Footer from './components/Footer/Footer.js';
 import Main from './components/Main/Main.js';
+import Checkout from './pages/Checkout/Checkout.js';
 
 export default function App() {
   return (
@@ -39,6 +40,10 @@ export default function App() {
 
           <Route path="/login">
             <Login/>
+          </Route>
+
+          <Route path="/checkout">
+            <Checkout/>
           </Route>
 
           <Route exact path="/">

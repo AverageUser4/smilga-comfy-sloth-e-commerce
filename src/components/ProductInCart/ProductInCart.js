@@ -5,16 +5,10 @@ import css from './ProductInCart.module.css';
 import Counter from '../Counter/Counter.js';
 import { ReactComponent as TrashIcon } from '../../assets/trash.svg';
 import { stringifyPrice } from '../../utils/utils';
-import useFetch from '../../hooks/useFetch';
-import { SINGLE_PRODUCT } from '../../utils/API_Endpoints';
 import Loading from '../Loading/Loading';
 
-/*
-  changing this layout to actual html table is a good idea
-*/
-
-function ProductInCart({ color, quantity, setQuantity, sameOfDifferentColorInCart, remove, id, setPrice, setIsError }) {
-  const { data, isError } = useFetch(SINGLE_PRODUCT + id);
+function ProductInCart({ color, quantity, setQuantity, sameOfDifferentColorInCart, remove, id, setPrice, setIsError, data }) {
+  const isError = data?.isError;
   const price = data?.price;
 
   useEffect(() => {
@@ -104,6 +98,7 @@ ProductInCart.propTypes = {
   remove: PropTypes.func.isRequired,
   setPrice: PropTypes.func,
   setIsError: PropTypes.func,
+  data: PropTypes.object
 };
 
 export default ProductInCart;
