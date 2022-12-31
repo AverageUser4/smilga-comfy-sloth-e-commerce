@@ -7,14 +7,9 @@ import { ReactComponent as TrashIcon } from '../../assets/trash.svg';
 import { stringifyPrice } from '../../utils/utils';
 import Loading from '../Loading/Loading';
 
-function ProductInCart({ color, quantity, setQuantity, sameOfDifferentColorInCart, remove, id, setPrice, setIsError, data }) {
+function ProductInCart({ color, quantity, setQuantity, sameOfDifferentColorInCart, remove, id, setIsError, data }) {
   const isError = data?.isError;
   const price = data?.price;
-
-  useEffect(() => {
-    if(price)
-      setPrice(price);
-  }, [price]);
 
   useEffect(() => {
     if(isError)
@@ -96,7 +91,6 @@ ProductInCart.propTypes = {
   setQuantity: PropTypes.func.isRequired,
   sameOfDifferentColorInCart: PropTypes.number.isRequired,
   remove: PropTypes.func.isRequired,
-  setPrice: PropTypes.func,
   setIsError: PropTypes.func,
   data: PropTypes.object
 };

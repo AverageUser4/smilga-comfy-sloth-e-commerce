@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import css from './PayBox.module.css';
 
-function PayBox() {
+function PayBox({ onSubmit }) {
   const [cardNumber, setCardNumber] = useState('');
 
   function handleSubmit(event) {
     event.preventDefault();
+    onSubmit();
   }
   
   function handleChange(event) {
@@ -41,5 +43,9 @@ function PayBox() {
     </form>
   );
 }
+
+PayBox.propTypes = {
+  onSubmit: PropTypes.func
+};
 
 export default PayBox;

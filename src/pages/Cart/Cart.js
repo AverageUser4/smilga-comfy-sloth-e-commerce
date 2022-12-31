@@ -13,7 +13,6 @@ import { useAuthContext } from '../../utils/AuthContext.js';
 function Cart() {
   const { isLoggedIn } = useAuthContext();
   const { cartProductsData, cartChangeCount, cartRemove, cartEmpty, totalPrice } = useCartContext();
-  const [IDsToPrices, setIDsToPrices] = useState(new Map());
   const [isError, setIsError] = useState(false);
 
   const productElements = [];
@@ -37,13 +36,6 @@ function Cart() {
         sameOfDifferentColorInCart={sameProductDiffColorsCount}
         remove={() => cartRemove(item.id, item.color)}
         setIsError={setIsError}
-        setPrice={(price) => {
-          setIDsToPrices(prev => {
-            const copy = new Map(prev);
-            copy.set(item.id, price);
-            return copy;
-          })
-        }}
       />
     );
   }

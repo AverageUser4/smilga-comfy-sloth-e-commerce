@@ -42,7 +42,7 @@ function CartProvider({ children }) {
     }
 
     totalPrice.products += product.data.price * product.count;
-    totalPrice.shipping += product.shipping ? 0 : 299;
+    totalPrice.shipping += product.data.shipping ? 0 : 99 * product.count;
   }
 
   useEffect(() => {
