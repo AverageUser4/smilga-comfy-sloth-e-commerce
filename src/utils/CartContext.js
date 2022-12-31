@@ -31,18 +31,39 @@ function CartProvider({ children }) {
   const [IDsToData, setIDsToData] = useState(new Map());
   const fetchedIDsRef = useRef([]);
   const allIDs = [...(new Set(cart.map(product => product.id)))];
-  const cartProductsData = cart.map(item => ({ ...item, data: IDsToData.get(item.id) }));
+  const cartProductsData = cart.map(item => {
+    let sameProductDiffColorsCount = 0;
+    const sameProductDiffColors = cart.filter(product => product.id === item.id && product.color !== item.color);
+
+    for(let product of sameProductDiffColors)
+      sameProductDiffColorsCount += product.count;
+
+    return { ...item, data: IDsToData.get(item.id), sameProductDiffColorsCount };
+  });
+
+  console.log(cart?.[0]?.count)
 
   let totalPrice = { products: 0, shipping: 0 };
+  const overflowingProducts = [];
+  const checkedIDs = [];
+
   for(let i = 0; i < cartProductsData.length; i++) {
-    const product = cartProductsData[i];
-    if(!product.data || product.data.isError) {
+    const item = cartProductsData[i];
+    if(!item.data || item.data.isError) {
       totalPrice = null;
       break;
     }
 
-    totalPrice.products += product.data.price * product.count;
-    totalPrice.shipping += product.data.shipping ? 0 : 99 * product.count;
+    totalPrice.products += item.data.price * item.count;
+    totalPrice.shipping += item.data.shipping ? 0 : 99 * item.count;
+
+    if(!checkedIDs.includes(item.id)) {
+      const overflow = item.data.stock - (item.count + item.sameProductDiffColorsCount);
+      if(overflow < 0)
+        overflowingProducts.push({ id: item.id, name: item.data.name, overflow: -overflow })
+  
+      checkedIDs.push(item.id);
+    }
   }
 
   useEffect(() => {
@@ -159,6 +180,7 @@ function CartProvider({ children }) {
       value={{
         cartProductsData,
         totalPrice,
+        overflowingProducts,
         cartGetItemCount,
         cartGetItemTypeCount,
         cartChangeCount,

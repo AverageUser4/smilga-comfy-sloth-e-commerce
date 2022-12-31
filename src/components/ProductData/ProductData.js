@@ -16,7 +16,7 @@ function ProductData() {
   const [count, setCount] = useState(1);
   const [color, setColor] = useState('');
   const { id } = useParams();
-  const { data: product, isFetching, isError } = useFetch(SINGLE_PRODUCT + id);
+  const { data: product, isError } = useFetch(SINGLE_PRODUCT + id);
   const { cartChangeCount, cartGetItemTypeCount } = useCartContext();
   const inCartCount = id ? cartGetItemTypeCount(id) : 0;
   const { NotificationElement, notifyUser } = useNotification();
@@ -29,7 +29,10 @@ function ProductData() {
   if(!product)
     return <Loading/>;
 
-  const { name, stock, price, shipping, reviews, stars, colors, images, description, company } = product;
+  if(isError)
+    return <div>Something went wrong... Please, refresh the page.</div>;
+
+  const { name, stock, price, reviews, stars, colors, images, description, company } = product;
   const availableCount = stock - inCartCount;
 
   const colorInputs = colors.map(col =>

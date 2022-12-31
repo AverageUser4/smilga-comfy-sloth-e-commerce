@@ -12,6 +12,5 @@
     - existing cart for profile overrides non-logged cart
       (3 red sofas for guest and 3 purple sofas for users: 
       it will choose 1 red sofa and 3 purple sofas if there are only 4 sofas available)
-- add buy page, there it will check whether there's enough items in stock
 - analize and decide whether or not certain PropTypes should use isRequired
 - data of products is immediately fetched in CartContext, should make it so its only fetched when needed

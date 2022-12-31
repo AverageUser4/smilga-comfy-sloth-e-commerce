@@ -18,12 +18,6 @@ function Cart() {
   const productElements = [];
   for(let i = 0; i < cartProductsData.length; i++) {
     const item = cartProductsData[i];
-    
-    let sameProductDiffColorsCount = 0;
-    const sameProductDiffColors = cartProductsData.filter(product => product.id === item.id && product.color !== item.color);
-
-    for(let product of sameProductDiffColors)
-      sameProductDiffColorsCount += product.count;
 
     productElements.push(
       <ProductInCart
@@ -33,7 +27,7 @@ function Cart() {
         quantity={item.count}
         setQuantity={(count) => cartChangeCount(item.id, item.color, count - item.count)}
         data={item.data}
-        sameOfDifferentColorInCart={sameProductDiffColorsCount}
+        sameOfDifferentColorInCart={item.sameProductDiffColorsCount}
         remove={() => cartRemove(item.id, item.color)}
         setIsError={setIsError}
       />
