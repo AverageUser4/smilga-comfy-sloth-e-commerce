@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import css from './temp.module.css';
 import CurrentPath from '../../components/CurrentPath/CurrentPath.js';
@@ -12,9 +12,11 @@ import { useAuthContext } from '../../utils/AuthContext.js';
 
 function Cart() {
   const { isLoggedIn } = useAuthContext();
-  const { cartProductsData, cartChangeCount, cartRemove, cartEmpty, totalPrice } = useCartContext();
+  const { cartProductsData, cartChangeCount, cartRemove, cartEmpty, totalPrice, requireFullData } = useCartContext();
   const [isError, setIsError] = useState(false);
 
+  useEffect(() => requireFullData(), [requireFullData]);
+  
   const productElements = [];
   for(let i = 0; i < cartProductsData.length; i++) {
     const item = cartProductsData[i];

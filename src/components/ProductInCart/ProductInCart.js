@@ -14,7 +14,7 @@ function ProductInCart({ color, quantity, setQuantity, sameOfDifferentColorInCar
   useEffect(() => {
     if(isError)
       setIsError(isError)
-  }, [isError]);
+  }, [isError, setIsError]);
   
   if(isError)
     return (

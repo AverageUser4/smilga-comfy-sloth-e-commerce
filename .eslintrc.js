@@ -6,7 +6,8 @@ module.exports = {
     },
     "extends": [
         "eslint:recommended",
-        "plugin:react/recommended"
+        "plugin:react/recommended",
+        "plugin:react-hooks/recommended",
     ],
     "overrides": [
     ],
@@ -18,6 +19,6 @@ module.exports = {
         "react"
     ],
     "rules": {
-      "no-unused-vars": "warn"
+        "no-unused-vars": "warn",
     }
 }

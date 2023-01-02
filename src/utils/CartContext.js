@@ -28,45 +28,31 @@ const CartContext = createContext();
 function CartProvider({ children }) {
   const { username } = useAuthContext();
   const [cart, setCart] = useState([]);
+  const [shouldFetch, setShouldFetch] = useState(false);
   const [IDsToData, setIDsToData] = useState(new Map());
+  const [cartProductsData, setCartProductsData] = useState([]);
   const fetchedIDsRef = useRef([]);
-  const allIDs = [...(new Set(cart.map(product => product.id)))];
-  const cartProductsData = cart.map(item => {
-    let sameProductDiffColorsCount = 0;
-    const sameProductDiffColors = cart.filter(product => product.id === item.id && product.color !== item.color);
-
-    for(let product of sameProductDiffColors)
-      sameProductDiffColorsCount += product.count;
-
-    return { ...item, data: IDsToData.get(item.id), sameProductDiffColorsCount };
-  });
-
-  console.log(cart?.[0]?.count)
-
-  let totalPrice = { products: 0, shipping: 0 };
-  const overflowingProducts = [];
-  const checkedIDs = [];
-
-  for(let i = 0; i < cartProductsData.length; i++) {
-    const item = cartProductsData[i];
-    if(!item.data || item.data.isError) {
-      totalPrice = null;
-      break;
-    }
-
-    totalPrice.products += item.data.price * item.count;
-    totalPrice.shipping += item.data.shipping ? 0 : 99 * item.count;
-
-    if(!checkedIDs.includes(item.id)) {
-      const overflow = item.data.stock - (item.count + item.sameProductDiffColorsCount);
-      if(overflow < 0)
-        overflowingProducts.push({ id: item.id, name: item.data.name, overflow: -overflow })
-  
-      checkedIDs.push(item.id);
-    }
-  }
 
   useEffect(() => {
+    const data = cart.map(item => {
+      let sameProductDiffColorsCount = 0;
+      const sameProductDiffColors = cart.filter(product => product.id === item.id && product.color !== item.color);
+  
+      for(let product of sameProductDiffColors)
+        sameProductDiffColorsCount += product.count;
+  
+      return { ...item, data: IDsToData.get(item.id), sameProductDiffColorsCount };
+    });
+
+    setCartProductsData(data);
+  }, [cart, IDsToData]);
+
+  useEffect(() => {
+    if(!shouldFetch)
+      return;
+
+    const allIDs = [...(new Set(cart.map(product => product.id)))];
+
     async function fetchProductsData(id) {
       try {
         const response = await fetch(SINGLE_PRODUCT + id);
@@ -93,11 +79,34 @@ function CartProvider({ children }) {
         fetchProductsData(id);
       }
     }
-  });
+  }, [shouldFetch, cart, IDsToData]);
 
   useEffect(() => {
     setCart(getCartFromStorage(username));
   }, [username]);
+  
+  let totalPrice = { products: 0, shipping: 0 };
+  const overflowingProducts = [];
+  const checkedIDs = [];
+
+  for(let i = 0; i < cartProductsData.length; i++) {
+    const item = cartProductsData[i];
+    if(!item.data || item.data.isError) {
+      totalPrice = null;
+      break;
+    }
+
+    totalPrice.products += item.data.price * item.count;
+    totalPrice.shipping += item.data.shipping ? 0 : 99 * item.count;
+
+    if(!checkedIDs.includes(item.id)) {
+      const overflow = item.data.stock - (item.count + item.sameProductDiffColorsCount);
+      if(overflow < 0)
+        overflowingProducts.push({ id: item.id, name: item.data.name, overflow: -overflow })
+  
+      checkedIDs.push(item.id);
+    }
+  }
   
   function checkArgs(id, color, count) {
     if(!id)
@@ -106,6 +115,13 @@ function CartProvider({ children }) {
       throw new Error(`Incorrect color provided: '${color}'`);
     if(!Number.isInteger(count) || count === 0)
       throw new Error(`'count' argument has to be an integer !== 0 , provided: '${count}'`);
+  }
+
+  function requireFullData() {
+    if(shouldFetch)
+      return;
+
+    setShouldFetch(true);
   }
   
   function getItemIndex(id, color) {
@@ -181,6 +197,7 @@ function CartProvider({ children }) {
         cartProductsData,
         totalPrice,
         overflowingProducts,
+        requireFullData,
         cartGetItemCount,
         cartGetItemTypeCount,
         cartChangeCount,
@@ -196,7 +213,6 @@ function CartProvider({ children }) {
 CartProvider.propTypes = {
   children: PropTypes.element
 };
-
 
 function useCartContext() {
   return useContext(CartContext);

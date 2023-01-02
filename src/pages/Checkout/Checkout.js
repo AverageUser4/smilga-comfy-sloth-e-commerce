@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from  'react-router-dom';
 import StandaloneSection from '../../components/StandaloneSection/StandaloneSection';
 import CurrentPath from '../../components/CurrentPath/CurrentPath';
@@ -9,10 +9,10 @@ import { stringifyPrice } from '../../utils/utils';
 
 function Checkout() {
   const { username, isLoggedIn } = useAuthContext();
-  const { cartProductsData, totalPrice, cartEmpty, overflowingProducts } = useCartContext();
+  const { cartProductsData, totalPrice, cartEmpty, overflowingProducts, requireFullData } = useCartContext();
   const [hasPaid, setHasPaid] = useState(false);
 
-  console.log(overflowingProducts)
+  useEffect(() => requireFullData(), [requireFullData]);
   
   let content = <div></div>;
 

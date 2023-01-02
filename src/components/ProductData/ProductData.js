@@ -22,9 +22,12 @@ function ProductData() {
   const { NotificationElement, notifyUser } = useNotification();
 
   useEffect(() => {
-    if(product?.colors?.[0])
-      setColor(product.colors[0]);
-  }, [product?.colors?.[0]]);
+    if(color || !product?.colors?.[0])
+      return;
+      
+    setColor(product.colors[0]);
+
+  }, [product?.colors, color]);
 
   if(!product)
     return <Loading/>;
@@ -132,9 +135,5 @@ function ProductData() {
     </>
   );
 }
-
-ProductData.propTypes = {
-
-};
 
 export default ProductData;

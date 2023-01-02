@@ -30,25 +30,35 @@ function Counter({ count, setCount, step = 1, min = 1, max = 999, fontSize = "cl
   useEffect(() => {
     count > max && setCount(max);
     count < min && setCount(min);
-  }, [count, min, max]);
-  
-  function decrease() {
-    if(count === min)
-      return;
-    const diff = count - step;
-    setCount(diff > min ? diff : min);
-  }
-  function increase() {
-    if(count === max)
-      return;
-    const sum = count + step;
-    setCount(sum < max ? sum : max);
-  }
+  }, [count, min, max, setCount]);
 
-  if(pressedButton === 'minus')
-    setTimeout(decrease, 100);
-  else if(pressedButton === 'plus')
-    setTimeout(increase, 100);
+  useEffect(() => {
+    function decrease() {
+      if(count === min)
+        return;
+  
+      const diff = count - step;
+      setCount(diff > min ? diff : min);
+    }
+    function increase() {
+      if(count === max)
+        return;
+        
+      const sum = count + step;
+      setCount(sum < max ? sum : max);
+    }
+  
+    let timeoutID = null;
+    
+    if(pressedButton === 'minus')
+      timeoutID = setTimeout(decrease, 100);
+    else if(pressedButton === 'plus')
+      timeoutID = setTimeout(increase, 100);
+
+    return () => {
+      clearTimeout(timeoutID);
+    };
+  });
 
   return (
     <div style={containerStyle} className={css['container']}>
