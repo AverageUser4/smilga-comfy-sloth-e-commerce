@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect, useRef } from 'react';
+import React, { createContext, useContext, useState, useEffect, useRef, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { useAuthContext } from './AuthContext';
 import { SINGLE_PRODUCT } from './API_Endpoints';
@@ -27,25 +27,31 @@ const CartContext = createContext();
 
 function CartProvider({ children }) {
   const { username } = useAuthContext();
+  const latestUsernameRef = useRef(username);
   const [cart, setCart] = useState([]);
   const [shouldFetch, setShouldFetch] = useState(false);
   const [IDsToData, setIDsToData] = useState(new Map());
   const [cartProductsData, setCartProductsData] = useState([]);
   const fetchedIDsRef = useRef([]);
+  
+  const getSameProductDiffColorCount = useCallback((cart, item) => {
+    let sameProductDiffColorsCount = 0;
+    const sameProductDiffColors = cart.filter(product => product.id === item.id && product.color !== item.color);
+
+    for(let product of sameProductDiffColors)
+      sameProductDiffColorsCount += product.count;
+
+    return sameProductDiffColorsCount;
+  }, []);
 
   useEffect(() => {
     const data = cart.map(item => {
-      let sameProductDiffColorsCount = 0;
-      const sameProductDiffColors = cart.filter(product => product.id === item.id && product.color !== item.color);
-  
-      for(let product of sameProductDiffColors)
-        sameProductDiffColorsCount += product.count;
-  
+      const sameProductDiffColorsCount = getSameProductDiffColorCount(cart, item);
       return { ...item, data: IDsToData.get(item.id), sameProductDiffColorsCount };
     });
 
     setCartProductsData(data);
-  }, [cart, IDsToData]);
+  }, [cart, IDsToData, getSameProductDiffColorCount]);
 
   useEffect(() => {
     if(!shouldFetch)
@@ -82,8 +88,64 @@ function CartProvider({ children }) {
   }, [shouldFetch, cart, IDsToData]);
 
   useEffect(() => {
-    setCart(getCartFromStorage(username));
-  }, [username]);
+    if(username === latestUsernameRef.current)
+      return;
+
+    function cartMergeGuestWithUser() {
+      const guestCart = [...cart];
+      const userCart = getCartFromStorage(username);
+
+      const tempOutcomeCart = userCart;
+      for(let i = 0; i < guestCart.length; i++) {
+        const item = guestCart[i];
+        if(!userCart.find(product => product.id === item.id))
+          tempOutcomeCart.push(item);
+      }
+
+      setCart(tempOutcomeCart);
+      
+      // TODO: make this more sopthisticated algorithm work
+      // const mergedCart = [...userCart, ...guestCart];
+      // const outcomeCart = userCart;
+
+      // if(!guestCart.length) {
+      //   setCart(userCart)
+      //   return;
+      // }
+
+      // const allUnavailableSpaces = new Map();
+
+      // for(let i = 0; i < guestCart.length; i++) {
+      //   const guestItem = guestCart[i];
+      //   const sameProductDiffColorsCount = getSameProductDiffColorCount(mergedCart, guestItem);
+      //   const unavailableSpace = allUnavailableSpaces.get(guestItem.id) || 0;
+      //   const inCart = sameProductDiffColorsCount + guestItem.count;
+
+      //   if(inCart + unavailableSpace <= guestItem.stock) {
+      //     outcomeCart.push(guestItem);
+      //   } else {
+      //     const remainingSpace = guestItem.stock - unavailableSpace - sameProductDiffColorsCount;
+
+      //     if(remainingSpace <= 0)
+      //       continue;
+
+      //     const newCount = Math.min(remainingSpace, guestItem.count);
+      //     outcomeCart.push({ ...guestItem, count: newCount });
+      //     allUnavailableSpaces.set(guestItem.id, unavailableSpace + newCount);
+      //   }
+      // }
+
+      // setCart(outcomeCart);
+    }
+      
+    if(latestUsernameRef.current === '') {
+      cartMergeGuestWithUser();
+      saveCartToStorage('', []);
+    } else 
+      setCart(getCartFromStorage(username));
+
+    latestUsernameRef.current = username;
+  }, [username, cart, getSameProductDiffColorCount]);
   
   let totalPrice = { products: 0, shipping: 0 };
   const overflowingProducts = [];
@@ -149,7 +211,7 @@ function CartProvider({ children }) {
     return count;
   }
 
-  function cartChangeCount(id, color, count) {
+  function cartChangeCount(id, color, count, stock) {
     checkArgs(id, color, count);
     const { index, itemExists } = getItemIndex(id, color, count);
 
@@ -165,9 +227,13 @@ function CartProvider({ children }) {
     }
 
     if(itemExists)
-      copy[index] = { id, color, count: currentCount + count };
-    else
-      copy.push({ id, color, count });
+      copy[index] = { ...copy[index], id, color, count: currentCount + count };
+    else {
+      if(typeof stock === 'undefined')
+        throw new Error('When adding brand-new item to cart, stock has to be provided.');
+
+      copy.push({ id, color, count, stock });
+    }
 
     setCart(copy);
     saveCartToStorage(username, copy);

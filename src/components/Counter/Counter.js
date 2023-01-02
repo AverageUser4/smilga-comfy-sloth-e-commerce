@@ -33,21 +33,6 @@ function Counter({ count, setCount, step = 1, min = 1, max = 999, fontSize = "cl
   }, [count, min, max, setCount]);
 
   useEffect(() => {
-    function decrease() {
-      if(count === min)
-        return;
-  
-      const diff = count - step;
-      setCount(diff > min ? diff : min);
-    }
-    function increase() {
-      if(count === max)
-        return;
-        
-      const sum = count + step;
-      setCount(sum < max ? sum : max);
-    }
-  
     let timeoutID = null;
     
     if(pressedButton === 'minus')
@@ -60,12 +45,33 @@ function Counter({ count, setCount, step = 1, min = 1, max = 999, fontSize = "cl
     };
   });
 
+  function decrease() {
+    if(count === min)
+      return;
+
+    const diff = count - step;
+    setCount(diff > min ? diff : min);
+  }
+
+  function increase() {
+    if(count === max)
+      return;
+      
+    const sum = count + step;
+    setCount(sum < max ? sum : max);
+  }
+
   return (
     <div style={containerStyle} className={css['container']}>
       <button 
         style={buttonStyle}
-        onMouseDown={() => setPressedButton('minus')}
-        onKeyDown={(e) => e.key === 'Enter' && setPressedButton('minus')}
+        onMouseDown={() => { setPressedButton('minus'); decrease(); }}
+        onKeyDown={(e) => { 
+          if(e.key === 'Enter') {
+            setPressedButton('minus');
+            decrease();
+          }
+        }}
       >
         <Minus/>
       </button>
@@ -74,8 +80,13 @@ function Counter({ count, setCount, step = 1, min = 1, max = 999, fontSize = "cl
 
       <button 
         style={buttonStyle}
-        onMouseDown={() => setPressedButton('plus')}
-        onKeyDown={(e) => e.key === 'Enter' && setPressedButton('plus')}
+        onMouseDown={() => { setPressedButton('plus'); increase(); }}
+        onKeyDown={(e) => {
+          if(e.key === 'Enter') {
+            setPressedButton('plus');
+            increase();
+          }
+        }}
       >
         <Plus/>
       </button>
