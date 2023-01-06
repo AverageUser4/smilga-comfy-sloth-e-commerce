@@ -8,7 +8,6 @@ import { ReactComponent as Compass } from '../../assets/compass.svg';
 import { ReactComponent as Mining } from '../../assets/mining-diamond.svg';
 import { ReactComponent as Scroll } from '../../assets/scroll.svg';
 import StandaloneSection from '../../components/StandaloneSection/StandaloneSection.js';
-import Siblings from '../../components/Siblings/Siblings.js';
 import VerticalGap from '../../components/VerticalGap/VerticalGap';
 import useProducts from '../../hooks/useProducts';
 import Product from '../../components/Product/Product';
@@ -66,7 +65,7 @@ function Home() {
 
       <StandaloneSection isSemanticSection={true} backgroundID={2} isProtruding={true}>
 
-        <Siblings>
+        <div className="siblings">
 
           <h2 className="heading heading--no-shrink heading--medium heading--no-margin heading--color-2 heading-and-paragraph__heading">Custom Furniture <br/> Built Only For You</h2>
           <p className="paragraph paragraph--width-cap paragraph--no-margin paragraph--color-2 heading-and-paragraph__paragraph">
@@ -74,7 +73,7 @@ function Home() {
             reprehenderit non aliquam voluptates dolore aut vero consequuntur.
           </p>
 
-        </Siblings>
+        </div>
 
         <VerticalGap typeID={1}/>
 
@@ -104,7 +103,7 @@ function Home() {
       
       <StandaloneSection isSemanticSection={true}>
 
-        <Siblings>
+        <div className="siblings">
 
           <div>
             <h2 className="heading heading--medium heading--no-margin">Join our newsletter and get 20% off</h2>
@@ -130,7 +129,7 @@ function Home() {
             </div>
           </form>
           
-        </Siblings>
+        </div>
 
       </StandaloneSection>
       

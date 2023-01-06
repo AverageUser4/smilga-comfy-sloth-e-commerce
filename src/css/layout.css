@@ -153,4 +153,24 @@
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
   }
+
+  /******************************/
+  .siblings {
+    display: flex;
+    flex-direction: column;
+    gap: 24px 96px;
+  }
+  
+  @media(min-width: 980px) {
+    .siblings {
+      flex-direction: row;
+      justify-content: space-between;
+    }
+  }
+  
+  @media(min-width: 1200px) {
+    .siblings {
+      margin: 0;
+    }
+  }
 }

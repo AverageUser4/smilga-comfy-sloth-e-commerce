@@ -74,7 +74,7 @@ function ProductInCart({ color, quantity, setQuantity, sameOfDifferentColorInCar
 
         <div className={css['medium-screen']}>{stringifyPrice(total)}</div>
 
-        <button className="button button--danger button--square" onClick={remove}>
+        <button className="button button--danger button--square" onClick={remove} aria-label="Remove from cart.">
           <TrashIcon className="annoying-garbage-icon" alt="Remove from cart."/>
         </button>
 

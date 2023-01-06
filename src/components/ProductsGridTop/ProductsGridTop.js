@@ -1,8 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import css from './ProductsGridTop.module.css';
-
-// assets
 import { ReactComponent as Blocks } from '../../assets/blocks.svg';
 import { ReactComponent as Bars } from '../../assets/menu-bars.svg';
 
@@ -15,6 +13,8 @@ function ProductsGridTop({ showDetails, setShowDetails, orderBy, setOrderBy, pro
           <button 
             className={"toggle-button" + (!showDetails ? ' toggle-button--active' : '')}
             onClick={() => setShowDetails(false)}
+            aria-label="simple view"
+            aria-current={!showDetails}
           >
             <Blocks alt="Simple view."/>
           </button>
@@ -23,6 +23,8 @@ function ProductsGridTop({ showDetails, setShowDetails, orderBy, setOrderBy, pro
           <button 
             className={"toggle-button" + (showDetails ? ' toggle-button--active' : '')}
             onClick={() => setShowDetails(true)}
+            aria-label="detailed view"
+            aria-current={showDetails}
           >
             <Bars alt="Detailed view."/>
           </button>

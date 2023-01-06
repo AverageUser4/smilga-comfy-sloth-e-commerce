@@ -17,7 +17,7 @@ function Product({ image, price, name, id, description, showDetails = false }) {
           <div className={css['plain__top']}>
 
             <div className={css["plain__search"]}>
-              <Search/>
+              <Search alt="View product page."/>
             </div>
 
             <img className={css["image"]} src={image} alt={name}/>
