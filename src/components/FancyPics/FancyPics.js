@@ -9,10 +9,8 @@ function FancyPics({ smallImage, bigImage, backgroundColor }) {
 
   return (
     <div className={css['container']}>
-
-      <img className={`${css['photo']} ${css['photo--big']}`} src={bigImage.src}/>
-      <img className={`${css['photo']} ${css['photo--small']}`} src={smallImage.src}/>
-
+      <img className={`${css['photo']} ${css['photo--big']}`} src={bigImage.src} alt={bigImage.alt}/>
+      <img className={`${css['photo']} ${css['photo--small']}`} src={smallImage.src} alt={smallImage.alt}/>
     </div>
   );
 }

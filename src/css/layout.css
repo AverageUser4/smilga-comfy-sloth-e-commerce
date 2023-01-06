@@ -104,5 +104,53 @@
     display: grid;
     gap: 48px;
   }
+
+  /******************************/
+  .text-and-block {
+    display: flex;
+    flex-direction: column;
+    gap: 48px 96px;
+  }
+  .text-and-block > :nth-child(2) {
+    align-self: center;
+  }
+  /* reversed means block is on left and text on right */
+  .text-and-block--reversed > :nth-child(1) {
+    align-self: center;
+  }
+  .text-and-block--reversed > :nth-child(2) {
+    align-self: auto;
+  }
+  
+  @media(min-width: 980px) {
+    .text-and-block {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+    }
+  }
+  
+  @media(min-width: 1200px) {
+    .text-and-block {
+      margin: 0;
+    }
+  }
  
+  /******************************/
+  .dual-input {
+    display: flex;
+  }
+  .dual-input > :first-child {
+    /* min-width: 0; */
+  
+    border-right: none;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+  .dual-input > :last-child {
+    flex-shrink: 0;
+    
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+  }
 }

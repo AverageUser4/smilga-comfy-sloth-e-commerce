@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import css from './Counter.module.css';
 import { ReactComponent as Plus } from '../../assets/plus.svg';
@@ -11,21 +11,24 @@ function Counter({ count, setCount, step = 1, min = 1, max = 999, fontSize = "cl
   const [pressedButton, setPressedButton] = useState('');
   const containerStyle = { fontSize };
   const buttonStyle = { width: fontSize, height: fontSize };
+  const setPressedIDRef = useRef(null);
 
   useEffect(() => {
     function stopCountChange(event) {
-      if(pressedButton && (!event.key || event.key === ' '))
+      if(pressedButton && (!event.key || event.key === 'ArrowDown' || event.key === 'ArrowUp'))
         setPressedButton('');
+
+      setPressedIDRef.current = null;
     }
 
-    window.addEventListener('mouseup', stopCountChange);
+    window.addEventListener('pointerup', stopCountChange);
     window.addEventListener('keyup', stopCountChange);
 
     return () => {
-      window.removeEventListener('mouseup', stopCountChange);
+      window.removeEventListener('pointerup', stopCountChange);
       window.removeEventListener('keyup', stopCountChange);
     };
-  }, [pressedButton]);
+  });
 
   useEffect(() => {
     count > max && setCount(max);
@@ -45,44 +48,107 @@ function Counter({ count, setCount, step = 1, min = 1, max = 999, fontSize = "cl
     };
   });
 
-  function decrease() {
+  function decrease(amount) {
     if(count === min)
       return;
 
-    const diff = count - step;
+    const diff = count - (amount ? amount : step);
     setCount(diff > min ? diff : min);
   }
 
-  function increase() {
+  function increase(amount) {
     if(count === max)
       return;
       
-    const sum = count + step;
+    const sum = count + (amount ? amount : step);
     setCount(sum < max ? sum : max);
   }
 
   function handleButton(event) {
+    setPressedButtonAfterDelay(event.currentTarget.name);
+    event.currentTarget.name === 'minus' ? decrease() : increase();
+  }
+
+  function setPressedButtonAfterDelay(value) {
+    const id = Math.random();
+    setPressedIDRef.current = id;
+
+    setTimeout(() => {
+      if(id === setPressedIDRef.current)
+        setPressedButton(value);
+    }, 400);
+  }
+
+  function handleKey(event) {
+    switch(event.key) {
+      case 'ArrowDown':
+      case 'ArrowUp':
+      case 'ArrowLeft':
+      case 'ArrowRight':
+      case 'Home':
+      case 'End':
+      case 'PageUp':
+      case 'PageDown':
+        event.preventDefault();
+    }
+
     if(event.repeat)
       return;
 
-    const { name } = event.currentTarget;
-    const setPressed = () => setPressedButton(name);
-    const changeValue = () => name === 'minus' ? decrease() : increase();
+    switch(event.key) {
+      case 'ArrowDown':
+        setPressedButtonAfterDelay('minus');
+        decrease();
+        break;
 
-    if(event.type === 'mousedown' || event.key === ' ') {
-      setPressed();
-      changeValue();
-    } else if(event.key === 'Enter')
-      changeValue();
+      case 'ArrowUp':
+        setPressedButtonAfterDelay('plus');
+        increase();
+        break;
+
+      case 'ArrowLeft':
+        decrease();
+        break;
+
+      case 'ArrowRight':
+        increase();
+        break;
+
+      case 'Home':
+        decrease(Number.MAX_SAFE_INTEGER);
+        break;
+
+      case 'End':
+        increase(Number.MAX_SAFE_INTEGER);
+        break;
+
+      case 'PageUp':
+        decrease(5);
+        break;
+
+      case 'PageDown':
+        increase(5);
+        break;
+    }
   }
-
+  
   return (
-    <div style={containerStyle} className={css['container']}>
+    <div 
+      style={containerStyle} 
+      className={css['container']}
+      onKeyDown={handleKey}
+      role="spinbutton"
+      aria-valuemin={min}
+      aria-valuemax={max}
+      aria-valuenow={count}
+      aria-label="Product count."
+      tabIndex={0}
+    >
       <button 
         style={buttonStyle}
+        onPointerDown={handleButton}
+        tabIndex={-1}
         name="minus"
-        onMouseDown={handleButton}
-        onKeyDown={handleButton}
       >
         <Minus/>
       </button>
@@ -91,9 +157,9 @@ function Counter({ count, setCount, step = 1, min = 1, max = 999, fontSize = "cl
 
       <button 
         style={buttonStyle}
+        onPointerDown={handleButton}
+        tabIndex={-1}
         name="plus"
-        onMouseDown={handleButton}
-        onKeyDown={handleButton}
       >
         <Plus/>
       </button>

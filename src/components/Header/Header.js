@@ -29,7 +29,7 @@ export default function Header() {
     window.addEventListener('resize', hide);
 
     return () => window.removeEventListener('resize', hide);
-  }, []);
+  }, [isNavVisible]);
   
   return (
     <header className={css['header']}>
@@ -50,8 +50,9 @@ export default function Header() {
           className={'icon-button' + ` ${css['open-button']}`}
           onClick={() => setIsNavVisible(true)}
           ref={lastFocusableRef}
+          aria-label="open menu"
         >
-          <MenuBars/>
+          <MenuBars alt=""/>
         </button>
 
       </div>

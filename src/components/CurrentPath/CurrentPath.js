@@ -29,7 +29,7 @@ function CurrentPath({ lastPathName }) {
   return (
     <div className={css['background']}>
       <div className={css['container']}>
-      {pathElements}
+        {pathElements}
       </div>
     </div>
   );

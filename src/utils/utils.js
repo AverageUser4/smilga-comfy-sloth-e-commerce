@@ -104,6 +104,31 @@ export function capitalize(str) {
   return output;
 }
 
+export function getColorName(color) {
+  if(!color)
+    return 'any';
+    
+  switch(color.toLowerCase()) {
+    case '#ff0000':
+      return 'red';
+
+    case '#00ff00':
+      return 'green';
+
+    case '#0000ff':
+      return 'blue';
+
+    case '#ffb900':
+      return 'orange';
+
+    case '#000':
+      return 'black';
+      
+    default:
+      return 'unrecognized';
+  }
+}
+
 // export function verifyColorString(color, type = 'hex') {
 //   if(type !== 'hex')
 //     throw new Error(`Currently you can only verify 'hex' colors, provided type: '${type}'.`);

@@ -9,9 +9,7 @@ import { ReactComponent as Mining } from '../../assets/mining-diamond.svg';
 import { ReactComponent as Scroll } from '../../assets/scroll.svg';
 import StandaloneSection from '../../components/StandaloneSection/StandaloneSection.js';
 import Siblings from '../../components/Siblings/Siblings.js';
-import BlockAndText from '../../components/BlockAndText/BlockAndText';
 import VerticalGap from '../../components/VerticalGap/VerticalGap';
-import DualInput from '../../components/DualInput/DualInput';
 import useProducts from '../../hooks/useProducts';
 import Product from '../../components/Product/Product';
 import Loading from '../../components/Loading/Loading';
@@ -25,9 +23,9 @@ function Home() {
   return (
     <>
 
-      <StandaloneSection>
+      <StandaloneSection isSemanticSection={true}>
 
-        <BlockAndText>
+        <div className="text-and-block">
 
           <div>
             <h1 className="heading heading--no-margin">Design Your <br/> Comfort Zone</h1>
@@ -40,11 +38,11 @@ function Home() {
             bigImage={{ src: furniture, alt: 'Our mind-blowing furniture.' }}
           />
 
-        </BlockAndText>
+        </div>
 
       </StandaloneSection>
 
-      <StandaloneSection backgroundID={1}>
+      <StandaloneSection isSemanticSection={true} backgroundID={1}>
 
         <h2 className="heading heading--no-margin heading--centered heading--underline">Featured Products</h2>
 
@@ -66,7 +64,7 @@ function Home() {
 
       </StandaloneSection>
 
-      <StandaloneSection backgroundID={2} isProtruding={true}>
+      <StandaloneSection isSemanticSection={true} backgroundID={2} isProtruding={true}>
 
         <Siblings>
 
@@ -104,7 +102,7 @@ function Home() {
 
       </StandaloneSection>
       
-      <StandaloneSection>
+      <StandaloneSection isSemanticSection={true}>
 
         <Siblings>
 
@@ -118,7 +116,7 @@ function Home() {
           </div>
 
           <form>
-            <DualInput>
+            <div className="dual-input">
               <input
                 type="email"
                 className="input input--type-1"
@@ -129,7 +127,7 @@ function Home() {
               >
                 Subscribe
               </button>
-            </DualInput>
+            </div>
           </form>
           
         </Siblings>

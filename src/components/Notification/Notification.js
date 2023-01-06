@@ -94,8 +94,9 @@ function Notification({ content = '', type = '', timeout = 3000, dateNow = 0 }) 
         <button 
           onClick={() => changeVisibility(i, false, true)}
           className={`icon-button icon-button--small icon-button--danger ${css['close-button']}`}
+          aria-label="hide notification"
         >
-          <Close/>
+          <Close alt="hide"/>
         </button>
         {item.content}
       </div>
@@ -110,9 +111,8 @@ function Notification({ content = '', type = '', timeout = 3000, dateNow = 0 }) 
             className={`button button--uppercase ${css['hide-button']} ${areThereVisible ? css['hide-button--visible'] : ''}`}
             tabIndex={areThereVisible ? 0 : -1}
             onClick={removeAll}
-            aria-label="Hide all notifications."
           >
-            Hide all
+            Hide all notifications
           </button>
           {elements}
         </>

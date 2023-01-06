@@ -29,12 +29,14 @@ function ProductsGridTop({ showDetails, setShowDetails, orderBy, setOrderBy, pro
         </li>
       </ul>
 
-      {
-        isLoading ?
-          <span>loading...</span>
-        :
-          <span>{productsCount || 'no'} products found</span>
-      }
+      <div aria-live="polite" aria-atomic="true">
+        {
+          isLoading ?
+            <span>loading...</span>
+          :
+            <span>{productsCount || 'no'} product{productsCount !== 1 && 's'} found</span>
+        }
+      </div>
 
       <div className="line"></div>
 

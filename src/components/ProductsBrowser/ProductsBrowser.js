@@ -83,7 +83,7 @@ function ProductsBrowser() {
                         />)}
                     </div>
                   :
-                    <p className="error">We cannot find any products that meet your expectations. Please, use other filters.</p>
+                    <p className="error">We cannot find any product that meets your expectations. Please, use different filters.</p>
                 }
               </>
           }

@@ -53,7 +53,7 @@ function LoginForm() {
         />
       </label>
 
-      {error && <p className="paragraph paragraph--danger">{error}</p>}
+      {error && <p role="alert" className="paragraph paragraph--danger">{error}</p>}
 
       <button className="button button--uppercase button--block button--100-width">
         Login

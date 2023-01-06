@@ -62,7 +62,7 @@ function ProductsFilterForm(props) {
         <input
           className="input"
           type="search"
-          placeholder='Search'
+          placeholder='Enter item name'
           name="queryString"
           value={queryString}
           onChange={handleChange}
