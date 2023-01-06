@@ -77,6 +77,33 @@ export function sortArrayOfObjectsByProperty(arr, property, desc = false) {
   return sorted;
 }
 
+export function stringChangeCharcter(str, index, newCharacter) {
+  if(!str || typeof str !== 'string')
+    throw new Error(`Only non-empty string is valid first argumen for this function, provided: ${str}`);
+  if(!Number.isInteger(index))
+    throw new Error(`Second argument (index) provided to this function has to be an integer, provided: ${index}`);
+  if(index >= str.length)
+    throw new Error(`Tried to change character at index '${index}', but the length of string is only '${str.length}'.`);
+  if(typeof  newCharacter !== 'string')
+    throw new Error(`Third argument provided to this function has to be a string, provided: '${newCharacter}'.`);
+
+  return str.slice(0, index) + newCharacter + str.slice(index + 1);
+}
+
+export function capitalize(str) {
+  if(!str || typeof str !== 'string')
+    throw new Error(`Only non-empty strings are valid arguments for this function, provided: ${str}`);
+
+  let output = stringChangeCharcter(str, 0, str[0].toUpperCase());
+    
+  for(let i = 1; i < str.length; i++) {
+    if(str[i - 1] === ' ')
+      output = stringChangeCharcter(output, i, output[i].toUpperCase());
+  }
+
+  return output;
+}
+
 // export function verifyColorString(color, type = 'hex') {
 //   if(type !== 'hex')
 //     throw new Error(`Currently you can only verify 'hex' colors, provided type: '${type}'.`);

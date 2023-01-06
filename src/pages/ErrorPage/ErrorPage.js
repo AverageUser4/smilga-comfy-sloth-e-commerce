@@ -2,8 +2,11 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import StandaloneSection from '../../components/StandaloneSection/StandaloneSection';
+import useDocumentTitle from '../../hooks/useDocumentTitle';
 
 function ErrorPage({ message = 'Unknown error.' }) {
+  useDocumentTitle('Error');
+  
   return (
     <StandaloneSection isCentered={true}>
       <h1 className="heading heading--no-margin">Something went wrong...</h1>

@@ -14,7 +14,7 @@ function Counter({ count, setCount, step = 1, min = 1, max = 999, fontSize = "cl
 
   useEffect(() => {
     function stopCountChange(event) {
-      if(pressedButton && (!event.key || event.key === 'Enter'))
+      if(pressedButton && (!event.key || event.key === ' '))
         setPressedButton('');
     }
 
@@ -61,17 +61,28 @@ function Counter({ count, setCount, step = 1, min = 1, max = 999, fontSize = "cl
     setCount(sum < max ? sum : max);
   }
 
+  function handleButton(event) {
+    if(event.repeat)
+      return;
+
+    const { name } = event.currentTarget;
+    const setPressed = () => setPressedButton(name);
+    const changeValue = () => name === 'minus' ? decrease() : increase();
+
+    if(event.type === 'mousedown' || event.key === ' ') {
+      setPressed();
+      changeValue();
+    } else if(event.key === 'Enter')
+      changeValue();
+  }
+
   return (
     <div style={containerStyle} className={css['container']}>
       <button 
         style={buttonStyle}
-        onMouseDown={() => { setPressedButton('minus'); decrease(); }}
-        onKeyDown={(e) => { 
-          if(e.key === 'Enter') {
-            setPressedButton('minus');
-            decrease();
-          }
-        }}
+        name="minus"
+        onMouseDown={handleButton}
+        onKeyDown={handleButton}
       >
         <Minus/>
       </button>
@@ -80,13 +91,9 @@ function Counter({ count, setCount, step = 1, min = 1, max = 999, fontSize = "cl
 
       <button 
         style={buttonStyle}
-        onMouseDown={() => { setPressedButton('plus'); increase(); }}
-        onKeyDown={(e) => {
-          if(e.key === 'Enter') {
-            setPressedButton('plus');
-            increase();
-          }
-        }}
+        name="plus"
+        onMouseDown={handleButton}
+        onKeyDown={handleButton}
       >
         <Plus/>
       </button>

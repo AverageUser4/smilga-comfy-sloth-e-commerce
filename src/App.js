@@ -17,47 +17,47 @@ export default function App() {
   return (
     <Router>
 
-      <Header/>
+        <Header/>
 
-      <Main>
-        <Switch>
+        <Main>
+          <Switch>
 
-          <Route path="/products/:id">
-            <ProductPage/>
-          </Route>
+            <Route path="/products/:id">
+              <ProductPage/>
+            </Route>
 
-          <Route path="/products">
-            <AllProducts/>
-          </Route>
+            <Route path="/products">
+              <AllProducts/>
+            </Route>
 
-          <Route path="/about">
-            <About/>
-          </Route>
+            <Route path="/about">
+              <About/>
+            </Route>
 
-          <Route path="/cart">
-            <Cart/>
-          </Route>
+            <Route path="/cart">
+              <Cart/>
+            </Route>
 
-          <Route path="/login">
-            <Login/>
-          </Route>
+            <Route path="/login">
+              <Login/>
+            </Route>
 
-          <Route path="/checkout">
-            <Checkout/>
-          </Route>
+            <Route path="/checkout">
+              <Checkout/>
+            </Route>
 
-          <Route exact path="/">
-            <Home/>
-          </Route>
+            <Route exact path="/">
+              <Home/>
+            </Route>
 
-          <Route path="*">
-            <ErrorPage message="404 page not found."/>
-          </Route>
+            <Route path="*">
+              <ErrorPage message="404 page not found."/>
+            </Route>
 
-        </Switch>
-      </Main>
+          </Switch>
+        </Main>
 
-      <Footer/>
+        <Footer/>
 
     </Router>
   );

@@ -55,12 +55,13 @@ function ProductsFilterForm(props) {
   );
   
   return (
-    <form className={css['products-form']} onSubmit={(e) => e.preventDefault()}>
+    <form role="search" className={css['products-form']} onSubmit={(e) => e.preventDefault()}>
 
       <label>
         <span className="heading heading--nano heading--only-bottom-margin">Search</span>
         <input
           className="input"
+          type="search"
           placeholder='Search'
           name="queryString"
           value={queryString}

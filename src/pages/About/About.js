@@ -3,8 +3,11 @@ import CurrentPath from '../../components/CurrentPath/CurrentPath.js';
 import StandaloneSection from '../../components/StandaloneSection/StandaloneSection.js';
 import furniture from '../../assets/furniture.jpeg';
 import css from './temporary.module.css';
+import useDocumentTitle from '../../hooks/useDocumentTitle.js';
 
 function About() {
+  useDocumentTitle('About Us');
+
   return (
     <>
       

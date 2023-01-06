@@ -6,8 +6,10 @@ import { useAuthContext } from '../../utils/AuthContext';
 import { useCartContext } from '../../utils/CartContext';
 import PayBox from '../../components/PayBox/PayBox';
 import { stringifyPrice } from '../../utils/utils';
+import useDocumentTitle from '../../hooks/useDocumentTitle';
 
 function Checkout() {
+  useDocumentTitle('Checkout');
   const { username, isLoggedIn } = useAuthContext();
   const { cartProductsData, totalPrice, cartEmpty, overflowingProducts, requireFullData } = useCartContext();
   const [hasPaid, setHasPaid] = useState(false);

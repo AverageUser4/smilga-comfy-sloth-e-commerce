@@ -4,9 +4,11 @@ import LoginForm from '../../components/LoginForm/LoginForm';
 import css from './temp.module.css';
 import { useAuthContext } from '../../utils/AuthContext.js';
 import { Link } from 'react-router-dom/cjs/react-router-dom.min';
+import useDocumentTitle from '../../hooks/useDocumentTitle';
 
 function Login() {
   const { isLoggedIn, username } = useAuthContext();
+  useDocumentTitle('Login');
 
   if(isLoggedIn)
     return (

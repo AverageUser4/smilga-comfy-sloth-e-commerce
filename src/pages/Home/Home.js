@@ -15,8 +15,10 @@ import DualInput from '../../components/DualInput/DualInput';
 import useProducts from '../../hooks/useProducts';
 import Product from '../../components/Product/Product';
 import Loading from '../../components/Loading/Loading';
+import useDocumentTitle from '../../hooks/useDocumentTitle';
 
 function Home() {
+  useDocumentTitle('Home');
   let { products, isLoading, error } = useProducts({ featuredOnly: true, orderBy: 'shuffle' });
   products = products.slice(0, 3);
 

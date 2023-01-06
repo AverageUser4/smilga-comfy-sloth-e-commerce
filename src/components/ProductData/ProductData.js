@@ -6,11 +6,12 @@ import Rating from '../Rating/Rating.js';
 import Counter from '../Counter/Counter.js';
 import Loading from '../Loading/Loading.js';
 import useFetch from '../../hooks/useFetch';
-import { stringifyPrice } from '../../utils/utils';
+import { stringifyPrice, capitalize } from '../../utils/utils';
 import ColorInput from '../ColorInput/ColorInput';
 import { useCartContext } from '../../utils/CartContext';
 import useNotification from '../../hooks/useNotification';
 import { SINGLE_PRODUCT } from '../../utils/API_Endpoints';
+import useDocumentTitle from '../../hooks/useDocumentTitle';
 
 function ProductData() {
   const [count, setCount] = useState(1);
@@ -20,6 +21,8 @@ function ProductData() {
   const { cartChangeCount, cartGetItemTypeCount } = useCartContext();
   const inCartCount = id ? cartGetItemTypeCount(id) : 0;
   const { NotificationElement, notifyUser } = useNotification();
+
+  useDocumentTitle(product?.name ? capitalize(product.name) : null);
 
   useEffect(() => {
     if(color || !product?.colors?.[0])

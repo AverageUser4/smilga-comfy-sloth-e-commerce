@@ -3,3 +3,5 @@
 - ProductInCart: change layout to table
 - add alt attributes to icons used in buttons without text (if there are any)
 - analize and decide whether or not certain PropTypes should use isRequired
+- make cart merging work properly (in CartContext)
+- Counter: make pressed Enter increment/decrement only once, constant value change when space is pressed

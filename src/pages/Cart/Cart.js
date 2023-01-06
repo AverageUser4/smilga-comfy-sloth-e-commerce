@@ -9,8 +9,10 @@ import TotalPrice from '../../components/TotalPrice/TotalPrice.js';
 import Loading from '../../components/Loading/Loading';
 import { useCartContext } from '../../utils/CartContext.js';
 import { useAuthContext } from '../../utils/AuthContext.js';
+import useDocumentTitle from '../../hooks/useDocumentTitle';
 
 function Cart() {
+  useDocumentTitle('Cart');
   const { isLoggedIn } = useAuthContext();
   const { cartProductsData, cartChangeCount, cartRemove, cartEmpty, totalPrice, requireFullData } = useCartContext();
   const [isError, setIsError] = useState(false);
