@@ -62,7 +62,7 @@ function ProductsFilterForm(props) {
         <input
           className="input"
           type="search"
-          placeholder='Enter item name'
+          placeholder='Item name'
           name="queryString"
           value={queryString}
           onChange={handleChange}
@@ -143,25 +143,24 @@ function ProductsFilterForm(props) {
 }
 
 ProductsFilterForm.propTypes = {
-  queryString: PropTypes.string,
-  setQueryString: PropTypes.func,
-  category: PropTypes.string,
-  setCategory: PropTypes.func,
-  company: PropTypes.string,
-  setCompany: PropTypes.func,
-  color: PropTypes.string,
-  setColor: PropTypes.func,
-  priceMin: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  setPriceMin: PropTypes.func,
-  priceMax: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  setPriceMax: PropTypes.func,
-  setPrice: PropTypes.func,
-  freeShippingOnly: PropTypes.bool,
-  setFreeShippingOnly: PropTypes.func,
-  resetFilters: PropTypes.func,
-  categories: PropTypes.array,
-  companies: PropTypes.array,
-  colors: PropTypes.array,
+  queryString: PropTypes.string.isRequired,
+  setQueryString: PropTypes.func.isRequired,
+  category: PropTypes.string.isRequired,
+  setCategory: PropTypes.func.isRequired,
+  company: PropTypes.string.isRequired,
+  setCompany: PropTypes.func.isRequired,
+  color: PropTypes.string.isRequired,
+  setColor: PropTypes.func.isRequired,
+  priceMin: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
+  setPriceMin: PropTypes.func.isRequired,
+  priceMax: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
+  setPriceMax: PropTypes.func.isRequired,
+  freeShippingOnly: PropTypes.bool.isRequired,
+  setFreeShippingOnly: PropTypes.func.isRequired,
+  resetFilters: PropTypes.func.isRequired,
+  categories: PropTypes.array.isRequired,
+  companies: PropTypes.array.isRequired,
+  colors: PropTypes.array.isRequired,
 };
 
 export default ProductsFilterForm;

@@ -13,7 +13,7 @@ function ProductsGridTop({ showDetails, setShowDetails, orderBy, setOrderBy, pro
           <button 
             className={"toggle-button" + (!showDetails ? ' toggle-button--active' : '')}
             onClick={() => setShowDetails(false)}
-            aria-label="simple view"
+            aria-label="Simple view."
             aria-current={!showDetails}
           >
             <Blocks alt="Simple view."/>
@@ -23,7 +23,7 @@ function ProductsGridTop({ showDetails, setShowDetails, orderBy, setOrderBy, pro
           <button 
             className={"toggle-button" + (showDetails ? ' toggle-button--active' : '')}
             onClick={() => setShowDetails(true)}
-            aria-label="detailed view"
+            aria-label="Detailed view."
             aria-current={showDetails}
           >
             <Bars alt="Detailed view."/>

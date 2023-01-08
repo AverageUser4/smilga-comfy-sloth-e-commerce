@@ -57,7 +57,7 @@ function ProductsBrowser() {
 
           {
             error ?
-              <p className="error">{error}</p>
+              <p role="alert" className="error">{error}</p>
             :
               <>
                 <ProductsGridTop

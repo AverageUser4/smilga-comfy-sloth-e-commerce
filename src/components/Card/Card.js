@@ -6,7 +6,7 @@ function Card({ heading, text, Icon }) {
   return (
     <article className={css['card']}>
 
-      <Icon className={css['icon']} alt=""/>
+      {Icon && <Icon className={css['icon']} alt="" aria-hidden="true"/>}
       <h3 className="heading heading--no-margin heading--color-2 heading--small">{heading}</h3>
       <p className="paragraph paragraph--no-margin paragraph--color-2">{text}</p>
 
@@ -15,8 +15,8 @@ function Card({ heading, text, Icon }) {
 }
 
 Card.propTypes = {
-  heading: PropTypes.string,
-  text: PropTypes.string,
+  heading: PropTypes.string.isRequired,
+  text: PropTypes.string.isRequired,
   Icon: PropTypes.object
 };
 

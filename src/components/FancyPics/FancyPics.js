@@ -17,11 +17,11 @@ function FancyPics({ smallImage, bigImage, backgroundColor }) {
 
 FancyPics.propTypes = {
   smallImage: PropTypes.shape({
-    src: PropTypes.string,
+    src: PropTypes.string.isRequired,
     alt: PropTypes.string
   }).isRequired,
   bigImage: PropTypes.shape({
-    src: PropTypes.string,
+    src: PropTypes.string.isRequired,
     alt: PropTypes.string
   }).isRequired,
   backgroundColor: PropTypes.string,

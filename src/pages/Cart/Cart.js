@@ -4,7 +4,7 @@ import css from './temp.module.css';
 import CurrentPath from '../../components/CurrentPath/CurrentPath.js';
 import ProductInCart from '../../components/ProductInCart/ProductInCart.js';
 import StandaloneSection from '../../components/StandaloneSection/StandaloneSection.js';
-import CartProductsTableHead from '../../components/CartProductsTableHead/CartProductsTableHead.js';
+import ProductsInCartHead from '../../components/ProductsInCartHead/ProductsInCartHead.js';
 import TotalPrice from '../../components/TotalPrice/TotalPrice.js';
 import Loading from '../../components/Loading/Loading';
 import { useCartContext } from '../../utils/CartContext.js';
@@ -19,11 +19,11 @@ function Cart() {
 
   useEffect(() => requireFullData(), [requireFullData]);
   
-  const productElements = [];
+  const productsInCart = [];
   for(let i = 0; i < cartProductsData.length; i++) {
     const item = cartProductsData[i];
 
-    productElements.push(
+    productsInCart.push(
       <ProductInCart
         key={`${item.id} ${item.color}`}
         id={item.id}
@@ -56,9 +56,9 @@ function Cart() {
 
       <StandaloneSection>
 
-        <CartProductsTableHead/>
+        <ProductsInCartHead/>
 
-        {productElements}
+        {productsInCart}
 
         <div className="line"></div>
 

@@ -14,7 +14,7 @@ function Product({ image, price, name, id, description, showDetails = false }) {
 
         <Link to={url} className={css["plain__product"]}>
 
-          <div className={css['plain__top']}>
+          <div aria-hidden="true" className={css['plain__top']}>
 
             <div className={css["plain__search"]}>
               <Search alt="View product page."/>
@@ -37,7 +37,7 @@ function Product({ image, price, name, id, description, showDetails = false }) {
   return (
     <article className={css['detailed']}>
 
-      <Link to={url} className={css['detailed__image-container']}>
+      <Link aria-hidden="true" to={url} className={css['detailed__image-container']}>
         <img className={css["image"]} src={image} alt={name}/>
       </Link>
 
@@ -60,12 +60,12 @@ function Product({ image, price, name, id, description, showDetails = false }) {
 }
 
 Product.propTypes = {
-  image: PropTypes.string,
-  price: PropTypes.number,
-  name: PropTypes.string,
-  id: PropTypes.string,
-  description: PropTypes.string,
-  showDetails: PropTypes.bool
+  image: PropTypes.string.isRequired,
+  price: PropTypes.number.isRequired,
+  name: PropTypes.string.isRequired,
+  id: PropTypes.string.isRequired,
+  description: PropTypes.string.isRequired,
+  showDetails: PropTypes.bool,
 };
 
 export default Product;

@@ -4,7 +4,7 @@ import css from './Loading.module.css';
 
 function Loading({ style }) {
   return (
-    <div aria-label="loading" style={style} className={css['loading']}></div>
+    <div aria-description="Loading, please wait." style={style} className={css['loading']}></div>
   );
 }
 

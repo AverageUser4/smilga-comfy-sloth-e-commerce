@@ -14,7 +14,8 @@ function Gallery({ photos }) {
 
         {
           photos.map(photo => 
-            <button 
+            <button
+              aria-label="Magnify photo."
               className={css['button']}
               key={photo.src}
               onClick={() => setCurrentPhoto(photo)}

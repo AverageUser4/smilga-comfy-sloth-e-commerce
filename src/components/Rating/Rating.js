@@ -23,15 +23,15 @@ function Rating({ amount, outOf }) {
   }
 
   return (
-    <div className={css['container']} title={ratingString}>
+    <div className={css['container']} title={ratingString} aria-description={ratingString}>
       {starElements}
     </div>
   );
 }
 
 Rating.propTypes = {
-  amount: PropTypes.number,
-  outOf: PropTypes.number
+  amount: PropTypes.number.isRequired,
+  outOf: PropTypes.number.isRequired,
 };
 
 export default Rating;

@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import css from './ProductInCart.module.css';
 import Counter from '../Counter/Counter.js';
 import { ReactComponent as TrashIcon } from '../../assets/trash.svg';
-import { stringifyPrice } from '../../utils/utils';
+import { getColorName, stringifyPrice } from '../../utils/utils';
 import Loading from '../Loading/Loading';
 
 function ProductInCart({ color, quantity, setQuantity, sameOfDifferentColorInCart, remove, id, setIsError, data }) {
@@ -13,7 +13,7 @@ function ProductInCart({ color, quantity, setQuantity, sameOfDifferentColorInCar
 
   useEffect(() => {
     if(isError)
-      setIsError(isError)
+      setIsError?.(isError)
   }, [isError, setIsError]);
   
   if(isError)
@@ -41,7 +41,7 @@ function ProductInCart({ color, quantity, setQuantity, sameOfDifferentColorInCar
 
       <div className={css['first-part']}>
 
-        <Link tabIndex="-1" to={`/products/${id}`}>
+        <Link aria-hidden="true" tabIndex="-1" to={`/products/${id}`}>
           <img className={css['image']} src={image} alt={name}/>
         </Link>
 
@@ -57,25 +57,26 @@ function ProductInCart({ color, quantity, setQuantity, sameOfDifferentColorInCar
             Color: 
             <span 
               style={{ backgroundColor: color }}
-              className={css['color']}></span>
+              className={css['color']}
+              aria-description={getColorName(color)}></span>
           </div>
 
-          <div className="text text--color-1 text--bold">{stringifyPrice(price)}</div>
+          <div aria-description="Price." className="text text--color-1 text--bold">{stringifyPrice(price)}</div>
 
         </div>
         
       </div>
 
-      <div className={`${css['medium-screen']} text text--color-1`}>{stringifyPrice(price)}</div>
+      <div className={`${css['medium-screen']} text text--color-1`} aria-hidden="true">{stringifyPrice(price)}</div>
 
       <div className={css['second-part']}>
 
         <Counter count={quantity} setCount={setQuantity} fontSize={'clamp(20px, 2.5vw, 24px)'} max={available}/>
 
-        <div className={css['medium-screen']}>{stringifyPrice(total)}</div>
+        <div aria-description="Subtotal." className={css['medium-screen']}>{stringifyPrice(total)}</div>
 
         <button className="button button--danger button--square" onClick={remove} aria-label="Remove from cart.">
-          <TrashIcon className="annoying-garbage-icon" alt="Remove from cart."/>
+          <TrashIcon className="annoying-garbage-icon" alt="Trash can icon."/>
         </button>
 
       </div>

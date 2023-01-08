@@ -94,9 +94,9 @@ function Notification({ content = '', type = '', timeout = 3000, dateNow = 0 }) 
         <button 
           onClick={() => changeVisibility(i, false, true)}
           className={`icon-button icon-button--small icon-button--danger ${css['close-button']}`}
-          aria-label="hide notification"
+          aria-label="Hide this notification."
         >
-          <Close alt="hide"/>
+          <Close alt="Red cross." aria-hidden="true"/>
         </button>
         {item.content}
       </div>

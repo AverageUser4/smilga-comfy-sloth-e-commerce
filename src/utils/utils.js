@@ -106,7 +106,7 @@ export function capitalize(str) {
 
 export function getColorName(color) {
   if(!color)
-    return 'any';
+    return 'all';
     
   switch(color.toLowerCase()) {
     case '#ff0000':
@@ -125,7 +125,7 @@ export function getColorName(color) {
       return 'black';
       
     default:
-      return 'unrecognized';
+      return 'unrecognized color';
   }
 }
 

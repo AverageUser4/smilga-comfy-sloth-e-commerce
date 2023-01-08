@@ -31,7 +31,7 @@ function HeaderNav({ shouldBeVisible, close, shouldTrap }) {
   useAppearanceTransition(shouldBeVisible, setNavClasses, phases, 300, defaultFocusableRef.current);
   
   return (
-    <nav className={navClasses}>
+    <nav id="header-nav" className={navClasses}>
 
       <div className={css['nav-top']}>
         <Logo 
@@ -42,9 +42,9 @@ function HeaderNav({ shouldBeVisible, close, shouldTrap }) {
           className="icon-button icon-button--color-1"
           onClick={close}
           ref={defaultFocusableRef}
-          aria-label="close menu"
+          aria-label="Close nav."
         >
-          <MenuClose alt=""/>
+          <MenuClose alt="Red cross." aria-hidden="true"/>
         </button>
       </div>
 
@@ -66,8 +66,13 @@ function HeaderNav({ shouldBeVisible, close, shouldTrap }) {
             activeClassName={css["profile-link--active"]}
           >
             Cart 
-            <ShoppingCart alt=""/>
-            {cartProductsData.length ? <span className={css['cart-count']}>{cartProductsData.length}</span> : null}
+            <ShoppingCart alt="Shopping cart." aria-hidden="true"/>
+            {
+              cartProductsData.length ? 
+                <span aria-description="Products in cart." className={css['cart-count']}>{cartProductsData.length}</span> 
+              : 
+                null
+            }
           </NavLink>
         </li>
         <li>
@@ -77,7 +82,7 @@ function HeaderNav({ shouldBeVisible, close, shouldTrap }) {
                 className={css["profile-link"]} ref={lastFocusableRef}
                 onClick={logout}
               >
-                Logout <RemovePerson alt=""/>
+                Logout <RemovePerson alt="Person next to minus sign icon." aria-hidden="true"/>
               </button>
             :
               <NavLink 
@@ -86,7 +91,7 @@ function HeaderNav({ shouldBeVisible, close, shouldTrap }) {
                 activeClassName={css["profile-link--active"]} 
                 ref={lastFocusableRef}
               >
-                Login <AddPerson alt=""/>
+                Login <AddPerson alt="Person next to plus sign icon." aria-hidden="true"/>
               </NavLink>
           }
         </li>
@@ -97,9 +102,9 @@ function HeaderNav({ shouldBeVisible, close, shouldTrap }) {
 }
 
 HeaderNav.propTypes = {
-  shouldBeVisible: PropTypes.bool,
-  shouldTrap: PropTypes.bool,
-  close: PropTypes.func
+  shouldBeVisible: PropTypes.bool.isRequired,
+  shouldTrap: PropTypes.bool.isRequired,
+  close: PropTypes.func.isRequired
 };
 
 export default HeaderNav;

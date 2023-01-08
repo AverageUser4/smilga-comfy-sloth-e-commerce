@@ -119,7 +119,8 @@ function Home() {
               <input
                 type="email"
                 className="input input--type-1"
-                placeholder="Enter Email"
+                placeholder="Enter email"
+                aria-label="Email"
               />
               <button 
                 className="button button--type-1"

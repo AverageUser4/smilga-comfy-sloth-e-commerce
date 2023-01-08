@@ -12,10 +12,10 @@ function logoBody(props, ref) {
     logoStyle.height = props.height;
 
   return (
-    <Link to="/" ref={ref} aria-label="go to homepage">
+    <Link to="/" ref={ref} aria-label="Go to homepage.">
       <img
         src={logo}
-        alt="ComfySloth logo"
+        alt="ComfySloth logo."
         style={logoStyle}
       />
     </Link>

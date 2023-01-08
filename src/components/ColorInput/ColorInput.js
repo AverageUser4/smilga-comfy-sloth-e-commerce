@@ -38,7 +38,6 @@ ColorInput.propTypes = {
   currentValue: PropTypes.string.isRequired,
   handleChange: PropTypes.func.isRequired,
   size: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  defaultChecked: PropTypes.bool
 };
 
 export default ColorInput;

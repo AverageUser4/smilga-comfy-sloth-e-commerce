@@ -1,7 +1,7 @@
 import React from 'react';
-import css from './CartProductsTableHead.module.css';
+import css from './ProductsInCartHead.module.css';
 
-function CartProductsTableHead() {
+function ProductsInCartHead() {
   return (
     <div className={css['container']}>
     
@@ -18,4 +18,4 @@ function CartProductsTableHead() {
   );
 }
 
-export default CartProductsTableHead;
+export default ProductsInCartHead;

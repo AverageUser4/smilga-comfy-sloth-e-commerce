@@ -31,8 +31,8 @@ function TotalPrice({ subtotal, shipping }) {
 }
 
 TotalPrice.propTypes = {
-  subtotal: PropTypes.number,
-  shipping: PropTypes.number
+  subtotal: PropTypes.number.isRequired,
+  shipping: PropTypes.number.isRequired,
 };
 
 export default TotalPrice;

@@ -27,8 +27,8 @@ function PayBox({ onSubmit }) {
 
       <input
         className={`${css['input']} ${css['input--number']}`}
-        placeholder="Card number" 
-        aria-label="Card number"
+        placeholder="12345" 
+        aria-label="Card number."
         value={cardNumber}
         onChange={handleChange}
       />
@@ -45,7 +45,7 @@ function PayBox({ onSubmit }) {
 }
 
 PayBox.propTypes = {
-  onSubmit: PropTypes.func
+  onSubmit: PropTypes.func.isRequired
 };
 
 export default PayBox;

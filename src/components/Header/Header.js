@@ -12,6 +12,7 @@ export default function Header() {
   const [isNavVisible, setIsNavVisible] = useState(false);
   const lastFocusableRef = useRef();
   
+  // close when page is changed
   if(pathname !== path) {
     setPath(pathname);
 
@@ -50,9 +51,10 @@ export default function Header() {
           className={'icon-button' + ` ${css['open-button']}`}
           onClick={() => setIsNavVisible(true)}
           ref={lastFocusableRef}
-          aria-label="open menu"
+          aria-label="Open nav."
+          aria-controls="header-nav"
         >
-          <MenuBars alt=""/>
+          <MenuBars alt="Menu bars." aria-hidden="true"/>
         </button>
 
       </div>

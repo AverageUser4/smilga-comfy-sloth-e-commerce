@@ -4,11 +4,12 @@ import css from './Counter.module.css';
 import { ReactComponent as Plus } from '../../assets/plus.svg';
 import { ReactComponent as Minus } from '../../assets/minus.svg';
 
-function Counter({ count, setCount, step = 1, min = 1, max = 999, fontSize = "clamp(30px, 3vw, 42px)" }) {
+function Counter({ count, setCount, step = 1, min = 1, max = 999, fontSize = "clamp(30px, 3vw, 42px)", label = 'Product count.' }) {
   if(min > max)
     console.error(`Min value provided to counter (${min}) is greater than max value (${max}).`);
 
   const [pressedButton, setPressedButton] = useState('');
+  const [counterID] = useState(Math.random());
   const containerStyle = { fontSize };
   const buttonStyle = { width: fontSize, height: fontSize };
   const setPressedIDRef = useRef(null);
@@ -141,16 +142,19 @@ function Counter({ count, setCount, step = 1, min = 1, max = 999, fontSize = "cl
       aria-valuemin={min}
       aria-valuemax={max}
       aria-valuenow={count}
-      aria-label="Product count."
+      aria-label={label}
       tabIndex={0}
+      id={counterID}
     >
       <button 
         style={buttonStyle}
         onPointerDown={handleButton}
         tabIndex={-1}
         name="minus"
+        aria-label="Subtract."
+        aria-controls={counterID}
       >
-        <Minus/>
+        <Minus aria-hidden="true" alt="Minus icon."/>
       </button>
 
       <span>{count}</span>
@@ -160,8 +164,10 @@ function Counter({ count, setCount, step = 1, min = 1, max = 999, fontSize = "cl
         onPointerDown={handleButton}
         tabIndex={-1}
         name="plus"
+        aria-label="Add."
+        aria-controls={counterID}
       >
-        <Plus/>
+        <Plus aria-hidden="true" alt="Plus icon."/>
       </button>
     </div>
   );
@@ -174,6 +180,7 @@ Counter.propTypes = {
   min: PropTypes.number,
   max: PropTypes.number,
   fontSize: PropTypes.string,
+  label: PropTypes.string,
 };
 
 export default Counter;
