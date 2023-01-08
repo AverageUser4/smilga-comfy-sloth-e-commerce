@@ -1,5 +1,2 @@
-- css clean up:
-  - ideally there should be no css modules for pages
-- ProductInCart, CartProductsTableHead: change layout to table
 - make cart merging work properly (in CartContext)
 - add tests

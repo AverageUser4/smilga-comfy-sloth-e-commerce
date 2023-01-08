@@ -1,7 +1,6 @@
 import React from 'react';
 import StandaloneSection from '../../components/StandaloneSection/StandaloneSection';
 import LoginForm from '../../components/LoginForm/LoginForm';
-import css from './temp.module.css';
 import { useAuthContext } from '../../utils/AuthContext.js';
 import { Link } from 'react-router-dom/cjs/react-router-dom.min';
 import useDocumentTitle from '../../hooks/useDocumentTitle';
@@ -21,7 +20,7 @@ function Login() {
   return (
     <StandaloneSection>
 
-      <div className={css['container']}>
+      <div className="center-500-width-cap">
 
         <h1 className="heading heading--no-margin heading--medium">Login</h1>
 

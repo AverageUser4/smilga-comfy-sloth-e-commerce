@@ -27,7 +27,7 @@ const CartContext = createContext();
 
 function CartProvider({ children }) {
   const { username } = useAuthContext();
-  const latestUsernameRef = useRef(username);
+  const latestUsernameRef = useRef(Math.random());
   const [cart, setCart] = useState([]);
   const [shouldFetch, setShouldFetch] = useState(false);
   const [IDsToData, setIDsToData] = useState(new Map());

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import css from './temp.module.css';
 import CurrentPath from '../../components/CurrentPath/CurrentPath.js';
 import ProductInCart from '../../components/ProductInCart/ProductInCart.js';
 import StandaloneSection from '../../components/StandaloneSection/StandaloneSection.js';
@@ -77,7 +76,7 @@ function Cart() {
             <p className="error">Oops... we have some trouble getting needed data. Please, refresh the page.</p>
           :
           totalPrice ?
-            <div className={`standalone standalone--medium standalone--no-bottom-margin ${css['total-container']}`}>
+            <div className="standalone standalone--medium standalone--no-bottom-margin center-then-right">
               <TotalPrice subtotal={totalPrice.products} shipping={totalPrice.shipping} />
               {
                 isLoggedIn ?
