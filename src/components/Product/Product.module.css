@@ -10,6 +10,14 @@
   object-position: center;
   transition: filter 500ms;
 }
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 100%;
+  height: 100%;
+}
 
 /* plain */
 .plain__product {

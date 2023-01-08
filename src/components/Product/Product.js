@@ -4,9 +4,20 @@ import { ReactComponent as Search } from '../../assets/magnyfing-glass.svg';
 import css from './Product.module.css';
 import { Link } from 'react-router-dom';
 import { cutText, stringifyPrice } from '../../utils/utils';
+import Loading from '../Loading/Loading';
+import useFullImageLoad from '../../hooks/useFullImageLoad';
 
 function Product({ image, price, name, id, description, showDetails = false }) {
   const url = `/products/${id}`;
+  const imageReady = useFullImageLoad(image);
+
+  const imageOrLoading = 
+    imageReady ?
+      <img className={css["image"]} src={image} alt={name}/>
+    :
+      <div className={css['loading-container']}>
+        <Loading style={{ margin: 0 }}/>
+      </div>;
 
   if(!showDetails)
     return (
@@ -20,7 +31,7 @@ function Product({ image, price, name, id, description, showDetails = false }) {
               <Search alt="View product page."/>
             </div>
 
-            <img className={css["image"]} src={image} alt={name}/>
+            {imageOrLoading}
 
           </div>
 
@@ -38,7 +49,7 @@ function Product({ image, price, name, id, description, showDetails = false }) {
     <article className={css['detailed']}>
 
       <Link aria-hidden="true" to={url} className={css['detailed__image-container']}>
-        <img className={css["image"]} src={image} alt={name}/>
+        {imageOrLoading}
       </Link>
 
       <div>

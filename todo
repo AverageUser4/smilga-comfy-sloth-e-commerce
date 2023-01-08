@@ -1,6 +1,5 @@
 - css clean up:
   - ideally there should be no css modules for pages
 - ProductInCart, CartProductsTableHead: change layout to table
-- add alt attributes to icons used in buttons without text (if there are any)
-- analize and decide whether or not certain PropTypes should use isRequired
 - make cart merging work properly (in CartContext)
+- add tests
