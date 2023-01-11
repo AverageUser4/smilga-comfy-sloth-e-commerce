@@ -12,7 +12,7 @@ export default function Header() {
   const [isNavVisible, setIsNavVisible] = useState(false);
   const lastFocusableRef = useRef();
   
-  // close when page is changed
+  // close nav when user navigates to different page
   if(pathname !== path) {
     setPath(pathname);
 
@@ -54,7 +54,7 @@ export default function Header() {
           aria-label="Open nav."
           aria-controls="header-nav"
         >
-          <MenuBars alt="Menu bars." aria-hidden="true"/>
+          <MenuBars aria-hidden="true"/>
         </button>
 
       </div>

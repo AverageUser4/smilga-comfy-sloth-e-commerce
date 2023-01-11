@@ -2,11 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import css from './FancyPics.module.css';
 
-function FancyPics({ smallImage, bigImage, backgroundColor }) {
-  const backgroundStyle = {};
-  if(backgroundColor)
-    backgroundStyle.backgroundColor = backgroundColor;
-
+function FancyPics({ smallImage, bigImage }) {
   return (
     <div className={css['container']}>
       <img className={`${css['photo']} ${css['photo--big']}`} src={bigImage.src} alt={bigImage.alt}/>
@@ -24,7 +20,6 @@ FancyPics.propTypes = {
     src: PropTypes.string.isRequired,
     alt: PropTypes.string
   }).isRequired,
-  backgroundColor: PropTypes.string,
 };
 
 export default FancyPics;

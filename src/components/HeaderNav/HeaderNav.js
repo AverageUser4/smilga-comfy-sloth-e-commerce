@@ -44,7 +44,7 @@ function HeaderNav({ shouldBeVisible, close, shouldTrap }) {
           ref={defaultFocusableRef}
           aria-label="Close nav."
         >
-          <MenuClose alt="Red cross." aria-hidden="true"/>
+          <MenuClose aria-hidden="true"/>
         </button>
       </div>
 
@@ -66,7 +66,7 @@ function HeaderNav({ shouldBeVisible, close, shouldTrap }) {
             activeClassName={css["profile-link--active"]}
           >
             Cart 
-            <ShoppingCart alt="Shopping cart." aria-hidden="true"/>
+            <ShoppingCart aria-hidden="true"/>
             {
               cartProductsData.length ? 
                 <span aria-description="Products in cart." className={css['cart-count']}>{cartProductsData.length}</span> 
@@ -82,7 +82,7 @@ function HeaderNav({ shouldBeVisible, close, shouldTrap }) {
                 className={css["profile-link"]} ref={lastFocusableRef}
                 onClick={logout}
               >
-                Logout <RemovePerson alt="Person next to minus sign icon." aria-hidden="true"/>
+                Logout <RemovePerson aria-hidden="true"/>
               </button>
             :
               <NavLink 
@@ -91,7 +91,7 @@ function HeaderNav({ shouldBeVisible, close, shouldTrap }) {
                 activeClassName={css["profile-link--active"]} 
                 ref={lastFocusableRef}
               >
-                Login <AddPerson alt="Person next to plus sign icon." aria-hidden="true"/>
+                Login <AddPerson aria-hidden="true"/>
               </NavLink>
           }
         </li>
