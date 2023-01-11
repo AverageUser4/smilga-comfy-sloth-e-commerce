@@ -10,7 +10,6 @@ module.exports = {
         "plugin:react-hooks/recommended",
         "plugin:jest/recommended",
         "plugin:jest-dom/recommended",
-        "plugin:testing-library/recommended"
     ],
     "overrides": [
     ],
@@ -19,7 +18,7 @@ module.exports = {
         "sourceType": "module"
     },
     "plugins": [
-        "react"
+        "react",
     ],
     "rules": {
         "no-unused-vars": "warn",

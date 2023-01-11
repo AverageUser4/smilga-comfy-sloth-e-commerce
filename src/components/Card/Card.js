@@ -6,7 +6,7 @@ function Card({ heading, text, Icon }) {
   return (
     <article className={css['card']}>
 
-      {Icon && <Icon className={css['icon']} alt="" aria-hidden="true"/>}
+      {Icon && <Icon className={css['icon']} aria-hidden="true" data-testid="icon"/>}
       <h3 className="heading heading--no-margin heading--color-2 heading--small">{heading}</h3>
       <p className="paragraph paragraph--no-margin paragraph--color-2">{text}</p>
 
