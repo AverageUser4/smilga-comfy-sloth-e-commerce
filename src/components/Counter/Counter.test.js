@@ -1,51 +1,138 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import Counter from './Counter';
 
-function renderComponent(count = 1, step = 1, min = 1, max = 100, fontSize = '16px', label = 'label') {
-  const setCount = jest.fn((newCount) => count = newCount);
-  
-  const renderOutput = render(
+test('renders spinbutton (labelled with provided label), add and subtract buttons and element containing value of count', () => {
+  render(
     <Counter
-      count={count}
-      setCount={setCount}
-      step={step}
-      min={min}
-      max={max}
-      fontSize={fontSize}
-      label={label}
-    />
+      count={5}
+      setCount={()=>0}
+      step={1}
+      min={1}
+      max={10}
+      label="label"
+    />  
   );
+  const spinButton = screen.getByRole('spinbutton', { name: 'label' });
+  const addButton = screen.getByRole('button', { name: /add/i });
+  const subtractButton = screen.getByRole('button', { name: /subtract/i });
+  const countContainer = screen.queryByText('5') || screen.getByDisplayValue('5');
 
-  return {
-    mockFunction: setCount,
-    ...renderOutput
-  };
-}
+  expect(spinButton).toBeInTheDocument();
+  expect(addButton).toBeInTheDocument();
+  expect(subtractButton).toBeInTheDocument();
+  expect(countContainer).toBeInTheDocument();
+});
 
-describe('rendering', () => {
+test('calls set function with incremented or decremented value when appropriate button is clicked', () => {
+  const mockFunction = jest.fn();
+  render(
+    <Counter
+      count={5}
+      setCount={mockFunction}
+      step={1}
+      min={1}
+      max={10}
+      label="label"
+    />  
+  );
+  const addButton = screen.getByRole('button', { name: /add/i });
+  const subtractButton = screen.getByRole('button', { name: /subtract/i });
 
-  test('renders element with spinbutton role', () => {
-    renderComponent();
-    const spinButton = screen.getByRole('spinbutton');
+  userEvent.click(addButton);
+  userEvent.click(subtractButton);
 
-    expect(spinButton).toBeInTheDocument();
-  });
+  expect(mockFunction.mock.calls[0][0]).toBe(6);
+  expect(mockFunction.mock.calls[1][0]).toBe(4);
+});
 
-  test('renders add and subtract buttons buttons', () => {
-    renderComponent();
-    const addButton = screen.getByRole('button', { name: /add/i });
-    const subtractButton = screen.getByRole('button', { name: /subtract/i });
+test('step works both for incrementing and decrementing', () => {
+  const mockFunction = jest.fn();
+  render(
+    <Counter
+      count={5}
+      setCount={mockFunction}
+      step={3}
+      min={1}
+      max={10}
+      label="label"
+    />  
+  );
+  const addButton = screen.getByRole('button', { name: /add/i });
+  const subtractButton = screen.getByRole('button', { name: /subtract/i });
 
-    expect(addButton).toBeInTheDocument();
-    expect(subtractButton).toBeInTheDocument();
-  });
+  userEvent.click(addButton);
+  userEvent.click(subtractButton);
 
-  test('renders container with appropriate count', () => {
-    renderComponent(5);
-    const countContainer = screen.queryByText('5') || screen.getByDisplayValue('5');
+  expect(mockFunction.mock.calls[0][0]).toBe(8);
+  expect(mockFunction.mock.calls[1][0]).toBe(2);
+});
 
-    expect(countContainer).toBeInTheDocument();
-  });
-  
+test('does not call set function with value less than min or greater than max, instead calls it with min or max', () => {
+  const mockFunction = jest.fn();
+  render(
+    <Counter
+      count={5}
+      setCount={mockFunction}
+      step={10}
+      min={1}
+      max={10}
+      label="label"
+    />  
+  );
+  const addButton = screen.getByRole('button', { name: /add/i });
+  const subtractButton = screen.getByRole('button', { name: /subtract/i });
+
+  userEvent.click(addButton);
+  userEvent.click(subtractButton);
+
+  expect(mockFunction.mock.calls[0][0]).toBe(10);
+  expect(mockFunction.mock.calls[1][0]).toBe(1);
+});
+
+test('keyboard arrow controls work as expected', () => {
+  const mockFunction = jest.fn();
+  render(
+    <Counter
+      count={5}
+      setCount={mockFunction}
+      step={1}
+      min={1}
+      max={10}
+      label="label"
+    />  
+  );
+  const spinButton = screen.getByRole('spinbutton', { name: 'label' });
+
+  spinButton.focus();
+  userEvent.keyboard('{ArrowRight}{ArrowUp}{ArrowLeft}{ArrowDown}');
+
+  expect(mockFunction.mock.calls[0][0]).toBe(6);
+  expect(mockFunction.mock.calls[1][0]).toBe(6);
+  expect(mockFunction.mock.calls[2][0]).toBe(4);
+  expect(mockFunction.mock.calls[3][0]).toBe(4);
+});
+
+test('keyboard special controls work as expected', () => {
+  const mockFunction = jest.fn();
+  render(
+    <Counter
+      count={50}
+      setCount={mockFunction}
+      step={1}
+      min={1}
+      max={100}
+      label="label"
+    />  
+  );
+  const spinButton = screen.getByRole('spinbutton', { name: 'label' });
+
+  spinButton.focus();
+  userEvent.keyboard('{Home}{End}{PageUp}{PageDown}');
+
+  expect(mockFunction.mock.calls[0][0]).toBe(1);
+  expect(mockFunction.mock.calls[1][0]).toBe(100);
+  expect(mockFunction.mock.calls[2][0]).toBeLessThan(49);
+  expect(mockFunction.mock.calls[3][0]).toBeGreaterThan(51);
 });

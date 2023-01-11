@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 import { useParams, Link } from 'react-router-dom';
 import Gallery from '../Gallery/Gallery';
 import css from './ProductData.module.css';
@@ -13,7 +14,7 @@ import useNotification from '../../hooks/useNotification';
 import { SINGLE_PRODUCT } from '../../utils/API_Endpoints';
 import useDocumentTitle from '../../hooks/useDocumentTitle';
 
-function ProductData() {
+function ProductData({ setProductName }) {
   const [count, setCount] = useState(1);
   const [color, setColor] = useState('');
   const { id } = useParams();
@@ -31,6 +32,11 @@ function ProductData() {
     setColor(product.colors[0]);
 
   }, [product?.colors, color]);
+
+  useEffect(() => {
+    if(product?.name)
+      setProductName(product.name);
+  }, [product?.name, setProductName]);
 
   if(!product)
     return <Loading/>;
@@ -138,5 +144,9 @@ function ProductData() {
     </>
   );
 }
+
+ProductData.propTypes = {
+  setProductName: PropTypes.func.isRequired,
+};
 
 export default ProductData;

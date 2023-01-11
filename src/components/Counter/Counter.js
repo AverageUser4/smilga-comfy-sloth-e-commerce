@@ -124,11 +124,11 @@ function Counter({ count, setCount, step = 1, min = 1, max = 999, fontSize = "cl
         break;
 
       case 'PageUp':
-        decrease(5);
+        decrease(step * 5);
         break;
 
       case 'PageDown':
-        increase(5);
+        increase(step * 5);
         break;
     }
   }

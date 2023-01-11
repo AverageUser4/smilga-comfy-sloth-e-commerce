@@ -28,7 +28,7 @@ function CurrentPath({ lastPathName }) {
   
   return (
     <div className={css['background']}>
-      <div className={css['container']}>
+      <div data-testid="paths-container" className={css['container']}>
         {pathElements}
       </div>
     </div>
