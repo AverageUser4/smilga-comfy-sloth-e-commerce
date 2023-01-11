@@ -146,7 +146,7 @@ function Counter({ count, setCount, step = 1, min = 1, max = 999, fontSize = "cl
       tabIndex={0}
       id={counterID}
     >
-      <button 
+      <button
         style={buttonStyle}
         onPointerDown={handleButton}
         tabIndex={-1}
@@ -154,7 +154,7 @@ function Counter({ count, setCount, step = 1, min = 1, max = 999, fontSize = "cl
         aria-label="Subtract."
         aria-controls={counterID}
       >
-        <Minus aria-hidden="true" alt="Minus icon."/>
+        <Minus aria-hidden="true"/>
       </button>
 
       <span>{count}</span>
@@ -167,7 +167,7 @@ function Counter({ count, setCount, step = 1, min = 1, max = 999, fontSize = "cl
         aria-label="Add."
         aria-controls={counterID}
       >
-        <Plus aria-hidden="true" alt="Plus icon."/>
+        <Plus aria-hidden="true"/>
       </button>
     </div>
   );
