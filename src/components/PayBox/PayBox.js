@@ -13,7 +13,7 @@ function PayBox({ onSubmit }) {
   function handleChange(event) {
     const { value } = event.target;
 
-    if(value && !Number.isInteger(Number(value)))
+    if((value && !Number.isInteger(Number(value))) || value.includes('.'))
       return;
 
     setCardNumber(value);
@@ -27,7 +27,7 @@ function PayBox({ onSubmit }) {
 
       <input
         className={`${css['input']} ${css['input--number']}`}
-        placeholder="12345" 
+        placeholder="12345"
         aria-label="Card number."
         value={cardNumber}
         onChange={handleChange}

@@ -13,7 +13,7 @@ function useFetch(url, parseJSON = true, retry) {
   useEffect(() => {
     let ignore = false;
 
-    async function fetchProductData() {
+    async function fetchData() {
       try {
         setIsFetching(true);
 
@@ -33,10 +33,10 @@ function useFetch(url, parseJSON = true, retry) {
       }
     }
 
-    fetchProductData();
+    fetchData();
 
     return () => ignore = true;
-  }, [retry]);
+  }, [retry, url, parseJSON]);
 
   return { isFetching, isError, data };
 }

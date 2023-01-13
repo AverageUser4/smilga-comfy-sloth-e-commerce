@@ -1,0 +1,26 @@
+import React from 'react';
+import { BrowserRouter as Router } from 'react-router-dom';
+import { render, screen } from '@testing-library/react';
+import Product from './Product';
+import image from '../../test-helpers/jpeg.jpeg';
+
+test('there is at least one link leading to product page', () => {
+  render(
+    <Router>
+      <Product
+        image={image}
+        price={1099}
+        name="sofa"
+        id="abcde"
+        description="cool sofa"
+      />
+    </Router>
+  );
+
+  const links = screen.getAllByRole('link');
+  const linkToProduct = links.find(link => link.getAttribute('href') === '/products/abcde');
+
+  expect(linkToProduct).toBeInTheDocument();
+});
+
+// imageElement.decode is not implemented in jsdom

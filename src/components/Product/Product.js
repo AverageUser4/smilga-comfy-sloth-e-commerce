@@ -64,7 +64,6 @@ function Product({ image, price, name, id, description, showDetails = false }) {
         <Link to="url" className="button button--uppercase">Details</Link>
 
       </div>
-
       
     </article>
   );

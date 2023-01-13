@@ -58,10 +58,11 @@ function ProductInCart({ color, quantity, setQuantity, sameOfDifferentColorInCar
             <span 
               style={{ backgroundColor: color }}
               className={css['color']}
-              aria-description={getColorName(color)}></span>
+              title={getColorName(color)}
+            ></span>
           </div>
 
-          <div aria-description="Price." className="text text--color-1 text--bold">{stringifyPrice(price)}</div>
+          <div aria-description="Price." className={`${css['small-screen']} text text--color-1 text--bold`}>{stringifyPrice(price)}</div>
 
         </div>
         

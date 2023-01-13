@@ -7,7 +7,7 @@ import { ReactComponent as StarHalf } from '../../assets/star-half.svg';
 
 function Rating({ amount, outOf }) {
   const rating = (amount / outOf * 5).toFixed(2);
-  const ratingString = `${rating} starts out of 5`;
+  const ratingString = `${rating} stars out of 5`;
   let stars = rating;
   const starElements = [];
 

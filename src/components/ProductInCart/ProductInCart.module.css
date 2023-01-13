@@ -69,4 +69,8 @@
   .medium-screen {
     display: block;
   }
+
+  .small-screen {
+    display: none;
+  }
 }
