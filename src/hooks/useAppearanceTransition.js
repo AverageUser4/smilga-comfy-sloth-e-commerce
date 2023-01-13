@@ -48,5 +48,5 @@ export default function useAppearanceTransition(
       if(lockScroll)
         document.documentElement.style.overflow = 'visible';
     };
-  }, [shouldBeVisible]);
+  }, [shouldBeVisible, defaultFocusable, lockScroll, phases, setClasses, transitionDuration]);
 }

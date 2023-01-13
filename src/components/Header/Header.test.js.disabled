@@ -4,6 +4,9 @@ import { render, screen } from '@testing-library/react';
 import Header from './Header';
 import { AuthProvider } from '../../utils/AuthContext';
 import { CartProvider } from '../../utils/CartContext';
+import { resize } from '../../test-helpers/utils';
+
+afterEach(() => resize({ width: 1024, height: 768 }));
 
 jest.mock('react-router-dom', () => {
   const originalModule = jest.requireActual('react-router-dom');
@@ -27,5 +30,12 @@ test('testj', () => {
     </AuthProvider>
   );
 
-  expect(useLocation().pathname).toBe('/about/something/nice')
+  // const closeButton = screen.getByRole('button', { name: /close/i });
+  // console.log(getComputedStyle(closeButton))
+  resize({width:300})
+  console.log(window.innerWidth)
+});
+
+test('dupa', () => {
+  console.log(window.innerWidth)
 });

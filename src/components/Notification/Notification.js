@@ -10,7 +10,7 @@ function Notification({ content = '', type = '', timeout = 3000, dateNow = 0 }) 
   const pointerDataRef = useRef({});
   const [notifications, setNotifications] = useState([]);
   const areThereVisible = notifications.findIndex(not => not !== null) !== -1;
-  
+
   useEffect(() => {
     if(dateNow === lastDateRef.current)
       return;
@@ -21,7 +21,7 @@ function Notification({ content = '', type = '', timeout = 3000, dateNow = 0 }) 
 
     setTimeout(() => changeVisibility(lastIndex, true), 50);
     setTimeout(() => changeVisibility(lastIndex, false, true), timeout);
-  });
+  }, [content, dateNow, notifications.length, timeout, type]);
 
   useEffect(() => {
     function onPointerMove(event) {
@@ -96,7 +96,7 @@ function Notification({ content = '', type = '', timeout = 3000, dateNow = 0 }) 
           className={`icon-button icon-button--small icon-button--danger ${css['close-button']}`}
           aria-label="Hide this notification."
         >
-          <Close alt="Red cross." aria-hidden="true"/>
+          <Close aria-hidden="true"/>
         </button>
         {item.content}
       </div>

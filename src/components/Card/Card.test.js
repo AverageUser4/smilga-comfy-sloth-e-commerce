@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import Card from './Card';
-import { ReactComponent as Icon } from '../../__tests__/svg.svg';
+import { ReactComponent as Icon } from '../../test-helpers/svg.svg';
 
 test('renders expected heading and paragraph', () => {
   render(<Card heading="my heading" text="my paragraph"/>);

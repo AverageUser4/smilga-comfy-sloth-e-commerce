@@ -1,8 +1,8 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import FancyPics from './FancyPics';
-import small from '../../__tests__/jpeg.jpeg';
-import big from '../../__tests__/jpeg2.jpeg';
+import small from '../../test-helpers/jpeg.jpeg';
+import big from '../../test-helpers/jpeg2.jpeg';
 
 test('it renders two images with appropriate alt attributes', () => {
   render(

@@ -1,2 +1,4 @@
 - make cart merging work properly (in CartContext)
 - add tests
+- after pressing hide all button in Notification components the button itself disappears and then re-appears for a moment
+- when notifications are getting hidden theirs movements are kinda weird

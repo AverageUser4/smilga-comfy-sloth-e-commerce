@@ -2,8 +2,8 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import Gallery from './Gallery';
-import photo_1 from '../../__tests__/jpeg.jpeg';
-import photo_2 from '../../__tests__/jpeg2.jpeg';
+import photo_1 from '../../test-helpers/jpeg.jpeg';
+import photo_2 from '../../test-helpers/jpeg2.jpeg';
 
 test('renders provided photos, first photo gets rendered two times as it is magnified', () => {
   render(
