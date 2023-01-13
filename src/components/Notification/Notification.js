@@ -69,6 +69,7 @@ function Notification({ content = '', type = '', timeout = 3000, dateNow = 0 }) 
   }
 
   function onPointerDown(event) {
+    console.log(event)
     const { dataset } = event.target;
 
     if(typeof dataset.index === 'undefined')
