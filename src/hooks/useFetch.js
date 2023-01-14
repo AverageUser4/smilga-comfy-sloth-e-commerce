@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react';
   parseJSON - bool indicating whether data should be parsed with data.json()
   retry - when this value changes another fetch is attempted
 */
-function useFetch(url, parseJSON = true, retry) {
+function useFetch(url, parseJSON = true) {
   const [data, setData] = useState(null);
   const [isFetching, setIsFetching] = useState(true);
   const [isError, setIsError] = useState(false);
@@ -36,7 +36,7 @@ function useFetch(url, parseJSON = true, retry) {
     fetchData();
 
     return () => ignore = true;
-  }, [retry, url, parseJSON]);
+  }, [url, parseJSON]);
 
   return { isFetching, isError, data };
 }
