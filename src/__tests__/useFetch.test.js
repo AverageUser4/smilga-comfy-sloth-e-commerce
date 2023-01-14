@@ -1,40 +1,34 @@
-import React from 'react';
 import { act } from 'react-dom/test-utils';
-import { screen, render } from '@testing-library/react';
+import { renderHook } from '@testing-library/react';
 import useFetch from '../hooks/useFetch';
+import { mockFetch } from '../test-helpers/utils';
 
 global.fetch = jest.fn();
-let data = null;
+jest.useFakeTimers();
 
-async function sleep(ms) {
-  await new Promise(resolve => setTimeout(resolve, ms));
-}
-
-function FakeComponent() {
-  data = useFetch();
-  return null;
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 test('works as expected', async () => {
-  fetch.mockImplementation(async () => {
-    return new Promise(resolve => 
-      setTimeout(
-        () => resolve(({ json: () => ({ a: 1 }) })),
-        20 + Math.floor(Math.random() * 30)
-      ))
-  });
+  mockFetch(fetch, { json: () => ({ a: 1 }) }, 20);
+  const { result } = renderHook(() => useFetch());
+  expect(result.current.isFetching).toBe(true);
+  expect(result.current.isError).toBe(false);
+  expect(result.current.data).toBeNull();
 
-  act(() => render(<FakeComponent/>));
-  expect(data.isFetching).toBe(true);
+  Promise.resolve().then(() => jest.advanceTimersByTime(20));
+  await act(() => sleep(20));
 
-  await act(() => sleep(100));
-
-  expect(data.isFetching).toBe(false);
+  expect(result.current.isFetching).toBe(false);
+  expect(result.current.isError).toBe(false);
+  expect(result.current.data).toEqual({ a: 1 });
 });
 
 /*
-  - isFetching = true, until data or isError is set
-  - isFetching = false when data or isError is set
-  - 
-  url, parseJSON = true, retry
+  - initial state: data: null, isFetching: true, isError: false
+  - after time passes: data: provided data, isFetching: false, isError: false
+  - after time passes, when rejected: data: provided data, isFetching: false, isError: true
+  - when retry changes: data: the same, isFetching: true, isError: the same
+  - parseJSON affects data
 */
