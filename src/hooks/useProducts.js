@@ -23,6 +23,11 @@ function useProducts(options = defaultOptions) {
   const [error, setError] = useState('');
   const [data, setData] = useState(initialData);
   const { data: fetchedData, isError } = useFetch(ALL_PRODUCTS);
+  
+  for(let key in defaultOptions) {
+    if(!options[key])
+      options[key] = defaultOptions[key];
+  }
 
   const { 
     featuredOnly, queryString, category, company, color, 
@@ -31,8 +36,10 @@ function useProducts(options = defaultOptions) {
 
   useEffect(() => {
     // there may be some bugs in this effect
-    if(isError)
+    if(isError) {
       setError('We were unable to get data of our products. Please, refresh the page or try again later.');
+      setIsLoading(false);
+    }
     if(fetchedData)
       setData(prev => ({
         ...prev,
