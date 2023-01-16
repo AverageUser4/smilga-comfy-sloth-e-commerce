@@ -82,7 +82,7 @@ function Notification({ content = '', type = '', timeout = 3000, dateNow = 0 }) 
     if(!item)
       return null;
 
-    let classes = `${css['notification']} ${css[`notification--type`]}`;
+    let classes = `${css['notification']} ${css[`notification--${type}`]}`;
     classes += item.isVisible ? ` ${css['notification--visible']}` : '';
 
     return (

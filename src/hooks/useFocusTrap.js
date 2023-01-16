@@ -11,27 +11,22 @@ export default function useFocusTrap(close, firstFocusable, lastFocusable, shoul
     function onKeyDown(event) {
       const { key, shiftKey } = event;
 
-      switch(key) {
-        case 'Esc':
-        case 'Escape':
-          close();
-          break;
+      if(key === 'Esc' || key === 'Escape')
+        close();
 
-        case 'Tab':
-          if(!shiftKey && document.activeElement === lastFocusable) {
-            event.preventDefault();
-            firstFocusable?.focus();
-          } else if(shiftKey && document.activeElement === firstFocusable) {
-            event.preventDefault();
-            lastFocusable?.focus();
-          }
-          break;
+      if(shouldTrap && key === 'Tab') {
+        if(!shiftKey && document.activeElement === lastFocusable) {
+          event.preventDefault();
+          firstFocusable?.focus();
+        } else if(shiftKey && document.activeElement === firstFocusable) {
+          event.preventDefault();
+          lastFocusable?.focus();
+        }
       }
     }
 
-    if(shouldTrap)
-      window.addEventListener('keydown', onKeyDown);
+    window.addEventListener('keydown', onKeyDown);
 
     return () => window.removeEventListener('keydown', onKeyDown);
-  }, [shouldTrap]);
+  }, [shouldTrap, close, firstFocusable, lastFocusable]);
 }

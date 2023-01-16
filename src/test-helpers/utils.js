@@ -18,22 +18,22 @@ export function resize({ width, height }) {
 
 export async function mockFetch(fetch, returnValue, timeout = 20, shouldReject = false) {
   if(!fetch.mock)
-    throw new Error('Provide fetch!!!');
+    throw new Error('Provide mocked function as the first argument.');
   
-  function timeoutCallback(resolve, reject) {
+  function timeoutCallback(resolve, reject, url) {
     if(shouldReject)
-      reject(returnValue);
-    resolve(returnValue);
+      reject({ returnValue, url });
+    resolve({ json: () => ({ returnValue, url }) });
   }
 
-  function implementation() {
+  function implementation(url) {
     return new Promise((resolve, reject) => {
       setTimeout(
-        () => timeoutCallback(resolve, reject),
+        () => timeoutCallback(resolve, reject, url),
         timeout
       );
     });
   }
   
-  fetch.mockImplementation(implementation);
+  return fetch.mockImplementation(implementation);
 }

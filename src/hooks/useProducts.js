@@ -43,7 +43,7 @@ function useProducts(options = defaultOptions) {
       }));
   }, [fetchedData, isError]);
   
-  const dependencyArray = [data.productsOriginal].concat(optionKeys.map(key => options[key]));
+  // const dependencyArray = [data.productsOriginal].concat(optionKeys.map(key => options[key]));
   useEffect(() => {
     let newProducts = [...data.productsOriginal];
     if(!newProducts.length)
@@ -98,8 +98,7 @@ function useProducts(options = defaultOptions) {
 
     setData(prev => ({ ...prev, products: newProducts }));
     setIsLoading(false);
-  }, dependencyArray);
-  //[productsOriginal, featuredOnly, queryString, category, company, color, priceMin, priceMax, orderBy, freeShippingOnly]
+  }, [category, color, company, data.productsOriginal, featuredOnly, freeShippingOnly, orderBy, priceMax, priceMin, queryString]);
   
   return { 
     products: data.products, 

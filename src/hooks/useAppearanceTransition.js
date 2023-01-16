@@ -15,12 +15,9 @@ export default function useAppearanceTransition(
   transitionDuration,
   // DOM node that should be focused when element appears on screen
   defaultFocusable = null,
-  // indicates whether html element's overflow property should be set to hidden
-  // when the modal is visible
-  lockScroll = true
 ) {
   useEffect(() => {
-    var timeoutA, timeoutB;
+    let timeoutA, timeoutB;
 
     function makeVisible() {
       setClasses(phases[1]);
@@ -45,8 +42,6 @@ export default function useAppearanceTransition(
     return () => {
       clearTimeout(timeoutA);
       clearTimeout(timeoutB);
-      if(lockScroll)
-        document.documentElement.style.overflow = 'visible';
     };
-  }, [shouldBeVisible, defaultFocusable, lockScroll, phases, setClasses, transitionDuration]);
+  }, [shouldBeVisible, defaultFocusable, phases, setClasses, transitionDuration]);
 }

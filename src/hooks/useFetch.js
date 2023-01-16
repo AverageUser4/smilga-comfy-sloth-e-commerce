@@ -3,7 +3,6 @@ import { useState, useEffect } from 'react';
 /*
   url - url of resource
   parseJSON - bool indicating whether data should be parsed with data.json()
-  retry - when this value changes another fetch is attempted
 */
 function useFetch(url, parseJSON = true) {
   const [data, setData] = useState(null);
