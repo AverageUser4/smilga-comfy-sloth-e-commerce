@@ -1,4 +1,9 @@
 export function randomInteger(min, max) {
+  if(!Number.isInteger(min) || !Number.isInteger(max) || min < 0 || max < 0)
+    throw new Error(`Both min and max have to be positive integers, provided: '${min}', '${max}'.`);
+  if(min > max)
+    throw new Error(`Min cannot be greater than max, provided: '${min}', '${max}'.`);
+
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
