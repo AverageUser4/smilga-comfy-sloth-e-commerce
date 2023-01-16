@@ -21,9 +21,12 @@ export async function mockFetch(fetch, returnValue, timeout = 20, shouldReject =
     throw new Error('Provide mocked function as the first argument.');
   
   function timeoutCallback(resolve, reject, url) {
-    if(shouldReject)
-      reject({ returnValue, url });
-    resolve({ json: () => ({ returnValue, url }) });
+    if(shouldReject) {
+      const error = new Error(returnValue.toString());
+      error.url = url;
+      reject(error);
+    }
+    resolve({ json: () => returnValue, url });
   }
 
   function implementation(url) {
@@ -36,4 +39,8 @@ export async function mockFetch(fetch, returnValue, timeout = 20, shouldReject =
   }
   
   return fetch.mockImplementation(implementation);
+}
+
+export function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms || 0));
 }
