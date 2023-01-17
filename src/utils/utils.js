@@ -8,6 +8,9 @@ export function randomInteger(min, max) {
 }
 
 export function shuffleArray(arr) {
+  if(!Array.isArray(arr))
+    throw new Error(`You have to proivde an array, provided: '${arr}'.`);
+
   const copy = [...arr];
   const shuffled = [];
 
@@ -18,55 +21,40 @@ export function shuffleArray(arr) {
 }
 
 export function stringifyPrice(price) {
+  if(!Number.isInteger(price) || price < 0)
+    throw new Error(`First argument (price) has to be non-negative integer, provided: '${price}'.`);
+
   return `$${(price / 100).toFixed(2)}`;
 }
 
 export function cutText(text, length) {
-  if(typeof text !== 'string' || text.length < 1)
-    throw new Error('Text hast to be non-empty string!');
-  if(!Number.isInteger(length) || length < 1)
-    throw new Error('Length has to be a positive integer!');
+  if(typeof text !== 'string')
+    throw new Error(`Frist argument (text) has to be string, provided: '${text}'.`);
+  if(!Number.isInteger(length) || length < 0)
+    throw new Error(`Second argument (length) has to be a non-negative integer, provided: '${length}.`);
 
+  if(length === 0)
+    return '';
   if(text.length <= length)
     return text;
 
   return `${text.slice(0, length)}...`;
 }
 
-export function spacesToCamelCase(text) {
-  if(typeof text !== 'string')
-    throw new Error('Text has to be a string!');
-
-  const arr = text.split(' ');
-
-  for(let i = 0; i < arr.length - 1; i++) {
-    if(arr[i] === ' ')
-      arr[i + 1] = arr[i + 1].toUpperCase();
-  }
-
-  return arr.filter(character => character !== ' ').join('');
-}
-
-export function arrayIsSubsetOf(subset, whole) {
-  if(!Array.isArray(subset) || !Array.isArray(whole))
-    throw new Error(`Non-array provided: firstArg: '${subset}', secondArg: '${whole}'`);
-
-  for(let i = 0; i < subset.length; i++)
-    if(!whole.includes(subset[i]))
-      return false;
-
-  return true;
-}
-
-export function sortArrayOfObjectsByProperty(arr, property, desc = false) {
+export function sortArrayOfObjectsByProperty(arr, property, descendingOrder = false) {
   // sorts strings, won't work for numbers
 
   if(!Array.isArray(arr))
-    throw new Error(`Non-array provided: '${arr}'.`);
+    throw new Error(`First argument has to be an array, provided: '${arr}'.`);
   if(!property || typeof property !== 'string')
     throw new Error(`Property has to be non-empty string, provided: '${property}'.`);
 
-  const properties = arr.map(item => item[property]);
+  const properties = arr.map(item => {
+    if(typeof item[property] !== 'string')
+      console.error(`Found property value that is not a string: '${item[property]}'. They array may be sorted in unexpected way.`);
+
+    return item[property];
+  });
   properties.sort();
   const sorted = [];
   
@@ -76,7 +64,7 @@ export function sortArrayOfObjectsByProperty(arr, property, desc = false) {
     arr.splice(index, 1);
   }
 
-  if(desc)
+  if(descendingOrder)
     sorted.reverse();
 
   return sorted;
@@ -84,11 +72,11 @@ export function sortArrayOfObjectsByProperty(arr, property, desc = false) {
 
 export function stringChangeCharcter(str, index, newCharacter) {
   if(!str || typeof str !== 'string')
-    throw new Error(`Only non-empty string is valid first argumen for this function, provided: ${str}`);
-  if(!Number.isInteger(index))
-    throw new Error(`Second argument (index) provided to this function has to be an integer, provided: ${index}`);
+    throw new Error(`First argument (str) has to be an non-empty string, provided: ${str}`);
+  if(!Number.isInteger(index) || index < 0)
+    throw new Error(`Second argument (index) has to be a non-negative integer, provided: ${index}`);
   if(index >= str.length)
-    throw new Error(`Tried to change character at index '${index}', but the length of string is only '${str.length}'.`);
+    throw new Error(`Tried to change character at index '${index}' (second argument), but the length of string (first argument) is only '${str.length}'.`);
   if(typeof  newCharacter !== 'string')
     throw new Error(`Third argument provided to this function has to be a string, provided: '${newCharacter}'.`);
 
@@ -97,7 +85,7 @@ export function stringChangeCharcter(str, index, newCharacter) {
 
 export function capitalize(str) {
   if(!str || typeof str !== 'string')
-    throw new Error(`Only non-empty strings are valid arguments for this function, provided: ${str}`);
+    throw new Error(`First argument (str) has to be a non-empty string, provided: ${str}`);
 
   let output = stringChangeCharcter(str, 0, str[0].toUpperCase());
     
@@ -133,6 +121,31 @@ export function getColorName(color) {
       return 'unrecognized color';
   }
 }
+
+// export function spacesToCamelCase(text) {
+//   if(typeof text !== 'string')
+//     throw new Error('Text has to be a string!');
+
+//   const arr = text.split(' ');
+
+//   for(let i = 0; i < arr.length - 1; i++) {
+//     if(arr[i] === ' ')
+//       arr[i + 1] = arr[i + 1].toUpperCase();
+//   }
+
+//   return arr.filter(character => character !== ' ').join('');
+// }
+
+// export function arrayIsSubsetOf(subset, whole) {
+//   if(!Array.isArray(subset) || !Array.isArray(whole))
+//     throw new Error(`Non-array provided: firstArg: '${subset}', secondArg: '${whole}'`);
+
+//   for(let i = 0; i < subset.length; i++)
+//     if(!whole.includes(subset[i]))
+//       return false;
+
+//   return true;
+// }
 
 // export function verifyColorString(color, type = 'hex') {
 //   if(type !== 'hex')
