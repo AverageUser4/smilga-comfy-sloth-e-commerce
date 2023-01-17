@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, useLocation, Link } from 'react-router-dom';
 import Gallery from '../Gallery/Gallery';
 import css from './ProductData.module.css';
 import Rating from '../Rating/Rating.js';
@@ -18,6 +18,7 @@ function ProductData({ setProductName }) {
   const [count, setCount] = useState(1);
   const [color, setColor] = useState('');
   const { id } = useParams();
+  const { state: locationState } = useLocation();
   const { data: product, isError } = useFetch(SINGLE_PRODUCT + id);
   const { cartChangeCount, cartGetItemTypeCount } = useCartContext();
   const inCartCount = id ? cartGetItemTypeCount(id) : 0;
@@ -62,6 +63,16 @@ function ProductData({ setProductName }) {
     <>
 
       {NotificationElement}
+
+      {
+        locationState?.name && locationState?.url ?
+          <div className="close-siblings">
+            <Link to={locationState.url} className="button button--uppercase">Back to {locationState.name}</Link>
+            <Link to="/products" className="button button--uppercase">More products</Link>
+          </div>
+        :
+          <Link to="/products" className="button button--uppercase">Back to products</Link>
+      }
     
       <article className={css['product']}>
       

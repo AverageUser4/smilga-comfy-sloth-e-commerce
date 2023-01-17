@@ -7,9 +7,11 @@ import { cutText, stringifyPrice } from '../../utils/utils';
 import Loading from '../Loading/Loading';
 import useFullImageLoad from '../../hooks/useFullImageLoad';
 
-function Product({ image, price, name, id, description, showDetails = false }) {
-  const url = `/products/${id}`;
+function Product({ image, price, name, id, description, showDetails = false, locationData }) {
   const imageReady = useFullImageLoad(image);
+  let url = `/products/${id}`;
+  if(locationData)
+    url = { pathname: url, state: locationData };
 
   const imageOrLoading = 
     imageReady ?
@@ -76,6 +78,10 @@ Product.propTypes = {
   id: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
   showDetails: PropTypes.bool,
+  locationData: PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    url: PropTypes.string.isRequired
+  }),
 };
 
 export default Product;

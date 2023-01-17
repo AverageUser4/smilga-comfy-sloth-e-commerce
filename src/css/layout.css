@@ -222,4 +222,12 @@
     max-width: 500px;
     margin: auto;
   }
+
+  /******************************/
+  .close-siblings {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
 }

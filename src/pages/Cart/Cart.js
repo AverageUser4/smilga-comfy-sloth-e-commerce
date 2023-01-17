@@ -33,6 +33,7 @@ function Cart() {
         sameOfDifferentColorInCart={item.sameProductDiffColorsCount}
         remove={() => cartRemove(item.id, item.color)}
         setIsError={setIsError}
+        locationData={{ url: '/cart', name: 'cart' }}
       />
     );
   }

@@ -54,7 +54,7 @@ function Home() {
               <Loading/>
             :
               <div className="grid">
-                {products.map(product => <Product key={product.id} {...product}/>)}
+                {products.map(product => <Product key={product.id} {...product} locationData={{ name: 'home', url: '/' }}/>)}
               </div>
           }
         </div>

@@ -7,9 +7,12 @@ import { ReactComponent as TrashIcon } from '../../assets/trash.svg';
 import { getColorName, stringifyPrice } from '../../utils/utils';
 import Loading from '../Loading/Loading';
 
-function ProductInCart({ color, quantity, setQuantity, sameOfDifferentColorInCart, remove, id, setIsError, data }) {
+function ProductInCart({ color, quantity, setQuantity, sameOfDifferentColorInCart, remove, id, setIsError, data, locationData }) {
   const isError = data?.isError;
   const price = data?.price;
+  let url = `/products/${id}`;
+  if(locationData)
+    url = { pathname: url, state: locationData };
 
   useEffect(() => {
     if(isError)
@@ -41,14 +44,14 @@ function ProductInCart({ color, quantity, setQuantity, sameOfDifferentColorInCar
 
       <div className={css['first-part']}>
 
-        <Link aria-hidden="true" tabIndex="-1" to={`/products/${id}`}>
+        <Link aria-hidden="true" tabIndex="-1" to={url}>
           <img className={css['image']} src={image} alt={name}/>
         </Link>
 
         <div>
 
           <h4 className="heading heading--no-margin heading--pico heading--capitalized">
-            <Link className={css['heading-link']} to={`/products/${id}`}>
+            <Link className={css['heading-link']} to={url}>
               {name}
             </Link>
           </h4>
@@ -94,7 +97,11 @@ ProductInCart.propTypes = {
   sameOfDifferentColorInCart: PropTypes.number.isRequired,
   remove: PropTypes.func.isRequired,
   setIsError: PropTypes.func,
-  data: PropTypes.object
+  data: PropTypes.object,
+  locationData: PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    url: PropTypes.string.isRequired
+  }),
 };
 
 export default ProductInCart;

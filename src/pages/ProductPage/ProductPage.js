@@ -14,8 +14,6 @@ function ProductPage() {
 
       <StandaloneSection>
 
-        <Link to="/products" className="button button--uppercase">Back to products</Link>
-
         <ProductData setProductName={setProductName}/>
         
       </StandaloneSection>
