@@ -149,7 +149,7 @@ function CartProvider({ children }) {
   
   let totalPrice = cartProductsData.length ? { products: 0, shipping: 0 } : null;
   const overflowingProducts = [];
-  const checkedIDs = [];
+  const IDsCheckedForOverflow = [];
 
   for(let i = 0; i < cartProductsData.length; i++) {
     const item = cartProductsData[i];
@@ -161,12 +161,12 @@ function CartProvider({ children }) {
     totalPrice.products += item.data.price * item.count;
     totalPrice.shipping += item.data.shipping ? 0 : 99 * item.count;
 
-    if(!checkedIDs.includes(item.id)) {
+    if(!IDsCheckedForOverflow.includes(item.id)) {
       const overflow = item.data.stock - (item.count + item.sameProductDiffColorsCount);
       if(overflow < 0)
         overflowingProducts.push({ id: item.id, name: item.data.name, overflow: -overflow })
   
-      checkedIDs.push(item.id);
+      IDsCheckedForOverflow.push(item.id);
     }
   }
   
