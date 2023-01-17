@@ -9,7 +9,9 @@ function Notification({ content = '', type = '', timeout = 3000, dateNow = 0 }) 
   const lastDateRef = useRef(0);
   const pointerDataRef = useRef({});
   const [notifications, setNotifications] = useState([]);
-  const areThereVisible = notifications.findIndex(not => not !== null) !== -1;
+  const areThereVisible = notifications.findIndex(notif => notif) !== -1;
+  const notificationsRef = useRef();
+  notificationsRef.current = notifications;
 
   useEffect(() => {
     if(dateNow === lastDateRef.current)
@@ -49,6 +51,9 @@ function Notification({ content = '', type = '', timeout = 3000, dateNow = 0 }) 
   }
   
   function changeVisibility(index, isVisible = true, remove = false) {
+    if(!notificationsRef.current[index])
+      return;
+
     if(!Number.isInteger(Number(index)))
       throw new Error('Provided index is not an integer.');
 
@@ -69,7 +74,6 @@ function Notification({ content = '', type = '', timeout = 3000, dateNow = 0 }) 
   }
 
   function onPointerDown(event) {
-    console.log(event)
     const { dataset } = event.target;
 
     if(typeof dataset.index === 'undefined')

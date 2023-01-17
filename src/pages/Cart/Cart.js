@@ -6,6 +6,7 @@ import StandaloneSection from '../../components/StandaloneSection/StandaloneSect
 import ProductsInCartHead from '../../components/ProductsInCartHead/ProductsInCartHead.js';
 import TotalPrice from '../../components/TotalPrice/TotalPrice.js';
 import Loading from '../../components/Loading/Loading';
+import Dialog from '../../components/Dialog/Dialog.js';
 import { useCartContext } from '../../utils/CartContext.js';
 import { useAuthContext } from '../../utils/AuthContext.js';
 import useDocumentTitle from '../../hooks/useDocumentTitle';
@@ -15,6 +16,7 @@ function Cart() {
   const { isLoggedIn } = useAuthContext();
   const { cartProductsData, cartChangeCount, cartRemove, cartEmpty, totalPrice, requireFullData } = useCartContext();
   const [isError, setIsError] = useState(false);
+  const [showDialog, setShowDialog] = useState(false);
 
   useEffect(() => requireFullData(), [requireFullData]);
   
@@ -52,6 +54,16 @@ function Cart() {
   return (
     <div>
 
+        <Dialog
+          isShown={showDialog}
+          heading="Are you sure?"
+          message="Do you really want to empty your cart? Don't you like our high-quality products? Or maybe you cannot afford them? Oh... I guess, if you are so *cheap*. Sucker."
+          onConfirm={() => { cartEmpty(); setShowDialog(false); }}
+          onReject={() => { setShowDialog(false); }}
+          confirmText="Yes, I am a moron."
+          rejectText="Sorry, missclick."
+        />
+
       <CurrentPath/>
 
       <StandaloneSection>
@@ -65,7 +77,7 @@ function Cart() {
         <div className="distant-twins-layout standalone standalone--small">
           <Link to="/products" className="button">Continue Shopping</Link>
           <button 
-            onClick={cartEmpty}
+            onClick={() => setShowDialog(prev => !prev)}
             className="button button--color-1"
           >
             Clear Shopping Cart
