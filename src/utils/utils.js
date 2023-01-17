@@ -21,8 +21,10 @@ export function shuffleArray(arr) {
 }
 
 export function stringifyPrice(price) {
-  if(!Number.isInteger(price) || price < 0)
-    throw new Error(`First argument (price) has to be non-negative integer, provided: '${price}'.`);
+  price = parseFloat(price);
+
+  if(Number.isNaN(price) || price < 0)
+    throw new Error(`First argument (price) has to be non-negative number or string that can be parsed to number, provided: '${price}' of type '${typeof price}'.`)
 
   return `$${(price / 100).toFixed(2)}`;
 }

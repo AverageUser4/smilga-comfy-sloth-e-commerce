@@ -1,7 +1,7 @@
 import { act } from 'react-dom/test-utils';
 import { renderHook } from '@testing-library/react';
 import useFetch from '../hooks/useFetch';
-import { mockFetch, sleep } from '../test-helpers/utils';
+import { fetchMockAddImplementation, sleep } from '../test-helpers/utils';
 
 jest.useFakeTimers();
 
@@ -14,7 +14,7 @@ afterEach(() => {
 });
 
 test('has expected initial state', async () => {
-  mockFetch(fetch, 1, 20);
+  fetchMockAddImplementation(fetch, 1, 20);
   const { result } = renderHook(() => useFetch('abc'));
   expect(result.current.isFetching).toBe(true);
   expect(result.current.isError).toBe(false);
@@ -22,7 +22,7 @@ test('has expected initial state', async () => {
 });
 
 test('has expected state after successful fetch', async () => {
-  mockFetch(fetch, { a: 1 }, 20);
+  fetchMockAddImplementation(fetch, { a: 1 }, 20);
   const { result } = renderHook(() => useFetch('abc'));
 
   Promise.resolve().then(() => jest.advanceTimersByTime(20));
@@ -34,7 +34,7 @@ test('has expected state after successful fetch', async () => {
 });
 
 test('has expected state after unsuccessful fetch and logs error to console', async () => {
-  mockFetch(fetch, 'oh no!', 20, true);
+  fetchMockAddImplementation(fetch, 'oh no!', 20, true);
   jest.spyOn(console, 'error').mockImplementation(()=>0);
   const { result } = renderHook(() => useFetch('abc'));
 
@@ -48,7 +48,7 @@ test('has expected state after unsuccessful fetch and logs error to console', as
 });
 
 test('when parseJSON is set to false it returns raw data', async () => {
-  mockFetch(fetch, { a: 1 }, 20);
+  fetchMockAddImplementation(fetch, { a: 1 }, 20);
   const { result } = renderHook(() => useFetch('abc', false));
 
   Promise.resolve().then(() => jest.advanceTimersByTime(20));
@@ -60,7 +60,7 @@ test('when parseJSON is set to false it returns raw data', async () => {
 });
 
 test('fetches again after url change', async () => {
-  mockFetch(fetch, 1, 20);
+  fetchMockAddImplementation(fetch, 1, 20);
   const { result, rerender } = renderHook((url = 'first', parseJSON = false) => useFetch(url, parseJSON));
 
   Promise.resolve().then(() => jest.advanceTimersByTime(20));

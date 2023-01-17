@@ -2,3 +2,4 @@
 - add tests
 - after pressing hide all button in Notification components the button itself disappears and then re-appears for a moment
 - when notifications are getting hidden theirs movements are kinda weird
+- when you navigate to product page form Home or Cart make button Back to... place you've navigated from, not only back to products

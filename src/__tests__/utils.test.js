@@ -57,7 +57,7 @@ describe('stringifyPrice', () => {
   test('throws when invalid argument is provided', () => {
     expect(() => stringifyPrice()).toThrow();
     expect(() => stringifyPrice(-10)).toThrow();
-    expect(() => stringifyPrice('999')).toThrow();
+    expect(() => stringifyPrice('x999')).toThrow();
   });
 
   test('returns expected output', () => {

@@ -147,7 +147,7 @@ function CartProvider({ children }) {
     latestUsernameRef.current = username;
   }, [username, cart, getSameProductDiffColorCount]);
   
-  let totalPrice = { products: 0, shipping: 0 };
+  let totalPrice = cartProductsData.length ? { products: 0, shipping: 0 } : null;
   const overflowingProducts = [];
   const checkedIDs = [];
 

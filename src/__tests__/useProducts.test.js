@@ -1,6 +1,6 @@
 import { act } from '@testing-library/react';
 import { renderHook } from '@testing-library/react';
-import { mockFetch, sleep } from '../test-helpers/utils';
+import { fetchMockAddImplementation, sleep } from '../test-helpers/utils';
 import allProducts from '../test-helpers/allProducts.json';
 import useProducts from '../hooks/useProducts';
 
@@ -15,7 +15,7 @@ afterEach(() => {
 });
 
 test('expected initial state', () => {
-  mockFetch(fetch, allProducts, 20);
+  fetchMockAddImplementation(fetch, allProducts, 20);
   const { result } = renderHook(() => useProducts());
 
   expect(result.current.isLoading).toBe(true);
@@ -27,7 +27,7 @@ test('expected initial state', () => {
 });
 
 test('"error" is set to helpful message and "isLoading" = false when fetch throws', async () => {
-  mockFetch(fetch, 'oops', 20, true);
+  fetchMockAddImplementation(fetch, 'oops', 20, true);
   jest.spyOn(console, 'error').mockImplementation(()=>0);
   const { result } = renderHook(() => useProducts());
 
@@ -39,7 +39,7 @@ test('"error" is set to helpful message and "isLoading" = false when fetch throw
 });
 
 test('after successful fetch returned properties have expected values', async () => {
-  mockFetch(fetch, allProducts, 20);
+  fetchMockAddImplementation(fetch, allProducts, 20);
   const { result } = renderHook(() => useProducts());
 
   Promise.resolve().then(() => jest.advanceTimersByTime(20));
@@ -73,7 +73,7 @@ test('after successful fetch returned properties have expected values', async ()
 });
 
 test('changing filters has no effect on all* properties and does not set isLoading to true', async () => {
-  mockFetch(fetch, allProducts, 20);
+  fetchMockAddImplementation(fetch, allProducts, 20);
   const { result, rerender } = renderHook((options = {}) => useProducts(options));
 
   Promise.resolve().then(() => jest.advanceTimersByTime(20));
@@ -89,7 +89,7 @@ test('changing filters has no effect on all* properties and does not set isLoadi
 });
 
 test('featuredOnly filter works', async () => {
-  mockFetch(fetch, allProducts, 20);
+  fetchMockAddImplementation(fetch, allProducts, 20);
   const { result } = renderHook((options = { featuredOnly: true }) => useProducts(options));
 
   Promise.resolve().then(() => jest.advanceTimersByTime(20));
@@ -99,7 +99,7 @@ test('featuredOnly filter works', async () => {
 });
 
 test('queryString filter works', async () => {
-  mockFetch(fetch, allProducts, 20);
+  fetchMockAddImplementation(fetch, allProducts, 20);
   const { result } = renderHook((options = { queryString: 'le' }) => useProducts(options));
 
   Promise.resolve().then(() => jest.advanceTimersByTime(20));
@@ -109,7 +109,7 @@ test('queryString filter works', async () => {
 });
 
 test('category filter works', async () => {
-  mockFetch(fetch, allProducts, 20);
+  fetchMockAddImplementation(fetch, allProducts, 20);
   const { result } = renderHook((options = { category: 'kids' }) => useProducts(options));
 
   Promise.resolve().then(() => jest.advanceTimersByTime(20));
@@ -119,7 +119,7 @@ test('category filter works', async () => {
 });
 
 test('company filter works', async () => {
-  mockFetch(fetch, allProducts, 20);
+  fetchMockAddImplementation(fetch, allProducts, 20);
   const { result } = renderHook((options = { company: 'liddy' }) => useProducts(options));
 
   Promise.resolve().then(() => jest.advanceTimersByTime(20));
@@ -129,7 +129,7 @@ test('company filter works', async () => {
 });
 
 test('color filter works', async () => {
-  mockFetch(fetch, allProducts, 20);
+  fetchMockAddImplementation(fetch, allProducts, 20);
   const { result } = renderHook((options = { color: '#000' }) => useProducts(options));
 
   Promise.resolve().then(() => jest.advanceTimersByTime(20));
@@ -139,7 +139,7 @@ test('color filter works', async () => {
 });
 
 test('priceMin filter works', async () => {
-  mockFetch(fetch, allProducts, 20);
+  fetchMockAddImplementation(fetch, allProducts, 20);
   const { result } = renderHook((options = { priceMin: 1099 }) => useProducts(options));
 
   Promise.resolve().then(() => jest.advanceTimersByTime(20));
@@ -149,7 +149,7 @@ test('priceMin filter works', async () => {
 });
 
 test('priceMax filter works', async () => {
-  mockFetch(fetch, allProducts, 20);
+  fetchMockAddImplementation(fetch, allProducts, 20);
   const { result } = renderHook((options = { priceMax: 800 }) => useProducts(options));
 
   Promise.resolve().then(() => jest.advanceTimersByTime(20));
@@ -159,7 +159,7 @@ test('priceMax filter works', async () => {
 });
 
 test('orderBy filter works', async () => {
-  mockFetch(fetch, allProducts, 20);
+  fetchMockAddImplementation(fetch, allProducts, 20);
   const { result, rerender } = renderHook((options = { orderBy: 'nameDesc' }) => useProducts(options));
 
   Promise.resolve().then(() => jest.advanceTimersByTime(20));
@@ -186,7 +186,7 @@ test('orderBy filter works', async () => {
 });
 
 test('multiple filters work together', async () => {
-  mockFetch(fetch, allProducts, 20);
+  fetchMockAddImplementation(fetch, allProducts, 20);
   const { result, rerender } = renderHook((options = { orderBy: 'priceAsc', company: 'marcos', color: '#00ff00' }) => useProducts(options));
 
   Promise.resolve().then(() => jest.advanceTimersByTime(20));
