@@ -14,7 +14,7 @@ function ProfileComponent(props, lastFocusableRef) {
   const [showProfile, setShowProfile] = useState(false);
   const [showLogoutDialog, setShowLogoutDialog] = useState(false);
   const { cartProductsData } = useCartContext();
-  const { isLoggedIn, logout } = useAuthContext();
+  const { isLoggedIn, logout, username } = useAuthContext();
 
   return (
     <>
@@ -31,51 +31,52 @@ function ProfileComponent(props, lastFocusableRef) {
 
         <button
           aria-controls={ID}
-          className={css['main-button']}
+          className={`${css['button']} ${css['button--main']}`}
           onClick={() => setShowProfile(prev => !prev)}
         >
-          Profile <ProfileIcon/>
+          {username ? username : 'Guest'} <ProfileIcon/>
         </button>
 
-        {
-          showProfile &&
-            <div id={ID} className={css['profile']}>
+          <div 
+            id={ID}
+            className={`${css['profile']} ${showProfile ? css['profile--visible'] : ''}`}
+            onClick={() => setShowProfile(false)}
+          >
+            <NavLink 
+              to="/cart"
+              className={css["button"]}
+              activeClassName={css["button--active"]}
+            >
+              Cart 
+              <ShoppingCart aria-hidden="true"/>
               {
-                isLoggedIn ?
-                  <button 
-                    className={css['main-button']}
-                    ref={lastFocusableRef}
-                    onClick={() => setShowLogoutDialog(prev => !prev)}
-                  >
-                    Logout <RemovePerson aria-hidden="true"/>
-                  </button>
-                :
-                  <NavLink 
-                    to="/login"
-                    className={css["main-button"]} 
-                    activeClassName={css["main-button--active"]} 
-                    ref={lastFocusableRef}
-                  >
-                    Login <AddPerson aria-hidden="true"/>
-                  </NavLink>
+                cartProductsData.length ? 
+                  <span aria-description="Products in cart." className={css['cart-count']}>{cartProductsData.length}</span> 
+                : 
+                  null
               }
+            </NavLink>
 
-              <NavLink 
-                to="/cart"
-                className={css["main-button"]}
-                activeClassName={css["main-button--active"]}
-              >
-                Cart 
-                <ShoppingCart aria-hidden="true"/>
-                {
-                  cartProductsData.length ? 
-                    <span aria-description="Products in cart." className={css['cart-count']}>{cartProductsData.length}</span> 
-                  : 
-                    null
-                }
-              </NavLink>
-            </div>
-        }
+            {
+              isLoggedIn ?
+                <button 
+                  className={css['button']}
+                  ref={lastFocusableRef}
+                  onClick={() => setShowLogoutDialog(prev => !prev)}
+                >
+                  Logout <RemovePerson aria-hidden="true"/>
+                </button>
+              :
+                <NavLink
+                  to="/login"
+                  className={css["button"]} 
+                  activeClassName={css["button--active"]} 
+                  ref={lastFocusableRef}
+                >
+                  Login <AddPerson aria-hidden="true"/>
+                </NavLink>
+            }
+          </div>
 
       </div>
 

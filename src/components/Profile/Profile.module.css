@@ -2,7 +2,7 @@
   position: relative;
 }
 
-.main-button {
+.button {
   position: relative;
 
   display: flex;
@@ -15,31 +15,21 @@
   border: none;
   background-color: transparent;
 }
-.main-button:hover,
-.main-button--active {
+.button:hover,
+.button--active {
   text-decoration: 2px underline currentColor;
   text-underline-offset: 8px;
 }
-.main-button > svg {
+.button > svg {
   height: 20px;
+}
+.button--main {
+  display: none;
 }
 
 .profile {
-  display: grid;
-  justify-items: center;
-
-  position: absolute;
-  top: calc(100% + 8px);
-  right: 0;
-
-  width: 200px;
-  padding: 16px;
-  
-  background-color: white;
-  box-shadow: 0 0 5px rgba(32, 32, 32, 0.5);
-  border-radius: var(--border-radius);
-
-  box-sizing: border-box;
+  display: flex;
+  gap: 16px;
 }
 
 .cart-count {
@@ -58,4 +48,32 @@
   background-color: var(--brown-main);
   color: white;
   font-size: 12px;
+}
+
+@media(min-width: 980px) {
+  .button--main {
+    display: block;
+  }
+  
+  .profile {
+    display: none;
+    justify-items: center;
+    gap: 12px;
+  
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+  
+    width: 200px;
+    padding: 16px;
+    
+    background-color: white;
+    box-shadow: 0 0 5px rgba(32, 32, 32, 0.5);
+    border-radius: var(--border-radius);
+  
+    box-sizing: border-box;
+  }
+  .profile--visible {
+    display: grid;
+  }
 }

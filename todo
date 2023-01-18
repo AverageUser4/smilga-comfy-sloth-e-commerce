@@ -7,3 +7,6 @@ but not allowing overflow to happen may be enough
 - after cart gets merged, add some sort of a message informing user about it
 - add sync between open tabs using messagins api etc
 - instead of Logout button show Profile button which opens widget with Logout and Show Cart Changelog and maybe something else
+
+- Profile component currently breaks focusTrap (ref is forwarded to it but something does not work)
+- Profile component may use custom logic (it needs to be closed when page changes, good thing to put in custom hook)
