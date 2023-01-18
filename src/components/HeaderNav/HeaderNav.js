@@ -1,17 +1,13 @@
 import React, { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
-import { ReactComponent as ShoppingCart } from '../../assets/shopping-cart.svg';
-import { ReactComponent as AddPerson } from '../../assets/add-person.svg';
-import { ReactComponent as RemovePerson } from '../../assets/remove-person.svg';
 import { ReactComponent as MenuClose } from '../../assets/menu-close.svg';
 import Logo from '../Logo/Logo.js';
 import css from './HeaderNav.module.css';
 import useFocusTrap from '../../hooks/useFocusTrap';
 import useAppearanceTransition from '../../hooks/useAppearanceTransition';
 import { useAuthContext } from '../../utils/AuthContext';
-import { useCartContext } from '../../utils/CartContext';
-import Dialog from '../Dialog/Dialog';
+import Profile from '../Profile/Profile';
 
 const phases = [
   css['nav'],
@@ -20,10 +16,8 @@ const phases = [
 ];
 
 function HeaderNav({ shouldBeVisible, close, shouldTrap }) {
-  const { isLoggedIn, logout } = useAuthContext();
-  const { cartProductsData } = useCartContext();
+  const { isLoggedIn } = useAuthContext();
   const [navClasses, setNavClasses] = useState(phases[0]);
-  const [showLogoutDialog, setShowLogoutDialog] = useState(false);
 
   const firstFocusableRef = useRef();
   const defaultFocusableRef = useRef();
@@ -34,13 +28,6 @@ function HeaderNav({ shouldBeVisible, close, shouldTrap }) {
   
   return (
     <>
-      <Dialog
-        isShown={showLogoutDialog}
-        heading="Are you sure?"
-        message="Do you really want to log out?"
-        onConfirm={() => { setShowLogoutDialog(false); logout(); }}
-        onReject={() => setShowLogoutDialog(false)}
-      />
 
       <nav id="header-nav" className={navClasses}>
 
@@ -69,44 +56,9 @@ function HeaderNav({ shouldBeVisible, close, shouldTrap }) {
           }
         </ul>
 
-        <ul className={css["profile-list"]}>
-          <li>
-            <NavLink 
-              to="/cart"
-              className={css["profile-link"]}
-              activeClassName={css["profile-link--active"]}
-            >
-              Cart 
-              <ShoppingCart aria-hidden="true"/>
-              {
-                cartProductsData.length ? 
-                  <span aria-description="Products in cart." className={css['cart-count']}>{cartProductsData.length}</span> 
-                : 
-                  null
-              }
-            </NavLink>
-          </li>
-          <li>
-            {
-              isLoggedIn ?
-                <button 
-                  className={css["profile-link"]} ref={lastFocusableRef}
-                  onClick={() => setShowLogoutDialog(prev => !prev)}
-                >
-                  Logout <RemovePerson aria-hidden="true"/>
-                </button>
-              :
-                <NavLink 
-                  to="/login"
-                  className={css["profile-link"]} 
-                  activeClassName={css["profile-link--active"]} 
-                  ref={lastFocusableRef}
-                >
-                  Login <AddPerson aria-hidden="true"/>
-                </NavLink>
-            }
-          </li>
-        </ul>
+        <div className={css['profile-container']}>
+          <Profile/>
+        </div>
         
       </nav>
     </>
