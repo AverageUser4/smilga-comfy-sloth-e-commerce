@@ -1,5 +1,24 @@
 - make cart merging work properly (in CartContext)
 - add end to end tests
-- add are you sure dialog to clear your cart and maybe some other places (logout and pay in checkout and maybe removal of single
-product in cart)
 - check Dialog component and places it is used in for accessibility issues
+- add products list to checkout: product name (color) x(count) - price
+- if product overflows in ProductInCart (has count > stock) the overflowing count is subtracted FROM STOCK
+eg. count: 14, stock: 10, ends up being count: 6 - may investigate why this happens and if it happens consistently,
+but not allowing overflow to happen may be enough
+- cartMergeGuestWithUser ideally should not remove items form cart of the user (only from guest if needed), but it does when:
+  - user cart:
+    - product A (stock 3):
+      - color: red
+      - count: 1
+    - product A:
+      - color: green
+      - count: 1
+  - guest cart:
+    - product A:
+      - color: red
+      - stock: 2
+  - outcome cart:
+    - productA:
+      - color: red
+      - count: 3
+  - the one with green color gets removed, because its later in the array

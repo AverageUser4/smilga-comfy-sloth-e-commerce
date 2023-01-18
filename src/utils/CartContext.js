@@ -44,6 +44,40 @@ function CartProvider({ children }) {
     return sameProductDiffColorsCount;
   }, []);
 
+  const cartMergeGuestWithUser = useCallback((cart, username) => {
+    const guestCart = [...cart];
+    const userCart = getCartFromStorage(username);    
+    const outcomeCart = userCart;
+
+    for(let i = 0; i < guestCart.length; i++) {
+      const guestItem = guestCart[i];
+      const sameItemIndex = userCart.findIndex(userItem => 
+        userItem.id === guestItem.id && userItem.color === guestItem.color
+      );
+
+      if(sameItemIndex !== -1) {
+        outcomeCart[sameItemIndex].count = Math.min(guestItem.count, guestItem.stock);
+      } else {
+        outcomeCart.push(guestItem);
+      }
+    }
+
+    for(let i = outcomeCart.length - 1; i >= 0; i--) {
+      const item = outcomeCart[i];
+      const sameProductDiffColorsCount = getSameProductDiffColorCount(outcomeCart, item);
+
+      const availableSpace = item.stock - sameProductDiffColorsCount;
+
+      if(availableSpace <= 0)
+        outcomeCart.splice(i, 1);
+      else
+        item.count = Math.min(item.count, availableSpace);
+    }
+
+    setCart(outcomeCart);
+    saveCartToStorage(username, outcomeCart);
+  }, [getSameProductDiffColorCount]);
+
   useEffect(() => {
     const data = cart.map(item => {
       const sameProductDiffColorsCount = getSameProductDiffColorCount(cart, item);
@@ -90,62 +124,16 @@ function CartProvider({ children }) {
   useEffect(() => {
     if(username === latestUsernameRef.current)
       return;
-
-    function cartMergeGuestWithUser() {
-      const guestCart = [...cart];
-      const userCart = getCartFromStorage(username);
-
-      const tempOutcomeCart = userCart;
-      for(let i = 0; i < guestCart.length; i++) {
-        const item = guestCart[i];
-        if(!userCart.find(product => product.id === item.id))
-          tempOutcomeCart.push(item);
-      }
-
-      setCart(tempOutcomeCart);
-      
-      // TODO: make this more sopthisticated algorithm work
-      // const mergedCart = [...userCart, ...guestCart];
-      // const outcomeCart = userCart;
-
-      // if(!guestCart.length) {
-      //   setCart(userCart)
-      //   return;
-      // }
-
-      // const allUnavailableSpaces = new Map();
-
-      // for(let i = 0; i < guestCart.length; i++) {
-      //   const guestItem = guestCart[i];
-      //   const sameProductDiffColorsCount = getSameProductDiffColorCount(mergedCart, guestItem);
-      //   const unavailableSpace = allUnavailableSpaces.get(guestItem.id) || 0;
-      //   const inCart = sameProductDiffColorsCount + guestItem.count;
-
-      //   if(inCart + unavailableSpace <= guestItem.stock) {
-      //     outcomeCart.push(guestItem);
-      //   } else {
-      //     const remainingSpace = guestItem.stock - unavailableSpace - sameProductDiffColorsCount;
-
-      //     if(remainingSpace <= 0)
-      //       continue;
-
-      //     const newCount = Math.min(remainingSpace, guestItem.count);
-      //     outcomeCart.push({ ...guestItem, count: newCount });
-      //     allUnavailableSpaces.set(guestItem.id, unavailableSpace + newCount);
-      //   }
-      // }
-
-      // setCart(outcomeCart);
-    }
       
     if(latestUsernameRef.current === '') {
-      cartMergeGuestWithUser();
+      cartMergeGuestWithUser(cart, username);
       saveCartToStorage('', []);
-    } else 
+    } else {
       setCart(getCartFromStorage(username));
+    }
 
     latestUsernameRef.current = username;
-  }, [username, cart, getSameProductDiffColorCount]);
+  }, [username, cart, cartMergeGuestWithUser]);
   
   let totalPrice = cartProductsData.length ? { products: 0, shipping: 0 } : null;
   const overflowingProducts = [];
