@@ -27,7 +27,7 @@ function HeaderNav({ shouldBeVisible, close, shouldTrap }) {
   const defaultFocusableRef = useRef();
   const lastFocusableRef = useRef();
 
-  useFocusTrap(close, firstFocusableRef.current, lastFocusableRef.current, shouldTrap, defaultFocusableRef.current, 60);
+  useFocusTrap(close, shouldTrap, firstFocusableRef.current, lastFocusableRef.current, defaultFocusableRef.current, 60);
   useAppearanceTransition(shouldBeVisible, setNavClasses, phases, 300);
   
   return (

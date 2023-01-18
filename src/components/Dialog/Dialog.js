@@ -8,7 +8,7 @@ function Dialog({ heading, message, onConfirm, onReject, type = '', confirmText 
   const setForceRerender = useState(false)[1];
   const firstFocusableRef = useRef();
   const lastFocusableRef = useRef();
-  useFocusTrap(onReject || (()=>0), firstFocusableRef.current, lastFocusableRef.current, isShown, firstFocusableRef.current);
+  useFocusTrap(onReject || (()=>0), isShown, firstFocusableRef.current, lastFocusableRef.current, firstFocusableRef.current);
 
   useEffect(() => {
     if(isShown)

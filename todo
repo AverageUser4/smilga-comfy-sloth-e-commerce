@@ -1,4 +1,3 @@
 - make cart merging work properly (in CartContext)
 - add end to end tests
 - add are you sure dialog to clear your cart and maybe some other places
-- useFocusTrap does not trap Dialog component, figure out why, etc.

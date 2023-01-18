@@ -2,32 +2,33 @@ import { useEffect, useState } from 'react';
 
 /*
   - close: function to close modal
+  - isActive: should be equal to something like isModalVisible (bool)
   - firstFocusable: first element inside modal that can receive focus
   - lastFocusable: last element inside modal that can receive focus
-  - shouldTrap: should be equal to something like isModalVisible (bool)
   - defaultFocusable: DOM node that should be focused when element appears on screen
   - autoFocusDelay: add delay to autofocus if element is transitioned and eg. has display: none for some time
 */
-export default function useFocusTrap(close, firstFocusable, lastFocusable, shouldTrap, defaultFocusable, autoFocusDelay = 0) {
+export default function useFocusTrap(close, isActive, firstFocusable, lastFocusable, defaultFocusable, autoFocusDelay = 0) {
   const [autoFocusHappened, setAutoFocusHappened] = useState(false);
 
   useEffect(() => {
-    if(!shouldTrap && autoFocusHappened)
+    if(!isActive && autoFocusHappened)
       setAutoFocusHappened(false);
-  }, [shouldTrap, autoFocusHappened]);
+  }, [isActive, autoFocusHappened]);
   
   useEffect(() => {
     let timeoutID;
 
-    if(defaultFocusable && shouldTrap && !autoFocusHappened) {
-      setTimeout(() => {
-        defaultFocusable.focus();
-        setAutoFocusHappened(true);
-      }, autoFocusDelay);
+    function autoFocus() {
+      defaultFocusable.focus();
+      setAutoFocusHappened(true);
     }
 
+    if(defaultFocusable && isActive && !autoFocusHappened)
+      autoFocusDelay ? setTimeout(autoFocus, autoFocusDelay) : autoFocus();
+
     return () => clearTimeout(timeoutID);
-  }, [defaultFocusable, shouldTrap, autoFocusHappened, autoFocusDelay]);
+  }, [defaultFocusable, isActive, autoFocusHappened, autoFocusDelay]);
   
   useEffect(() => {
     function onKeyDown(event) {
@@ -36,7 +37,7 @@ export default function useFocusTrap(close, firstFocusable, lastFocusable, shoul
       if(key === 'Esc' || key === 'Escape')
         close();
 
-      if(shouldTrap && key === 'Tab') {
+      if(isActive && key === 'Tab') {
         if(!shiftKey && document.activeElement === lastFocusable) {
           event.preventDefault();
           firstFocusable?.focus();
@@ -47,8 +48,9 @@ export default function useFocusTrap(close, firstFocusable, lastFocusable, shoul
       }
     }
 
-    window.addEventListener('keydown', onKeyDown);
+    if(isActive)
+      window.addEventListener('keydown', onKeyDown);
 
     return () => window.removeEventListener('keydown', onKeyDown);
-  }, [shouldTrap, close, firstFocusable, lastFocusable]);
+  }, [isActive, close, firstFocusable, lastFocusable]);
 }

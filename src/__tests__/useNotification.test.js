@@ -10,7 +10,7 @@ function TestComponent() {
 
   return (
     <div>
-      <NotificationElement/>
+      {NotificationElement}
 
       <button onClick={() => notifyUser('Adam')}>sendAdam</button>
       <button onClick={() => notifyUser('Eva')}>sendEva</button>

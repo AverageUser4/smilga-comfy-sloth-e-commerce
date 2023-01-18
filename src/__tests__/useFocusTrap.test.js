@@ -1,26 +1,34 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import PropTypes from 'prop-types';
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import useFocusTrap from '../hooks/useFocusTrap';
+import { sleep } from '../test-helpers/utils';
+import { act } from 'react-dom/test-utils';
 
-function TestComponent({ close, shouldTrap = true }) {
+jest.useFakeTimers();
+
+function TestComponent({ close, autoFocus = false, autoFocusDelay = 0 }) {
+  const [isVisible, setIsVisible] = useState(false);
   const firstRef = useRef();
   const lastRef = useRef();
-  useFocusTrap(close, firstRef.current, lastRef.current, shouldTrap);
+  useFocusTrap(
+    close, isVisible, firstRef.current, lastRef.current,
+    autoFocus && firstRef.current, autoFocusDelay,
+  );
   
   return (
     <div>
 
-      <button>before</button>
+      <button onClick={() => setIsVisible(true)}>open</button>
 
       <nav>
-        <button ref={firstRef}>one</button>
-        <button>two</button>
-        <button ref={lastRef}>three</button>
+        <button ref={firstRef}>close</button>
+        <button>inside 1</button>
+        <button ref={lastRef}>inside 2</button>
       </nav>
 
-      <button>after</button>
+      <button>outside</button>
 
     </div>
   );
@@ -29,6 +37,8 @@ function TestComponent({ close, shouldTrap = true }) {
 TestComponent.propTypes = {
   close: PropTypes.func,
   shouldTrap: PropTypes.bool,
+  autoFocus: PropTypes.bool,
+  autoFocusDelay: PropTypes.number,
 };
 
 test('close callback is called when "Escape" key is pressed', () => {
@@ -40,11 +50,51 @@ test('close callback is called when "Escape" key is pressed', () => {
     />
   );
 
+  userEvent.click(screen.getByRole('button', { name: /open/i }));
+  
   expect(closeMock).not.toHaveBeenCalled();
   
   userEvent.keyboard('{Escape}');
 
   expect(closeMock).toHaveBeenCalledTimes(1);
+});
+
+test('if autoFocus = true and autoFocusDelay = 0, the first element gets immediately focused', () => {
+  render(
+    <TestComponent
+      close={()=>0}
+      shouldTrap={true}
+      autoFocus={true}
+    />
+  );
+  const first = screen.getByRole('button', { name: /close/i });
+
+  userEvent.click(screen.getByRole('button', { name: /open/i }));
+
+  expect(first).toHaveFocus();
+});
+
+test('if autoFocus = true and autoFocusDelay > 0, the first element gets focused after delay', async () => {
+  render(
+    <TestComponent
+      close={()=>0}
+      shouldTrap={true}
+      autoFocus={true}
+      autoFocusDelay={20}
+    />
+  );
+  const first = screen.getByRole('button', { name: /close/i });
+
+  userEvent.click(screen.getByRole('button', { name: /open/i }));
+  expect(first).not.toHaveFocus();
+
+  Promise.resolve().then(() => jest.advanceTimersByTime(19));
+  await act(() => sleep());
+  expect(first).not.toHaveFocus();
+
+  Promise.resolve().then(() => jest.advanceTimersByTime(1));
+  await act(() => sleep());
+  expect(first).toHaveFocus();
 });
 
 /* 
