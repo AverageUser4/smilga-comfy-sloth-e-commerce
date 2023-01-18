@@ -51,12 +51,17 @@ function CartProvider({ children }) {
 
     for(let i = 0; i < guestCart.length; i++) {
       const guestItem = guestCart[i];
-      const sameItemIndex = userCart.findIndex(userItem => 
+      const sameItemIndex = outcomeCart.findIndex(userItem => 
         userItem.id === guestItem.id && userItem.color === guestItem.color
       );
 
       if(sameItemIndex !== -1) {
-        outcomeCart[sameItemIndex].count = Math.min(guestItem.count, guestItem.stock);
+        const outcomeItem = outcomeCart[sameItemIndex];
+        const sameProductDiffColorsCount = getSameProductDiffColorCount(outcomeCart, outcomeItem);
+        const availableSpace = outcomeItem.stock - sameProductDiffColorsCount;
+
+        if(availableSpace)
+          outcomeItem.count = Math.min(outcomeItem.count + guestItem.count, availableSpace);
       } else {
         outcomeCart.push(guestItem);
       }
