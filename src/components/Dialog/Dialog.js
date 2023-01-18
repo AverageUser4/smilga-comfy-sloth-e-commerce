@@ -5,14 +5,15 @@ import useFocusTrap from '../../hooks/useFocusTrap';
 
 function Dialog({ heading, message, onConfirm, onReject, type = '', confirmText = 'Yes', rejectText = 'No', isShown }) {
   const [ID] = useState(Math.random());
+  const setForceRerender = useState(false)[1];
   const firstFocusableRef = useRef();
   const lastFocusableRef = useRef();
-  console.log(isShown)
-  useFocusTrap(onReject || (()=>0), firstFocusableRef.current, lastFocusableRef.current, isShown);
-  
+  useFocusTrap(onReject || (()=>0), firstFocusableRef.current, lastFocusableRef.current, isShown, firstFocusableRef.current);
+
   useEffect(() => {
-    firstFocusableRef.current.focus();
-  }, []);
+    if(isShown)
+      setForceRerender(prev => !prev);
+  }, [isShown, setForceRerender]);
   
   if(!isShown)
     return null;

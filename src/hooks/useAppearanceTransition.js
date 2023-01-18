@@ -13,8 +13,6 @@ export default function useAppearanceTransition(
   phases,
   // duration of transition in milliseconds
   transitionDuration,
-  // DOM node that should be focused when element appears on screen
-  defaultFocusable = null,
 ) {
   useEffect(() => {
     let timeoutA, timeoutB;
@@ -24,7 +22,6 @@ export default function useAppearanceTransition(
       
       timeoutA = setTimeout(() => {
         setClasses(phases[2]);
-        defaultFocusable?.focus();
       }, 50);
     }
 
@@ -43,5 +40,5 @@ export default function useAppearanceTransition(
       clearTimeout(timeoutA);
       clearTimeout(timeoutB);
     };
-  }, [shouldBeVisible, defaultFocusable, phases, setClasses, transitionDuration]);
+  }, [shouldBeVisible, phases, setClasses, transitionDuration]);
 }
