@@ -5,20 +5,6 @@
 - if product overflows in ProductInCart (has count > stock) the overflowing count is subtracted FROM STOCK
 eg. count: 14, stock: 10, ends up being count: 6 - may investigate why this happens and if it happens consistently,
 but not allowing overflow to happen may be enough
-- cartMergeGuestWithUser ideally should not remove items form cart of the user (only from guest if needed), but it does when:
-  - user cart:
-    - product A (stock 3):
-      - color: red
-      - count: 1
-    - product A:
-      - color: green
-      - count: 1
-  - guest cart:
-    - product A:
-      - color: red
-      - stock: 2
-  - outcome cart:
-    - productA:
-      - color: red
-      - count: 3
-  - the one with green color gets removed, because its later in the array
+- after cart gets merged, add some sort of a message informing user about it
+- add sync between open tabs using messagins api etc
+- instead of Logout button show Profile button which opens widget with Logout and Show Cart Changelog and maybe something else

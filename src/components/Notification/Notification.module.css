@@ -19,7 +19,7 @@
   pointer-events: none;
   box-sizing: border-box;
   overflow: hidden auto;
-  z-index: 10;
+  z-index: 15;
 }
 
 .notification {

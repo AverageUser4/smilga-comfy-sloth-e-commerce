@@ -1,7 +1,9 @@
 import React, { createContext, useContext, useState, useEffect, useRef, useCallback } from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import { useAuthContext } from './AuthContext';
 import { SINGLE_PRODUCT } from './API_Endpoints';
+import { getColorName } from '../utils/utils';
 
 function getCartFromStorage(username) {
   if(typeof username !== 'string')
@@ -33,6 +35,7 @@ function CartProvider({ children }) {
   const [IDsToData, setIDsToData] = useState(new Map());
   const [cartProductsData, setCartProductsData] = useState([]);
   const fetchedIDsRef = useRef([]);
+  const [mergeNotificationData, setMergeNotificationData] = useState({ content: '', timeout: 10000, type: '', data: null });
   
   const getSameProductDiffColorCount = useCallback((cart, item) => {
     let sameProductDiffColorsCount = 0;
@@ -48,6 +51,8 @@ function CartProvider({ children }) {
     const guestCart = [...cart];
     const userCart = getCartFromStorage(username);    
     const outcomeCart = userCart;
+    const dataListItems = [];
+    let content = <Link to="/cart-changelog">check this out</Link>;
 
     for(let i = 0; i < guestCart.length; i++) {
       const guestItem = guestCart[i];
@@ -60,11 +65,32 @@ function CartProvider({ children }) {
         const sameProductDiffColorsCount = getSameProductDiffColorCount(outcomeCart, outcomeItem);
         const availableSpace = outcomeItem.stock - sameProductDiffColorsCount;
 
-        if(availableSpace)
+        if(availableSpace) {
+          const oldCount = outcomeItem.count;
           outcomeItem.count = Math.min(outcomeItem.count + guestItem.count, availableSpace);
+
+          if(oldCount !== outcomeItem.count) {
+            dataListItems.push(
+              <li key={i}>
+                Changed amount of ordered product <Link to={`products/${outcomeItem.id}`}>{outcomeItem.name}</Link> ({getColorName(outcomeItem.color)}) from {oldCount} to {outcomeItem.count}.
+              </li>
+            );
+          }
+        }
       } else {
         outcomeCart.push(guestItem);
+        dataListItems.push(
+          <li key={i}>
+            Added product <Link to={`products/${guestItem.id}`}>{guestItem.name}</Link> ({getColorName(guestItem.color)}) x{guestItem.count} to your cart.
+          </li>
+        );
       }
+
+      if(guestCart.length)
+        setMergeNotificationData(prev => ({ 
+          ...prev, content,
+          data: dataListItems.length ? dataListItems : null
+        }));
     }
 
     for(let i = outcomeCart.length - 1; i >= 0; i--) {
@@ -204,7 +230,7 @@ function CartProvider({ children }) {
     return count;
   }
 
-  function cartChangeCount(id, color, count, stock) {
+  function cartChangeCount(id, color, count, stock, name) {
     checkArgs(id, color, count);
     const { index, itemExists } = getItemIndex(id, color, count);
 
@@ -222,10 +248,10 @@ function CartProvider({ children }) {
     if(itemExists)
       copy[index] = { ...copy[index], id, color, count: currentCount + count };
     else {
-      if(typeof stock === 'undefined')
-        throw new Error('When adding brand-new item to cart, stock has to be provided.');
+      if((!stock && stock !== 0) || !name)
+        throw new Error('When adding brand-new item to cart, stock and name have to be provided.');
 
-      copy.push({ id, color, count, stock });
+      copy.push({ id, color, count, stock, name });
     }
 
     setCart(copy);
@@ -256,6 +282,7 @@ function CartProvider({ children }) {
         cartProductsData,
         totalPrice,
         overflowingProducts,
+        mergeNotificationData,
         requireFullData,
         cartGetItemCount,
         cartGetItemTypeCount,

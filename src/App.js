@@ -12,10 +12,14 @@ import Header from './components/Header/Header.js';
 import Footer from './components/Footer/Footer.js';
 import Main from './components/Main/Main.js';
 import Checkout from './pages/Checkout/Checkout.js';
+import Messenger from './components/Messenger/Messenger.js';
+import CartChangelog from './pages/CartChangelog/CartChangelog.js';
 
 export default function App() {
   return (
     <Router>
+
+        <Messenger/>
 
         <Header/>
 
@@ -32,6 +36,10 @@ export default function App() {
 
             <Route path="/about">
               <About/>
+            </Route>
+
+            <Route path="/cart-changelog">
+              <CartChangelog/>
             </Route>
 
             <Route path="/cart">
