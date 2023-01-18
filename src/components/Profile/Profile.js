@@ -8,13 +8,15 @@ import { ReactComponent as ProfileIcon } from '../../assets/profile.svg';
 import { ReactComponent as RemovePerson } from '../../assets/remove-person.svg';
 import { ReactComponent as ShoppingCart } from '../../assets/shopping-cart.svg';
 import { ReactComponent as AddPerson } from '../../assets/add-person.svg';
+import usePopUp from '../../hooks/usePopUp';
 
-function ProfileComponent(props, lastFocusableRef) {
+function ProfileComponent(props, ref) {
   const [ID] = useState(Math.random());
   const [showProfile, setShowProfile] = useState(false);
   const [showLogoutDialog, setShowLogoutDialog] = useState(false);
   const { cartProductsData } = useCartContext();
   const { isLoggedIn, logout, username } = useAuthContext();
+  usePopUp({ isOpen: showProfile, close: () => setShowProfile(false), popUpID: ID, closeOnClickOutside: true });
 
   return (
     <>
@@ -40,7 +42,6 @@ function ProfileComponent(props, lastFocusableRef) {
           <div 
             id={ID}
             className={`${css['profile']} ${showProfile ? css['profile--visible'] : ''}`}
-            onClick={() => setShowProfile(false)}
           >
             <NavLink 
               to="/cart"
@@ -61,8 +62,8 @@ function ProfileComponent(props, lastFocusableRef) {
               isLoggedIn ?
                 <button 
                   className={css['button']}
-                  ref={lastFocusableRef}
-                  onClick={() => setShowLogoutDialog(prev => !prev)}
+                  ref={ref}
+                  onClick={() => { setShowLogoutDialog(prev => !prev); setShowProfile(false); }}
                 >
                   Logout <RemovePerson aria-hidden="true"/>
                 </button>
@@ -71,7 +72,7 @@ function ProfileComponent(props, lastFocusableRef) {
                   to="/login"
                   className={css["button"]} 
                   activeClassName={css["button--active"]} 
-                  ref={lastFocusableRef}
+                  ref={ref}
                 >
                   Login <AddPerson aria-hidden="true"/>
                 </NavLink>

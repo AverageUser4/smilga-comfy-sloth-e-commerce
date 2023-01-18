@@ -57,7 +57,7 @@ function HeaderNav({ shouldBeVisible, close, shouldTrap }) {
         </ul>
 
         <div className={css['profile-container']}>
-          <Profile/>
+          <Profile ref={lastFocusableRef}/>
         </div>
         
       </nav>

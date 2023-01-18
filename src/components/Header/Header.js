@@ -1,25 +1,15 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { useLocation } from 'react-router-dom';
 import Logo from '../Logo/Logo.js';
 import { ReactComponent as MenuBars } from '../../assets/menu-bars.svg';
 import HeaderNav from '../HeaderNav/HeaderNav.js';
 import css from './Header.module.css';
 import SkipToContent from '../SkipToContent/SkipToContent.js';
+import usePopUp from '../../hooks/usePopUp.js';
 
 export default function Header() {
-  const { pathname } = useLocation();
-  const [path, setPath] = useState(pathname);
   const [isNavVisible, setIsNavVisible] = useState(false);
   const lastFocusableRef = useRef();
-  
-  // close nav when user navigates to different page
-  if(pathname !== path) {
-    setPath(pathname);
-
-    if(isNavVisible) {
-      setIsNavVisible(false);
-    }
-  }
+  usePopUp({ isOpen: isNavVisible, close: () => setIsNavVisible(false) });
 
   useEffect(() => {
     function hide() {
