@@ -1,3 +1,5 @@
 - make cart merging work properly (in CartContext)
 - add end to end tests
-- add are you sure dialog to clear your cart and maybe some other places
+- add are you sure dialog to clear your cart and maybe some other places (logout and pay in checkout and maybe removal of single
+product in cart)
+- check Dialog component and places it is used in for accessibility issues

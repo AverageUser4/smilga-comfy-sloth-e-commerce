@@ -1,13 +1,15 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import css from './ProductInCart.module.css';
 import Counter from '../Counter/Counter.js';
+import Dialog from '../Dialog/Dialog.js';
 import { ReactComponent as TrashIcon } from '../../assets/trash.svg';
 import { getColorName, stringifyPrice } from '../../utils/utils';
 import Loading from '../Loading/Loading';
 
 function ProductInCart({ color, quantity, setQuantity, sameOfDifferentColorInCart, remove, id, setIsError, data, locationData }) {
+  const [showDialog, setShowDialog] = useState(false);
   const isError = data?.isError;
   const price = data?.price;
   let url = `/products/${id}`;
@@ -41,6 +43,14 @@ function ProductInCart({ color, quantity, setQuantity, sameOfDifferentColorInCar
 
   return (
     <article className={`cart-products-layout ${css['container']}`}>
+
+      <Dialog
+        isShown={showDialog}
+        heading="Are you sure?"
+        message={`Do you really want to remove ${name} (${getColorName(color)}) from your cart?`}
+        onConfirm={() => { setShowDialog(false); remove(); }}
+        onReject={() => setShowDialog(false)}
+      />
 
       <div className={css['first-part']}>
 
@@ -79,7 +89,7 @@ function ProductInCart({ color, quantity, setQuantity, sameOfDifferentColorInCar
 
         <div aria-description="Subtotal." className={css['medium-screen']}>{stringifyPrice(total)}</div>
 
-        <button className="button button--danger button--square" onClick={remove} aria-label="Remove from cart.">
+        <button className="button button--danger button--square" onClick={() => setShowDialog(prev => !prev)} aria-label="Remove from cart.">
           <TrashIcon className="annoying-garbage-icon" alt="Trash can icon."/>
         </button>
 

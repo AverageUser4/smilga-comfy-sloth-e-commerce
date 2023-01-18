@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from  'react-router-dom';
 import StandaloneSection from '../../components/StandaloneSection/StandaloneSection';
 import CurrentPath from '../../components/CurrentPath/CurrentPath';
+import Dialog from '../../components/Dialog/Dialog';
 import { useAuthContext } from '../../utils/AuthContext';
 import { useCartContext } from '../../utils/CartContext';
 import PayBox from '../../components/PayBox/PayBox';
@@ -13,6 +14,7 @@ function Checkout() {
   const { username, isLoggedIn } = useAuthContext();
   const { cartProductsData, totalPrice, cartEmpty, overflowingProducts, requireFullData } = useCartContext();
   const [hasPaid, setHasPaid] = useState(false);
+  const [showDialog, setShowDialog] = useState(false);
 
   useEffect(() => requireFullData(), [requireFullData]);
   
@@ -56,14 +58,24 @@ function Checkout() {
           </ul>
         </>
       );
-  else if(totalPrice)
+  else if(totalPrice) {
+    const priceString = stringifyPrice(totalPrice.products + totalPrice.shipping);
     content = (
       <>
+        <Dialog
+          isShown={showDialog}
+          heading="Are you sure?"
+          message={`You will have to pay ${priceString}.`}
+          onConfirm={() => { setShowDialog(false); setHasPaid(true); cartEmpty(); }}
+          onReject={() => setShowDialog(false)}
+        />
+
         <h1 className="heading heading--small heading--no-margin">Hello, {username}!</h1>
-        <p className="paragraph paragraph--color-1">Your total is {stringifyPrice(totalPrice.products + totalPrice.shipping)}</p>
-        <PayBox onSubmit={() => { setHasPaid(true); cartEmpty(); }}/>
+        <p className="paragraph paragraph--color-1">Your total is {priceString}</p>
+        <PayBox onSubmit={() => setShowDialog(prev => !prev)}/>
       </>
     );
+  }
 
   return (
     <div>

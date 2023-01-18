@@ -11,6 +11,7 @@ import useFocusTrap from '../../hooks/useFocusTrap';
 import useAppearanceTransition from '../../hooks/useAppearanceTransition';
 import { useAuthContext } from '../../utils/AuthContext';
 import { useCartContext } from '../../utils/CartContext';
+import Dialog from '../Dialog/Dialog';
 
 const phases = [
   css['nav'],
@@ -22,6 +23,7 @@ function HeaderNav({ shouldBeVisible, close, shouldTrap }) {
   const { isLoggedIn, logout } = useAuthContext();
   const { cartProductsData } = useCartContext();
   const [navClasses, setNavClasses] = useState(phases[0]);
+  const [showLogoutDialog, setShowLogoutDialog] = useState(false);
 
   const firstFocusableRef = useRef();
   const defaultFocusableRef = useRef();
@@ -31,73 +33,83 @@ function HeaderNav({ shouldBeVisible, close, shouldTrap }) {
   useAppearanceTransition(shouldBeVisible, setNavClasses, phases, 300);
   
   return (
-    <nav id="header-nav" className={navClasses}>
+    <>
+      <Dialog
+        isShown={showLogoutDialog}
+        heading="Are you sure?"
+        message="Do you really want to log out?"
+        onConfirm={() => { setShowLogoutDialog(false); logout(); }}
+        onReject={() => setShowLogoutDialog(false)}
+      />
 
-      <div className={css['nav-top']}>
-        <Logo 
-          width={175}
-          ref={firstFocusableRef}
-        />
-        <button 
-          className="icon-button icon-button--color-1"
-          onClick={close}
-          ref={defaultFocusableRef}
-          aria-label="Close nav."
-        >
-          <MenuClose aria-hidden="true"/>
-        </button>
-      </div>
+      <nav id="header-nav" className={navClasses}>
 
-      <ul className={css["pages-list"]}>
-        <li><NavLink exact to="/" className={css["pages-link"]} activeClassName={css["pages-link--active"]}>Home</NavLink></li>
-        <li><NavLink to="/about" className={css["pages-link"]} activeClassName={css["pages-link--active"]}>About</NavLink></li>
-        <li><NavLink exact to="/products" className={css["pages-link"]} activeClassName={css["pages-link--active"]}>Products</NavLink></li>
-        {
-          isLoggedIn &&
-            <li><NavLink to="/checkout" className={css["pages-link"]} activeClassName={css["pages-link--active"]}>Checkout</NavLink></li>
-        }
-      </ul>
-
-      <ul className={css["profile-list"]}>
-        <li>
-          <NavLink 
-            to="/cart"
-            className={css["profile-link"]}
-            activeClassName={css["profile-link--active"]}
+        <div className={css['nav-top']}>
+          <Logo 
+            width={175}
+            ref={firstFocusableRef}
+          />
+          <button 
+            className="icon-button icon-button--color-1"
+            onClick={close}
+            ref={defaultFocusableRef}
+            aria-label="Close nav."
           >
-            Cart 
-            <ShoppingCart aria-hidden="true"/>
-            {
-              cartProductsData.length ? 
-                <span aria-description="Products in cart." className={css['cart-count']}>{cartProductsData.length}</span> 
-              : 
-                null
-            }
-          </NavLink>
-        </li>
-        <li>
+            <MenuClose aria-hidden="true"/>
+          </button>
+        </div>
+
+        <ul className={css["pages-list"]}>
+          <li><NavLink exact to="/" className={css["pages-link"]} activeClassName={css["pages-link--active"]}>Home</NavLink></li>
+          <li><NavLink to="/about" className={css["pages-link"]} activeClassName={css["pages-link--active"]}>About</NavLink></li>
+          <li><NavLink exact to="/products" className={css["pages-link"]} activeClassName={css["pages-link--active"]}>Products</NavLink></li>
           {
-            isLoggedIn ?
-              <button 
-                className={css["profile-link"]} ref={lastFocusableRef}
-                onClick={logout}
-              >
-                Logout <RemovePerson aria-hidden="true"/>
-              </button>
-            :
-              <NavLink 
-                to="/login"
-                className={css["profile-link"]} 
-                activeClassName={css["profile-link--active"]} 
-                ref={lastFocusableRef}
-              >
-                Login <AddPerson aria-hidden="true"/>
-              </NavLink>
+            isLoggedIn &&
+              <li><NavLink to="/checkout" className={css["pages-link"]} activeClassName={css["pages-link--active"]}>Checkout</NavLink></li>
           }
-        </li>
-      </ul>
-      
-    </nav>
+        </ul>
+
+        <ul className={css["profile-list"]}>
+          <li>
+            <NavLink 
+              to="/cart"
+              className={css["profile-link"]}
+              activeClassName={css["profile-link--active"]}
+            >
+              Cart 
+              <ShoppingCart aria-hidden="true"/>
+              {
+                cartProductsData.length ? 
+                  <span aria-description="Products in cart." className={css['cart-count']}>{cartProductsData.length}</span> 
+                : 
+                  null
+              }
+            </NavLink>
+          </li>
+          <li>
+            {
+              isLoggedIn ?
+                <button 
+                  className={css["profile-link"]} ref={lastFocusableRef}
+                  onClick={() => setShowLogoutDialog(prev => !prev)}
+                >
+                  Logout <RemovePerson aria-hidden="true"/>
+                </button>
+              :
+                <NavLink 
+                  to="/login"
+                  className={css["profile-link"]} 
+                  activeClassName={css["profile-link--active"]} 
+                  ref={lastFocusableRef}
+                >
+                  Login <AddPerson aria-hidden="true"/>
+                </NavLink>
+            }
+          </li>
+        </ul>
+        
+      </nav>
+    </>
   );
 }
 
