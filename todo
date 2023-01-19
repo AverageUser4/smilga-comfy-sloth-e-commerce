@@ -4,9 +4,5 @@
 - if product overflows in ProductInCart (has count > stock) the overflowing count is subtracted FROM STOCK
 eg. count: 14, stock: 10, ends up being count: 6 - may investigate why this happens and if it happens consistently,
 but not allowing overflow to happen may be enough
-- after cart gets merged, add some sort of a message informing user about it
 - add sync between open tabs using messagins api etc
-- instead of Logout button show Profile button which opens widget with Logout and Show Cart Changelog and maybe something else
-
-- Profile component may use custom logic (it needs to be closed when page changes, good thing to put in custom hook)
-- logging in/out in Profile component breaks focus trap
+- logging in/out in Profile component breaks focus trap (because the 'last focusable' element is changed)

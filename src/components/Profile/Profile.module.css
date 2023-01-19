@@ -17,10 +17,19 @@
   border: none;
   background-color: transparent;
 }
-.button:hover,
-.button--active {
-  text-decoration: 2px underline currentColor;
-  text-underline-offset: 8px;
+.button:hover::after,
+.button--active::after {
+  content: '';
+
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  
+  display: block;
+  width: 100%;
+  height: 2px;
+
+  background-color: var(--black-main);
 }
 .button > svg {
   height: 20px;
@@ -99,7 +108,10 @@
   .button--profile:hover,
   .button--profile--active {
     background-color: var(--gray-light);
-    text-decoration: none;
+  }
+  .button--profile:hover:after,
+  .button--profile--active:after {
+    display: none;
   }
   .button--profile > svg {
     height: 16px;

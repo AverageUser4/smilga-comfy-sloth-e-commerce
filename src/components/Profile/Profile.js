@@ -23,7 +23,7 @@ function ProfileComponent(props, ref) {
     isOpen: showProfile, close: () => setShowProfile(false),
     popUpID, openButtonID, closeOnClickOutside: true
   });
-
+  
   return (
     <>
     
@@ -53,7 +53,7 @@ function ProfileComponent(props, ref) {
             <NavLink 
               to="/cart"
               className={`${css['button']} ${css['button--profile']}`}
-              activeClassName={css["button--profile--active"]}
+              activeClassName={`${css["button--profile--active"]} ${css['button--active']}`}
             >
               Cart 
               <ShoppingCart aria-hidden="true"/>
@@ -70,7 +70,7 @@ function ProfileComponent(props, ref) {
                 <NavLink 
                   to="/cart-changelog"
                   className={`${css['button']} ${css['button--profile']}`}
-                  activeClassName={css["button--profile--active"]}
+                  activeClassName={`${css["button--profile--active"]} ${css['button--active']}`}
                 >
                   Cart Changelog <ChangeLog aria-hidden="true"/>
                 </NavLink>
@@ -89,7 +89,7 @@ function ProfileComponent(props, ref) {
                 <NavLink
                   to="/login"
                   className={`${css['button']} ${css['button--profile']}`} 
-                  activeClassName={css["button--profile--active"]} 
+                  activeClassName={`${css["button--profile--active"]} ${css['button--active']}`} 
                   ref={ref}
                 >
                   Login <AddPerson aria-hidden="true"/>

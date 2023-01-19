@@ -131,7 +131,7 @@ function ProductData({ setProductName }) {
                     className="button button--uppercase"
                     onClick={() => {
                       cartChangeCount(id, color, count, stock, name);
-                      notifyUser(`Added ${name} x${count} to your cart!`);
+                      notifyUser(<p className="paragraph--no-margin">Added {name} x{count} to your <Link to="/cart" className="cool-link">cart</Link>!</p>, '', 5000);
                     }}
                   >
                     Add to cart

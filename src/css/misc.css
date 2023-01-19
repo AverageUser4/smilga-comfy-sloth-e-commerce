@@ -1,5 +1,15 @@
 @layer {
 
+  .cool-link {
+    color: var(--purple);
+  }
+  .cool-link:hover {
+    text-decoration: none;
+  }
+  .cool-link--capitalize {
+    text-transform: capitalize;
+  }
+
   .clean-link {
     text-decoration: none;
   }
