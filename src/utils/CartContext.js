@@ -30,6 +30,7 @@ const CartContext = createContext();
 function CartProvider({ children }) {
   const { username } = useAuthContext();
   const latestUsernameRef = useRef(Math.random());
+  const channelRef = useRef();
   const [cart, setCart] = useState([]);
   const [shouldFetch, setShouldFetch] = useState(false);
   const [IDsToData, setIDsToData] = useState(new Map());
@@ -143,7 +144,31 @@ function CartProvider({ children }) {
 
     setCart(outcomeCart);
     saveCartToStorage(username, outcomeCart);
+    channelRef.current.postMessage({ action: 'cartChange', info: { cart: outcomeCart } });
   }, [getSameProductDiffColorCount]);
+
+  useEffect(() => {
+    channelRef.current = new BroadcastChannel('cart');
+
+    channelRef.current.addEventListener('message', (event) => {
+      const { action, info } = event.data;
+
+      switch(action) {
+        case 'cartChange':
+          setCart(info.cart);
+          break;
+
+        default:
+          throw new Error(`Unrecognized message data: ${action}`);
+      }
+    });
+
+    channelRef.current.addEventListener('messageerror', (event) => {
+      console.error('messageerror in AuthProvider', event);
+    });
+    
+    return () => channelRef.current.close();
+  }, []);
 
   useEffect(() => {
     const data = cart.map(item => {
@@ -292,11 +317,13 @@ function CartProvider({ children }) {
 
     setCart(copy);
     saveCartToStorage(username, copy);
+    channelRef.current.postMessage({ action: 'cartChange', info: { cart: copy } });
   }
   
   function cartEmpty() {
     setCart([]);
     saveCartToStorage(username, []);
+    channelRef.current.postMessage({ action: 'cartChange', info: { cart: [] } });
   }
 
   function cartRemove(id, color) {
@@ -310,6 +337,7 @@ function CartProvider({ children }) {
     copy.splice(index, 1);
     setCart(copy);
     saveCartToStorage(username, copy);
+    channelRef.current.postMessage({ action: 'cartChange', info: { cart: copy } });
   }
   
   return (
