@@ -8,15 +8,21 @@ import { ReactComponent as ProfileIcon } from '../../assets/profile.svg';
 import { ReactComponent as RemovePerson } from '../../assets/remove-person.svg';
 import { ReactComponent as ShoppingCart } from '../../assets/shopping-cart.svg';
 import { ReactComponent as AddPerson } from '../../assets/add-person.svg';
+import { ReactComponent as ChangeLog } from '../../assets/changelog.svg';
 import usePopUp from '../../hooks/usePopUp';
 
 function ProfileComponent(props, ref) {
-  const [ID] = useState(Math.random());
+  const [ID] = useState(Math.random().toString());
   const [showProfile, setShowProfile] = useState(false);
   const [showLogoutDialog, setShowLogoutDialog] = useState(false);
-  const { cartProductsData } = useCartContext();
+  const { cartProductsData, mergeNotificationData } = useCartContext();
   const { isLoggedIn, logout, username } = useAuthContext();
-  usePopUp({ isOpen: showProfile, close: () => setShowProfile(false), popUpID: ID, closeOnClickOutside: true });
+  const popUpID = `popup-${ID}`;
+  const openButtonID = `open-${ID}`;
+  usePopUp({ 
+    isOpen: showProfile, close: () => setShowProfile(false),
+    popUpID, openButtonID, closeOnClickOutside: true
+  });
 
   return (
     <>
@@ -32,6 +38,7 @@ function ProfileComponent(props, ref) {
       <div className={css['container']}>
 
         <button
+          id={openButtonID}
           aria-controls={ID}
           className={`${css['button']} ${css['button--main']}`}
           onClick={() => setShowProfile(prev => !prev)}
@@ -40,13 +47,13 @@ function ProfileComponent(props, ref) {
         </button>
 
           <div 
-            id={ID}
+            id={popUpID}
             className={`${css['profile']} ${showProfile ? css['profile--visible'] : ''}`}
           >
             <NavLink 
               to="/cart"
-              className={css["button"]}
-              activeClassName={css["button--active"]}
+              className={`${css['button']} ${css['button--profile']}`}
+              activeClassName={css["button--profile--active"]}
             >
               Cart 
               <ShoppingCart aria-hidden="true"/>
@@ -59,9 +66,20 @@ function ProfileComponent(props, ref) {
             </NavLink>
 
             {
+              isLoggedIn && mergeNotificationData.data &&
+                <NavLink 
+                  to="/cart-changelog"
+                  className={`${css['button']} ${css['button--profile']}`}
+                  activeClassName={css["button--profile--active"]}
+                >
+                  Cart Changelog <ChangeLog aria-hidden="true"/>
+                </NavLink>
+            }
+            
+            {
               isLoggedIn ?
                 <button 
-                  className={css['button']}
+                  className={`${css['button']} ${css['button--profile']}`}
                   ref={ref}
                   onClick={() => { setShowLogoutDialog(prev => !prev); setShowProfile(false); }}
                 >
@@ -70,8 +88,8 @@ function ProfileComponent(props, ref) {
               :
                 <NavLink
                   to="/login"
-                  className={css["button"]} 
-                  activeClassName={css["button--active"]} 
+                  className={`${css['button']} ${css['button--profile']}`} 
+                  activeClassName={css["button--profile--active"]} 
                   ref={ref}
                 >
                   Login <AddPerson aria-hidden="true"/>

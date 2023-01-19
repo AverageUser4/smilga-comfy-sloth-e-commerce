@@ -57,11 +57,9 @@ function Cart() {
         <Dialog
           isShown={showDialog}
           heading="Are you sure?"
-          message="Do you really want to empty your cart? Don't you like our high-quality products? Or maybe you cannot afford them? Oh... I guess, if you are so *cheap*. Sucker."
+          message="Do you really want to empty your cart?"
           onConfirm={() => { cartEmpty(); setShowDialog(false); }}
           onReject={() => { setShowDialog(false); }}
-          confirmText="Yes, I am a moron."
-          rejectText="Sorry, missclick."
         />
 
       <CurrentPath/>

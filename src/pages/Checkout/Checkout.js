@@ -30,8 +30,8 @@ function Checkout() {
   else if(hasPaid)
     content = (
       <>
-        <h1 className="heading heading--small heading--no-margin">Congraulations, <span className="dramatic-emphasis">you moron!</span></h1>
-        <p className="paragraph paragraph--color-1">You just have been scammed! All of your money now belongs to us.</p>
+        <h1 className="heading heading--small heading--no-margin">Thank you!</h1>
+        <p className="paragraph paragraph--color-1">Your products will be shipped to you within 3 working days.</p>
         <Link to="/" className="button button--uppercase">Go back to the homepage</Link>
       </>
     );

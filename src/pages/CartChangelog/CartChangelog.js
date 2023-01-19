@@ -1,23 +1,30 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import CurrentPath from '../../components/CurrentPath/CurrentPath';
+import StandaloneSection from '../../components/StandaloneSection/StandaloneSection';
 import { useCartContext } from '../../utils/CartContext';
 
 function CartChangelog() {
   const { mergeNotificationData } = useCartContext();
 
-  if(!mergeNotificationData.data?.length)
-    return (
-      <div>Nothing to see here...</div>
-    );
-  
   return (
     <div>
 
       <CurrentPath lastPathName="Cart Changelog"/>
 
-      <ul>
-        {mergeNotificationData.data}
-      </ul>
+      <StandaloneSection>
+        {
+          mergeNotificationData.data?.length ?
+              <ul className="list">
+                {mergeNotificationData.data}
+              </ul>
+          :
+            <>
+              <h1 className="heading heading--only-bottom-margin heading--medium">Nothing to see here...</h1>
+              <Link to="/" className="button button--uppercase">Homepage</Link>
+            </>
+        }
+      </StandaloneSection>
 
     </div>
   );

@@ -35,7 +35,7 @@ function CartProvider({ children }) {
   const [IDsToData, setIDsToData] = useState(new Map());
   const [cartProductsData, setCartProductsData] = useState([]);
   const fetchedIDsRef = useRef([]);
-  const [mergeNotificationData, setMergeNotificationData] = useState({ content: '', timeout: 10000, type: '', data: null });
+  const [mergeNotificationData, setMergeNotificationData] = useState({ content: '', timeout: 30000, type: '', data: null });
   
   const getSameProductDiffColorCount = useCallback((cart, item) => {
     let sameProductDiffColorsCount = 0;
@@ -52,7 +52,12 @@ function CartProvider({ children }) {
     const userCart = getCartFromStorage(username);    
     const outcomeCart = userCart;
     const dataListItems = [];
-    let content = <Link to="/cart-changelog">check this out</Link>;
+    let newCount = 0;
+    let changedCount = 0;
+    let notFittingCount = 0;
+    let notFullyFittingCount = 0;
+    let messages = '';
+    let content;
 
     for(let i = 0; i < guestCart.length; i++) {
       const guestItem = guestCart[i];
@@ -69,7 +74,12 @@ function CartProvider({ children }) {
           const oldCount = outcomeItem.count;
           outcomeItem.count = Math.min(outcomeItem.count + guestItem.count, availableSpace);
 
+          if(outcomeItem.count < oldCount + guestItem.count) {
+            notFullyFittingCount++;
+          }
+          
           if(oldCount !== outcomeItem.count) {
+            changedCount++;
             dataListItems.push(
               <li key={i}>
                 Changed amount of ordered product <Link to={`products/${outcomeItem.id}`}>{outcomeItem.name}</Link> ({getColorName(outcomeItem.color)}) from {oldCount} to {outcomeItem.count}.
@@ -78,19 +88,33 @@ function CartProvider({ children }) {
           }
         }
       } else {
-        outcomeCart.push(guestItem);
-        dataListItems.push(
-          <li key={i}>
-            Added product <Link to={`products/${guestItem.id}`}>{guestItem.name}</Link> ({getColorName(guestItem.color)}) x{guestItem.count} to your cart.
-          </li>
-        );
-      }
+        const sameProductDiffColorsCount = getSameProductDiffColorCount(outcomeCart, guestItem);
+        const availableSpace = guestItem.stock - sameProductDiffColorsCount;
 
-      if(guestCart.length)
-        setMergeNotificationData(prev => ({ 
-          ...prev, content,
-          data: dataListItems.length ? dataListItems : null
-        }));
+        if(availableSpace) {
+          const oldCount = guestItem.count;
+          guestItem.count = Math.min(guestItem.count, availableSpace);
+
+          if(guestItem.count < oldCount) {
+            notFullyFittingCount++;
+          }
+
+          outcomeCart.push(guestItem);
+          newCount++;
+          dataListItems.push(
+            <li key={i}>
+              Added product <Link to={`products/${guestItem.id}`}>{guestItem.name}</Link> ({getColorName(guestItem.color)}) x{guestItem.count} to your cart.
+            </li>
+          );
+        } else {
+          notFittingCount++;
+          dataListItems.push(
+            <li key={i}>
+              Product <Link to={`products/${guestItem.id}`}>{guestItem.name}</Link> ({getColorName(guestItem.color)}) did not fit into your cart, because all of its stock is already in your cart.
+            </li>
+          );
+        }
+      }
     }
 
     for(let i = outcomeCart.length - 1; i >= 0; i--) {
@@ -104,6 +128,18 @@ function CartProvider({ children }) {
       else
         item.count = Math.min(item.count, availableSpace);
     }
+
+    messages += newCount ? `Added ${newCount} new item${newCount > 1 ? 's' : ''} to your cart. ` : '';
+    messages += changedCount ? `Increased amount of ${changedCount} item${changedCount > 1 ? 's' : ''} in your cart. ` : '';
+    messages += notFullyFittingCount ? `${notFullyFittingCount} item${notFullyFittingCount > 1 ? 's' : ''} didn't fully fit in your cart, because there is not enough in stock. ` : '';
+    messages += notFittingCount ? `${notFittingCount} item${notFittingCount > 1 ? 's' : ''} didn't fit in your cart, because all of its stock is already in your cart. ` : '';
+    content = <p>Your user cart has been merged with your guest cart. {messages} For more detail, checkout the <Link to="/cart-changelog">changelog</Link>.</p>;
+    
+    if(guestCart.length)
+      setMergeNotificationData(prev => ({ 
+        ...prev, content,
+        data: dataListItems.length ? dataListItems : null
+      }));
 
     setCart(outcomeCart);
     saveCartToStorage(username, outcomeCart);
