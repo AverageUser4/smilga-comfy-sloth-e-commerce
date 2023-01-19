@@ -10,23 +10,22 @@ function useFetch(url, parseJSON = true) {
   const [isError, setIsError] = useState(false);
 
   useEffect(() => {
-    let ignore = false;
+    const controller = new AbortController();
 
     async function fetchData() {
       try {
         setIsFetching(true);
 
-        let data = await fetch(url);
+        let data = await fetch(url, { signal: controller.signal });
         if(parseJSON)
           data = await data.json();
   
-        if(ignore)
-          return;
-  
         setData(data);
       } catch(error) {
-        console.error(error);
-        setIsError(true);
+        if(error.name !== 'AbortError') {
+          console.error(error);
+          setIsError(true);
+        }
       } finally {
         setIsFetching(false);
       }
@@ -34,7 +33,7 @@ function useFetch(url, parseJSON = true) {
 
     fetchData();
 
-    return () => ignore = true;
+    return () => controller.abort();
   }, [url, parseJSON]);
 
   return { isFetching, isError, data };

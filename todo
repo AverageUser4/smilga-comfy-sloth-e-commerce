@@ -1,9 +1,8 @@
 - add end to end tests
+- improve existing tests
 - check Dialog component and places it is used in for accessibility issues
-- add products list to checkout: product name (color) x(count) - price
 - if product overflows in ProductInCart (has count > stock) the overflowing count is subtracted FROM STOCK
 eg. count: 14, stock: 10, ends up being count: 6 - may investigate why this happens and if it happens consistently,
 but not allowing overflow to happen may be enough
-- add sync between open tabs using messagins api etc
 - logging in/out in Profile component breaks focus trap (because the 'last focusable' element is changed)
-- store user in localStorage because sessionStorage is different for each tab
+- consider changing ignore when fetching to AbortControllers
