@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from  'react-router-dom';
 import StandaloneSection from '../../components/StandaloneSection/StandaloneSection';
 import CurrentPath from '../../components/CurrentPath/CurrentPath';
@@ -16,7 +16,7 @@ function Checkout() {
   const { cartProductsData, totalPrice, cartEmpty, overflowingProducts, requireFullData } = useCartContext();
   const [hasPaid, setHasPaid] = useState(false);
   const [showDialog, setShowDialog] = useState(false);
-  requireFullData();
+  useEffect(() => requireFullData(), [requireFullData]);
   
   let content = <div></div>;
 

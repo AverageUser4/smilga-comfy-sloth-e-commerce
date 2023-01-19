@@ -1,11 +1,28 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect, useRef, useCallback } from 'react';
 import PropTypes from 'prop-types';
 
 const AuthContext = createContext();
 
 function AuthProvider({ children }) {
   const [name, setName] = useState('');
+  const channelRef = useRef();
   const isLoggedIn = name ? true : false;
+
+  const login = useCallback((username) => {
+    if(typeof username !== 'string' || username.length < 3)
+      throw new Error('Invalid username provided to login function.');
+
+    setName(username);
+    channelRef.current.postMessage({ action: 'login', info: { username } });
+  }, []);
+
+  const logout = useCallback(() => {
+    if(!isLoggedIn)
+      console.error('logout() function called although it appears user is not logged in.');
+
+    setName('');
+    channelRef.current.postMessage({ action: 'logout' });
+  }, [isLoggedIn]);
 
   useEffect(() => {
     const name = sessionStorage.getItem('user');
@@ -16,20 +33,33 @@ function AuthProvider({ children }) {
   useEffect(() => {
     sessionStorage.setItem('user', name);
   }, [name]);
+  
+  useEffect(() => {
+    channelRef.current = new BroadcastChannel('auth');
 
-  function login(username) {
-    if(typeof username !== 'string' || username.length < 3)
-      throw new Error('Invalid username provided to login function.');
+    channelRef.current.addEventListener('message', (event) => {
+      const { action, info } = event.data;
 
-    setName(username);
-  }
+      switch(action) {
+        case 'logout':
+          logout();
+          break;
 
-  function logout() {
-    if(!isLoggedIn)
-      console.error('logout() function called although it appears user is not logged in.');
+        case 'login':
+          login(info.username);
+          break;
+          
+        default:
+          throw new Error(`Unrecognized message data: ${action}`);
+      }
+    });
 
-    setName('');
-  }
+    channelRef.current.addEventListener('messageerror', (event) => {
+      console.error('messageerror in AuthProvider', event);
+    });
+    
+    return () => channelRef.current.close();
+  }, [login, logout]);
   
   return (
     <AuthContext.Provider 

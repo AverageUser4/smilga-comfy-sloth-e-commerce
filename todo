@@ -6,3 +6,4 @@ eg. count: 14, stock: 10, ends up being count: 6 - may investigate why this happ
 but not allowing overflow to happen may be enough
 - add sync between open tabs using messagins api etc
 - logging in/out in Profile component breaks focus trap (because the 'last focusable' element is changed)
+- store user in localStorage because sessionStorage is different for each tab

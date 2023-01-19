@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import CurrentPath from '../../components/CurrentPath/CurrentPath.js';
 import ProductInCart from '../../components/ProductInCart/ProductInCart.js';
@@ -17,7 +17,7 @@ function Cart() {
   const { cartProductsData, cartChangeCount, cartRemove, cartEmpty, totalPrice, requireFullData } = useCartContext();
   const [isError, setIsError] = useState(false);
   const [showDialog, setShowDialog] = useState(false);
-  requireFullData();
+  useEffect(() => requireFullData(), [requireFullData]);
   
   const productsInCart = [];
   for(let i = 0; i < cartProductsData.length; i++) {
