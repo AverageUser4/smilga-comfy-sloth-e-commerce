@@ -124,6 +124,15 @@ export function getColorName(color) {
   }
 }
 
+export function getCookie(key) {
+  const cookies = document.cookie.split('; ');
+  return cookies.find(cookie => cookie.startsWith(`${key}=`))?.split('=')[1];
+}
+
+export function setCookie(key, value) {
+  document.cookie = `${key}=${value}; SameSite=Lax`;
+}
+
 // export function spacesToCamelCase(text) {
 //   if(typeof text !== 'string')
 //     throw new Error('Text has to be a string!');

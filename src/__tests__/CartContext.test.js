@@ -1,8 +1,13 @@
 import { renderHook, act } from "@testing-library/react";
 import { CartProvider, useCartContext } from "../utils/CartContext";
 import { useAuthContext } from "../utils/AuthContext";
-import { fetchMockAddImplementation, sleep } from '../test-helpers/utils';
+import { fetchMockAddImplementation, sleep, mockBroadcastChannel } from '../test-helpers/utils';
 
+/*
+  now products in cart contain also "name" property which makes these tests kinda unrealistic
+*/
+
+mockBroadcastChannel();
 jest.useFakeTimers();
 jest.spyOn(global, 'fetch');
 jest.mock('../utils/AuthContext');
@@ -184,7 +189,7 @@ test('cartChangeCount adds brand-new item to the cart', () => {
   useAuthContext.mockReturnValue({ username });
   const { result } = renderHook(() => useCartContext(), { wrapper: CartProvider });
 
-  act(() => result.current.cartChangeCount('xxx', '#000', 8, 100));
+  act(() => result.current.cartChangeCount('xxx', '#000', 8, 100, 'chair'));
 
   expect(result.current.cartProductsData).toHaveLength(4);
   expect(JSON.parse(localStorage.getItem(`${username}-cart`))).toHaveLength(4);

@@ -7,7 +7,9 @@ import { AuthProvider } from '../../utils/AuthContext';
 import { CartProvider } from '../../utils/CartContext';
 import useFetch from '../../hooks/useFetch';
 import singleProductData from '../../test-helpers/singleProductData.json';
+import { mockBroadcastChannel } from '../../test-helpers/utils';
 
+mockBroadcastChannel();
 jest.mock('../../hooks/useFetch');
 jest.mock('react-router-dom', () => {
   const actual = jest.requireActual('react-router-dom');

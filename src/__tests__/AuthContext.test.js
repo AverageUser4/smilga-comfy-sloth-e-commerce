@@ -1,9 +1,11 @@
 import { renderHook, act } from '@testing-library/react';
 import { AuthProvider, useAuthContext } from '../utils/AuthContext';
+import { mockBroadcastChannel } from '../test-helpers/utils';
 
-beforeEach(() => sessionStorage.clear());
+mockBroadcastChannel();
+beforeEach(() => localStorage.clear());
 
-test('has expected state when sessionStorage is empty', () => {
+test('has expected state when localStorage is empty', () => {
   const { result } = renderHook(() => useAuthContext(), { wrapper: AuthProvider });
 
   expect(result.current.username).toBe('');
@@ -12,8 +14,8 @@ test('has expected state when sessionStorage is empty', () => {
   expect(result.current.logout).toEqual(expect.any(Function));
 });
 
-test('has expected state when "user" in sessionStorage is set to "adam"', () => {
-  sessionStorage.setItem('user', 'adam');
+test('has expected state when "user" in localStorage is set to "adam"', () => {
+  localStorage.setItem('user', 'adam');
   const { result } = renderHook(() => useAuthContext(), { wrapper: AuthProvider });
 
   expect(result.current.username).toBe('adam');
@@ -51,7 +53,7 @@ test('calling login results in expected state', () => {
 });
 
 test('calling logout results in expected state', () => {
-  sessionStorage.setItem('user', 'eva');
+  localStorage.setItem('user', 'eva');
   const { result } = renderHook(() => useAuthContext(), { wrapper: AuthProvider });
 
   act(() => result.current.logout());
@@ -61,7 +63,7 @@ test('calling logout results in expected state', () => {
 });
 
 test('calling login when user is logged in overwrites current user', () => {
-  sessionStorage.setItem('user', 'eva');
+  localStorage.setItem('user', 'eva');
   const { result } = renderHook(() => useAuthContext(), { wrapper: AuthProvider });
 
   act(() => result.current.login('adam'));

@@ -1,6 +1,6 @@
 import { 
   randomInteger, shuffleArray, stringifyPrice, cutText, sortArrayOfObjectsByProperty,
-  stringChangeCharcter, capitalize, getColorName
+  stringChangeCharcter, capitalize, getColorName, setCookie, getCookie
 } from '../utils/utils';
 
 describe('randomInteger', () => {
@@ -219,5 +219,30 @@ describe('getColorName', () => {
     expect(getColorName('#000')).toBe('black');
     expect(getColorName('#ff0000')).toBe('red');
     expect(getColorName('#00ff00')).toBe('green');
+  });
+});
+
+describe('cookies', () => {
+  test('setCookie', () => {
+    document.cookie = '';
+  
+    setCookie('a', '1');
+    expect(document.cookie).toBe('a=1');
+
+    setCookie('b', '2');
+    expect(document.cookie).toBe('a=1; b=2');
+  });
+
+  test('getCookie', () => {
+    document.cookie = '';
+  
+    setCookie('a', '1');
+    expect(getCookie('a')).toBe('1');
+
+    setCookie('b', '2');
+    expect(getCookie('a')).toBe('1');
+    expect(getCookie('b')).toBe('2');
+
+    expect(getCookie('c')).toBeUndefined();
   });
 });

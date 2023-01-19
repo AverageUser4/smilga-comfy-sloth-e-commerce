@@ -89,7 +89,7 @@ test('renders price, quantity and total price', () => {
   expect(total).toBeInTheDocument();
 });
 
-test('renders remove button, which calls remove function on click', () => {
+test('renders remove button, which opens are you sure dialog, after clicking yes button it calls remove function', () => {
   const removeMock = jest.fn();
   render(
     <Router>
@@ -107,6 +107,9 @@ test('renders remove button, which calls remove function on click', () => {
   const removeButton = screen.getByRole('button', { name: /remove/i });
 
   userEvent.click(removeButton);
+  const yesButton = screen.getByRole('button', { name: 'Yes' });
+  expect(yesButton).toBeInTheDocument();
+  userEvent.click(yesButton);
 
   expect(removeMock).toHaveBeenCalledTimes(1);
 });

@@ -44,3 +44,13 @@ export function fetchMockAddImplementation(fetch, returnValue, timeout = 20, sho
 export function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms || 0));
 }
+
+export function mockBroadcastChannel() {
+  global.BroadcastChannel = function() {
+    return {
+      postMessage: ()=>0,
+      addEventListener: ()=>0,
+      close: ()=>0
+    };
+  };
+}

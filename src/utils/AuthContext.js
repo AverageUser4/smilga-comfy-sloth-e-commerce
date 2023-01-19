@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useEffect, useRef, useCallback } from 'react';
 import PropTypes from 'prop-types';
+import { getCookie, setCookie } from './utils';
 
 const AuthContext = createContext();
 
@@ -25,13 +26,13 @@ function AuthProvider({ children }) {
   }, [isLoggedIn]);
 
   useEffect(() => {
-    const name = sessionStorage.getItem('user');
+    const name = getCookie('user');
     if(name)
       setName(name);
   }, []);
 
   useEffect(() => {
-    sessionStorage.setItem('user', name);
+    setCookie('user', name);
   }, [name]);
   
   useEffect(() => {

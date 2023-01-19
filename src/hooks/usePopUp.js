@@ -11,6 +11,7 @@ function usePopUp({ isOpen, close, closeOnPathChange = true, closeOnClickOutside
 
   const { pathname } = useLocation();
   const [path, setPath] = useState(pathname);
+  // eslint-disable-next-line
   const closePopUp = useCallback(close, []);
 
   if(closeOnPathChange && pathname !== path) {
