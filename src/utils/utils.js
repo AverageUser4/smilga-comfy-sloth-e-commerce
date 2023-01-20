@@ -133,6 +133,15 @@ export function setCookie(key, value) {
   document.cookie = `${key}=${value}; SameSite=Lax`;
 }
 
+export function deleteCookie(key) {
+  document.cookie = `${key}=x; expires=${new Date().toUTCString()}`;
+}
+
+export function deleteAllCookies() {
+  const keys = document.cookie.split('; ').map(keyVal => keyVal.split('=')[0]);
+  keys.forEach(key => deleteCookie(key));
+}
+
 // export function spacesToCamelCase(text) {
 //   if(typeof text !== 'string')
 //     throw new Error('Text has to be a string!');

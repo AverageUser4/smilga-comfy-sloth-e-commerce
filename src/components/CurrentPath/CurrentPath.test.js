@@ -1,9 +1,5 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
-import CurrentPath from './CurrentPath';
-import { useRouteMatch, BrowserRouter as Router } from 'react-router-dom';
-
-jest.mock('react-router-dom', () => {
+import { render, screen } from '@testing-library/react';import CurrentPath from './CurrentPath';import { useRouteMatch, BrowserRouter as Router } from 'react-router-dom';jest.mock('react-router-dom', () => {
   const originalModule = jest.requireActual('react-router-dom');
 
   return {
@@ -15,11 +11,7 @@ jest.mock('react-router-dom', () => {
 
 test('renders link to the landing page', () => {
   useRouteMatch.mockReturnValue({ "path": "/about" });
-  render(
-    <Router>
-      <CurrentPath/>
-    </Router>
-  );
+  render(<Router><CurrentPath/></Router>);
   const link = screen.getByRole('link', { name: /home/i });
 
   expect(link).toBeInTheDocument();
@@ -28,11 +20,7 @@ test('renders link to the landing page', () => {
 
 test('renders element with text based on last part of path, but it is not a link', () => {
   useRouteMatch.mockReturnValue({ "path": "/about" });
-  render(
-    <Router>
-      <CurrentPath/>
-    </Router>
-  );
+  render(<Router><CurrentPath/></Router>);
   const ending = screen.getByText(/about/i);
   const endingLink = screen.queryByRole('link', { name: /about/i });
 
@@ -42,23 +30,19 @@ test('renders element with text based on last part of path, but it is not a link
 
 test('renders multiple links for long path', () => {
   useRouteMatch.mockReturnValue({ "path": "/about/something/also/whatever" });
-  render(
-    <Router>
-      <CurrentPath/>
-    </Router>
-  );
+  render(<Router><CurrentPath/></Router>);
   const links = screen.getAllByRole('link');
 
   expect(links).toHaveLength(4);
+  expect(links[0]).toHaveTextContent('home');
+  expect(links[1]).toHaveTextContent('about');
+  expect(links[2]).toHaveTextContent('something');
+  expect(links[3]).toHaveTextContent('also');
 });
 
 test('changes last path name when lastPathName prop is provided', () => {
   useRouteMatch.mockReturnValue({ "path": "/about" });
-  render(
-    <Router>
-      <CurrentPath lastPathName="imLast"/>
-    </Router>
-  );
+  render(<Router><CurrentPath lastPathName="imLast"/></Router>);
   const providedName = screen.getByText('imLast');
   const originalName = screen.queryByText(/about/i);
 
@@ -68,11 +52,7 @@ test('changes last path name when lastPathName prop is provided', () => {
 
 test('there is no trailing slash', () => {
   useRouteMatch.mockReturnValue({ "path": "/about" });
-  render(
-    <Router>
-      <CurrentPath lastPathName="imLast"/>
-    </Router>
-  );
+  render(<Router><CurrentPath lastPathName="imLast"/></Router>);
   const container = screen.getByTestId('paths-container');
 
   expect(container.lastChild.textContent.endsWith('/')).toBeFalsy();

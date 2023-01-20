@@ -1,11 +1,23 @@
 import { renderHook, act } from '@testing-library/react';
 import { AuthProvider, useAuthContext } from '../utils/AuthContext';
 import { mockBroadcastChannel } from '../test-helpers/utils';
+import { deleteAllCookies } from '../utils/utils';
 
 mockBroadcastChannel();
-beforeEach(() => localStorage.clear());
+beforeEach(() => { 
+  deleteAllCookies();
+  if(document.cookie)
+    throw new Error('Seems like deleteAllCookies() did not delete all cookies...');
+});
 
-test('has expected state when localStorage is empty', () => {
+test('user data is stored in cookie', () => {
+  const { result } = renderHook(() => useAuthContext(), { wrapper: AuthProvider });
+
+  act(() => result.current.login('adam'));
+  expect(document.cookie).toEqual(expect.stringContaining('adam'));
+});
+
+test('has expected state when user is not logged in (default)', () => {
   const { result } = renderHook(() => useAuthContext(), { wrapper: AuthProvider });
 
   expect(result.current.username).toBe('');
@@ -14,36 +26,7 @@ test('has expected state when localStorage is empty', () => {
   expect(result.current.logout).toEqual(expect.any(Function));
 });
 
-test('has expected state when "user" in localStorage is set to "adam"', () => {
-  localStorage.setItem('user', 'adam');
-  const { result } = renderHook(() => useAuthContext(), { wrapper: AuthProvider });
-
-  expect(result.current.username).toBe('adam');
-  expect(result.current.isLoggedIn).toBe(true);
-  expect(result.current.login).toEqual(expect.any(Function));
-  expect(result.current.logout).toEqual(expect.any(Function));
-});
-
-test('calling login with invalid username (not a string or length < 3) throws', () => {
-  const { result } = renderHook(() => useAuthContext(), { wrapper: AuthProvider });
-
-  expect(() => result.current.login()).toThrow();
-  expect(() => result.current.login('ad')).toThrow();
-});
-
-test('calling logout when the user is not logged in logs error to console', () => {
-  jest.spyOn(console, 'error').mockImplementation(()=>0);
-  const { result } = renderHook(() => useAuthContext(), { wrapper: AuthProvider });
-
-  result.current.logout();
-
-  expect(console.error).toHaveBeenCalledTimes(1);
-  expect(console.error).toHaveBeenCalledWith(expect.stringMatching(/not logged in/i));
-
-  console.error.mockRestore();
-});
-
-test('calling login results in expected state', () => {
+test('has expected state after calling login', () => {
   const { result } = renderHook(() => useAuthContext(), { wrapper: AuthProvider });
 
   act(() => result.current.login('adam'));
@@ -52,10 +35,30 @@ test('calling login results in expected state', () => {
   expect(result.current.isLoggedIn).toBe(true);
 });
 
-test('calling logout results in expected state', () => {
-  localStorage.setItem('user', 'eva');
+test('calling login with invalid username (not a string or length < 3) throws', () => {
   const { result } = renderHook(() => useAuthContext(), { wrapper: AuthProvider });
 
+  expect(() => result.current.login()).toThrow();
+  expect(() => result.current.login('ad')).toThrow();
+  expect(() => result.current.login(['adam'])).toThrow();
+});
+
+test('calling logout when the user is not logged in logs error to console', () => {
+  jest.spyOn(console, 'error').mockImplementation(()=>0);
+  const { result } = renderHook(() => useAuthContext(), { wrapper: AuthProvider });
+
+  act(() => result.current.logout());
+
+  expect(console.error).toHaveBeenCalledTimes(1);
+  expect(console.error).toHaveBeenCalledWith(expect.stringMatching(/not logged in/i));
+
+  console.error.mockRestore();
+});
+
+test('calling logout results in expected state', () => {
+  const { result } = renderHook(() => useAuthContext(), { wrapper: AuthProvider });
+
+  act(() => result.current.login('adam'));
   act(() => result.current.logout());
 
   expect(result.current.username).toBe('');
@@ -63,9 +66,9 @@ test('calling logout results in expected state', () => {
 });
 
 test('calling login when user is logged in overwrites current user', () => {
-  localStorage.setItem('user', 'eva');
   const { result } = renderHook(() => useAuthContext(), { wrapper: AuthProvider });
 
+  act(() => result.current.login('eva'));
   act(() => result.current.login('adam'));
 
   expect(result.current.username).toBe('adam');

@@ -4,6 +4,11 @@ import css from './Dialog.module.css';
 import useFocusTrap from '../../hooks/useFocusTrap';
 
 function Dialog({ heading, message, onConfirm, onReject, type = '', confirmText = 'Yes', rejectText = 'No', isShown }) {
+  useEffect(() => {
+    if(typeof onConfirm !== 'function' && typeof onReject !== 'function')
+      console.error('You have to provide at least one callback (onConfirm or onReject)');
+  }, [onConfirm, onReject])
+
   const [ID] = useState(Math.random());
   const setForceRerender = useState(false)[1];
   const firstFocusableRef = useRef();
@@ -11,6 +16,7 @@ function Dialog({ heading, message, onConfirm, onReject, type = '', confirmText 
   useFocusTrap(onReject || (()=>0), isShown, firstFocusableRef.current, lastFocusableRef.current, firstFocusableRef.current);
 
   useEffect(() => {
+    // so refs are set to elements and useFocusTrap works
     if(isShown)
       setForceRerender(prev => !prev);
   }, [isShown, setForceRerender]);
@@ -23,13 +29,32 @@ function Dialog({ heading, message, onConfirm, onReject, type = '', confirmText 
       role="dialog"
       aria-labelledby={`heading-${ID}`}
       aria-describedby={`message-${ID}`}
+      aria-modal="true"
       className={`${css['container']} ${css[`container--${type}`]}`}
     >
       {heading && <h3 className="heading heading--small heading--no-margin" id={`heading-${ID}`}>{heading}</h3>}
       {message && <p className="paragraph" id={`message-${ID}`}>{message}</p>}
       <div className={css['buttons']}>
-        {onConfirm && <button ref={firstFocusableRef} className="button" onClick={onConfirm}>{confirmText}</button>}
-        {onReject && <button ref={lastFocusableRef} className="button" onClick={onReject}>{rejectText}</button>}
+        {
+          onConfirm && 
+            <button 
+              ref={(el) => { firstFocusableRef.current = el; if(!onReject) lastFocusableRef.current = el }}
+              className="button"
+              onClick={onConfirm}
+            >
+              {confirmText}
+            </button>
+        }
+        {
+          onReject &&
+            <button 
+              ref={(el) => { lastFocusableRef.current = el; if(!onConfirm) firstFocusableRef.current = el }}
+              className="button"
+              onClick={onReject}
+            >
+              {rejectText}
+            </button>
+        }
       </div>
     </div>
   );  

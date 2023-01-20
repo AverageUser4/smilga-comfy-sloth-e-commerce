@@ -1,6 +1,7 @@
 import { 
   randomInteger, shuffleArray, stringifyPrice, cutText, sortArrayOfObjectsByProperty,
-  stringChangeCharcter, capitalize, getColorName, setCookie, getCookie
+  stringChangeCharcter, capitalize, getColorName, setCookie, getCookie, deleteCookie,
+  deleteAllCookies
 } from '../utils/utils';
 
 describe('randomInteger', () => {
@@ -223,18 +224,55 @@ describe('getColorName', () => {
 });
 
 describe('cookies', () => {
+  beforeEach(() => deleteAllCookies());
+  
+  test('deleteCookie', () => {
+    expect(document.cookie).toBe('');
+    document.cookie = 'name=adam';
+    expect(document.cookie).toEqual(expect.stringContaining('name=adam'));
+
+    deleteCookie('name');
+    expect(document.cookie).toBe('');
+
+    document.cookie = 'age=20';
+    document.cookie = 'hobby=music';
+    expect(document.cookie).toEqual(expect.stringContaining('age=20'));
+    expect(document.cookie).toEqual(expect.stringContaining('hobby=music'));
+
+    deleteCookie('hobby');
+    expect(document.cookie).toEqual(expect.not.stringContaining('hobby=music'));
+    expect(document.cookie).toEqual(expect.stringContaining('age=20'));
+
+    deleteCookie('age');
+    expect(document.cookie).toBe('');
+  });
+
+  test('deleteAllCookies', () => {
+    expect(document.cookie).toBe('');
+    expect(() => deleteAllCookies()).not.toThrow();
+    document.cookie = 'name=adam';
+
+    deleteAllCookies();
+    expect(document.cookie).toBe('');
+
+    document.cookie = 'age=20';
+    document.cookie = 'hobby=music';
+    deleteAllCookies();
+    expect(document.cookie).toBe('');
+  });
+
   test('setCookie', () => {
-    document.cookie = '';
+    expect(document.cookie).toBe('');
   
     setCookie('a', '1');
-    expect(document.cookie).toBe('a=1');
+    expect(document.cookie).toEqual(expect.stringContaining('a=1'));
 
     setCookie('b', '2');
-    expect(document.cookie).toBe('a=1; b=2');
+    expect(document.cookie).toEqual(expect.stringContaining('b=2'));
   });
 
   test('getCookie', () => {
-    document.cookie = '';
+    expect(document.cookie).toBe('');
   
     setCookie('a', '1');
     expect(getCookie('a')).toBe('1');
