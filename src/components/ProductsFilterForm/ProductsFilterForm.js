@@ -83,6 +83,7 @@ function ProductsFilterForm(props) {
           value={company} 
           onChange={handleChange}
           className="input"
+          aria-label="company"
         >
           <option value="">All</option>
           {

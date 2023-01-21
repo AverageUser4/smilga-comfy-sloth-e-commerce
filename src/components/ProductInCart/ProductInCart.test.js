@@ -12,8 +12,6 @@ function renderComponent({ quantity = 1, isError = false, data } = {}) {
   if(!data)
     data = singleProductData;
 
-  console.log(data)
-
   const renderOutput = render(
     <Router>
       <ProductInCart
@@ -75,7 +73,7 @@ test('renders price, quantity and total price', () => {
 });
 
 test('renders remove button, which opens are you sure dialog, after clicking yes button it calls remove function', () => {
-  const { removeMock } = renderComponent({ quantity: 2 });
+  const { removeMock } = renderComponent();
   const removeButton = screen.getByRole('button', { name: /remove/i });
 
   userEvent.click(removeButton);

@@ -58,6 +58,6 @@ export function mockBroadcastChannel() {
 
 export function mockImageDecode() {
   global.HTMLImageElement.prototype.decode = async () => {
-    return [1];
+    await new Promise(()=>0);
   };
 }

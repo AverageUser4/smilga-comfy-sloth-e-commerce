@@ -3,20 +3,9 @@ import css from './ProductsBrowser.module.css';
 import ProductsFilterForm from '../../components/ProductsFilterForm/ProductsFilterForm.js';
 import StandaloneSection from '../../components/StandaloneSection/StandaloneSection.js';
 import ProductsGridTop from '../../components/ProductsGridTop/ProductsGridTop.js';
-import useProducts from '../../hooks/useProducts';
+import useProducts, { defaultOptions as initialFilters } from '../../hooks/useProducts';
 import Product from '../Product/Product';
 import Loading from '../Loading/Loading';
-
-const initialFilters = {
-  queryString: '',
-  category: '',
-  company: '',
-  color: '',
-  priceMin: '',
-  priceMax: '',
-  orderBy: 'priceAsc',
-  freeShippingOnly: false
-};
 
 function ProductsBrowser() {
   const [showDetails, setShowDetails] = useState(false);

@@ -4,9 +4,9 @@ import { ALL_PRODUCTS } from '../utils/API_Endpoints';
 import { sortArrayOfObjectsByProperty } from '../utils/utils';
 import useFetch from './useFetch';
 
-const defaultOptions = { 
+export const defaultOptions = {
   featuredOnly: false, queryString: '', category: '', company: '', color: '',
-  priceMin: '', priceMax: '', orderBy: '', freeShippingOnly: false
+  priceMin: '', priceMax: '', orderBy: 'priceAsc', freeShippingOnly: false
 };
 
 const optionKeys = [];
