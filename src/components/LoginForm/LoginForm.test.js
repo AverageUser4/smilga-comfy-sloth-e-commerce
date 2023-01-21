@@ -11,11 +11,7 @@ function setup() {
   useAuthContext.mockReturnValue({ login: loginMock });
   AuthProvider.mockImplementation(({ children }) => <div>{children}</div>);
 
-  const renderOutput = render(
-    <AuthProvider>
-      <LoginForm/>
-    </AuthProvider>
-  );
+  const renderOutput = render(<AuthProvider><LoginForm/></AuthProvider>);
 
   const usernameInput = screen.getByLabelText(/username/i);
   const passwordInput = screen.getByLabelText(/password/i);
@@ -87,9 +83,12 @@ test('alert text changes when validity of inputs changes and login button is cli
 
   userEvent.type(usernameInput, 'adam');
   userEvent.click(loginButton);
+  const alert = screen.getByRole('alert');
+  expect(alert).toBeInTheDocument();
+  expect(alert).toHaveTextContent(/password/i);
+
   userEvent.clear(usernameInput);
   userEvent.click(loginButton);
-  const alert = screen.getByRole('alert');
   
   expect(alert).toBeInTheDocument();
   expect(alert).toHaveTextContent(/username/i);
@@ -101,9 +100,10 @@ test('alert is removed from document when both inputs are valid and the loginBut
 
   userEvent.type(usernameInput, 'adam');
   userEvent.click(loginButton);
+  const alert = screen.getByRole('alert');
+
   userEvent.type(passwordInput, 'qwerty');
   userEvent.click(loginButton);
-  const alert = screen.queryByRole('alert');
   
   expect(alert).not.toBeInTheDocument();
 });

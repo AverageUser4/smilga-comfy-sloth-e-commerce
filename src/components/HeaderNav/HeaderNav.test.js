@@ -38,6 +38,4 @@ test('renders expected links when user is logged in', () => {
   expect(about).toBeInTheDocument();
   expect(products).toBeInTheDocument();
   expect(checkout).toBeInTheDocument();
-
-
 });

@@ -46,11 +46,17 @@ export function sleep(ms) {
 }
 
 export function mockBroadcastChannel() {
-  global.BroadcastChannel = function() {
+  global.BroadcastChannel = () => {
     return {
       postMessage: ()=>0,
       addEventListener: ()=>0,
       close: ()=>0
     };
+  };
+}
+
+export function mockImageDecode() {
+  global.HTMLImageElement.prototype.decode = async () => {
+    return [1];
   };
 }

@@ -17,7 +17,6 @@ test('user can type number into card input', () => {
   const cardInput = screen.getByRole('textbox', { name: /card/i });
 
   userEvent.type(cardInput, '12345');
-  
   expect(cardInput).toHaveDisplayValue('12345');
 });
 
@@ -26,7 +25,6 @@ test('characters that are not numbers are ignored when typing to card input', ()
   const cardInput = screen.getByRole('textbox', { name: /card/i });
 
   userEvent.type(cardInput, '&12a3,4..5z');
-  
   expect(cardInput).toHaveDisplayValue('12345');
 });
 
@@ -36,7 +34,6 @@ test('user can clear card input after typing into it', () => {
 
   userEvent.type(cardInput, '12345');
   userEvent.clear(cardInput);
-  
   expect(cardInput).toHaveDisplayValue('');
 }); 
 
@@ -53,7 +50,6 @@ test('clicking pay button when card number is invalid does not cause onSubmit fu
   const payButton = screen.getByRole('button', { name: /pay/i });
 
   userEvent.click(payButton);
-
   expect(onSubmitMock).not.toHaveBeenCalled();
 });
 
@@ -65,6 +61,5 @@ test('clicking pay button when card number is valid causes onSubmit function to 
 
   userEvent.type(cardInput, '12345');
   userEvent.click(payButton);
-
   expect(onSubmitMock).toHaveBeenCalledTimes(1);
 });

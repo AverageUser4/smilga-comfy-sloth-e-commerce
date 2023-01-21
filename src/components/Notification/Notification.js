@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import css from './Notification.module.css';
 import { ReactComponent as Close } from '../../assets/menu-close.svg';
 
-const TRANSITION_DURATION = 300;
+// export used by tests
+export const TRANSITION_DURATION = 600;
 
 function Notification({ content = '', type = '', timeout = 3000, dateNow = 0 }) {
   const lastDateRef = useRef(0);
@@ -70,7 +71,7 @@ function Notification({ content = '', type = '', timeout = 3000, dateNow = 0 }) 
           copy[index] = null;
           return copy;
         });
-      }, TRANSITION_DURATION * 2);
+      }, TRANSITION_DURATION);
   }
 
   function onPointerDown(event) {
