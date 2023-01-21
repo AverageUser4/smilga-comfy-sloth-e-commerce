@@ -9,19 +9,19 @@ function TotalPrice({ subtotal, shipping }) {
   return (
     <article className={css['container']}>
 
-      <div className={css['data']}>
+      <div data-testid="subtotal" className={css['data']}>
         <span>Subtotal:</span>
         <span>{stringifyPrice(subtotal)}</span>
       </div>
 
-      <div className={`${css['data']} ${css['normal-weight']}`}>
+      <div data-testid="shipping" className={`${css['data']} ${css['normal-weight']}`}>
         <span>Shipping Fee:</span>
         <span>{stringifyPrice(shipping)}</span>
       </div>
 
       <div className="line"></div>
 
-      <div className={`${css['data']} ${css['total']}`}>
+      <div data-testid="total" className={`${css['data']} ${css['total']}`}>
         <span>Order Total:</span>
         <span>{stringifyPrice(orderTotal)}</span>
       </div>
