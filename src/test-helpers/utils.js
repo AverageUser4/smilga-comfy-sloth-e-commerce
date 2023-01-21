@@ -46,7 +46,8 @@ export function sleep(ms) {
 }
 
 export function mockBroadcastChannel() {
-  global.BroadcastChannel = () => {
+  // cannot be arrow function or will throw 'not a constructor' error
+  global.BroadcastChannel = function() {
     return {
       postMessage: ()=>0,
       addEventListener: ()=>0,

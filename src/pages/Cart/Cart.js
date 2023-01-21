@@ -17,7 +17,17 @@ function Cart() {
   const { cartProductsData, cartChangeCount, cartRemove, cartEmpty, totalPrice, requireFullData } = useCartContext();
   const [isError, setIsError] = useState(false);
   const [showDialog, setShowDialog] = useState(false);
+
   useEffect(() => requireFullData(), [requireFullData]);
+  
+  useEffect(() => {
+    const isProductError = cartProductsData.find(item => item.data?.isError);
+
+    if(!isError && isProductError)
+      setIsError(true);
+    else if(isError && !isProductError)
+      setIsError(false);
+  }, [cartProductsData, isError]);
   
   const productsInCart = [];
   for(let i = 0; i < cartProductsData.length; i++) {
@@ -33,7 +43,6 @@ function Cart() {
         data={item.data}
         sameOfDifferentColorInCart={item.sameProductDiffColorsCount}
         remove={() => cartRemove(item.id, item.color)}
-        setIsError={setIsError}
         locationData={{ url: '/cart', name: 'cart' }}
       />
     );
@@ -53,13 +62,13 @@ function Cart() {
   return (
     <div>
 
-        <Dialog
-          isShown={showDialog}
-          heading="Are you sure?"
-          message="Do you really want to empty your cart?"
-          onConfirm={() => { cartEmpty(); setShowDialog(false); }}
-          onReject={() => { setShowDialog(false); }}
-        />
+      <Dialog
+        isShown={showDialog}
+        heading="Are you sure?"
+        message="Do you really want to empty your cart?"
+        onConfirm={() => { cartEmpty(); setShowDialog(false); }}
+        onReject={() => { setShowDialog(false); }}
+      />
 
       <CurrentPath/>
 

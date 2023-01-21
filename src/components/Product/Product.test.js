@@ -5,8 +5,9 @@ import Product from './Product';
 import image from '../../test-helpers/jpeg.jpeg';
 import { mockImageDecode } from '../../test-helpers/utils';
 
+mockImageDecode();
+
 test('there is at least one link leading to product page', async () => {
-  mockImageDecode();
   render(
     <Router>
       <Product image={image} price={1099} name="sofa" id="abcde" description="cool sofa"/>

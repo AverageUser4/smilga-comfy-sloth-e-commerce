@@ -21,19 +21,29 @@ jest.mock('react-router-dom', () => {
   }
 });
 
-test('handles error', () => {
-  useParams.mockReturnValue({ id: singleProductData.id });
-  useFetch.mockReturnValue({ data: {}, isError: true });
-
-  render(
+function renderComponent() {
+  const setProductNameMock = jest.fn();
+  const renderOutput = render(
     <Router>
       <AuthProvider>
         <CartProvider>
-          <ProductData setProductName={()=>0}/>
+          <ProductData setProductName={setProductNameMock}/>
         </CartProvider>
       </AuthProvider>
     </Router>
   );
+
+  return {
+    renderOutput,
+    setProductNameMock
+  };
+}
+
+test('when isError returned from useFetch is true, renders useful error message', () => {
+  useParams.mockReturnValue({ id: singleProductData.id });
+  useFetch.mockReturnValue({ data: {}, isError: true });
+  renderComponent();
+
   const error = screen.getByText(/something went wrong/i);
 
   expect(error).toBeInTheDocument();
@@ -42,16 +52,7 @@ test('handles error', () => {
 test('renders expected elements', () => {
   useParams.mockReturnValue({ id: singleProductData.id });
   useFetch.mockReturnValue({ data: singleProductData, isError: false });
-
-  render(
-    <Router>
-      <AuthProvider>
-        <CartProvider>
-          <ProductData setProductName={()=>0}/>
-        </CartProvider>
-      </AuthProvider>
-    </Router>
-  );
+  renderComponent();
 
   const name = screen.getByRole('heading', { name: new RegExp(singleProductData.name, 'i') });
   const colorInputs = screen.getAllByRole('radio');
@@ -59,7 +60,7 @@ test('renders expected elements', () => {
   const addToCartButton = screen.getByRole('button', { name: /add to cart/i });
 
   expect(name).toBeInTheDocument();
-  expect(colorInputs).toHaveLength(3);
+  expect(colorInputs).toHaveLength(singleProductData.colors.length);
   expect(spinButton).toBeInTheDocument();
   expect(addToCartButton).toBeInTheDocument();
 });
@@ -67,35 +68,16 @@ test('renders expected elements', () => {
 test("does not render 'add to cart' button when there is no stock", () => {
   useParams.mockReturnValue({ id: singleProductData.id });
   useFetch.mockReturnValue({ data: { ...singleProductData, stock: 0 }, isError: false });
-
-  render(
-    <Router>
-      <AuthProvider>
-        <CartProvider>
-          <ProductData setProductName={()=>0}/>
-        </CartProvider>
-      </AuthProvider>
-    </Router>
-  );
+  renderComponent();
 
   const addToCartButton = screen.queryByRole('button', { name: /add to cart/i });
-
   expect(addToCartButton).not.toBeInTheDocument();
 });
 
 test("renders 'all in your cart' prompt and does not render 'add to cart' button when all of the stock is in the cart", () => {
   useParams.mockReturnValue({ id: singleProductData.id });
   useFetch.mockReturnValue({ data: { ...singleProductData, stock: 1 }, isError: false });
-
-  render(
-    <Router>
-      <AuthProvider>
-        <CartProvider>
-          <ProductData setProductName={()=>0}/>
-        </CartProvider>
-      </AuthProvider>
-    </Router>
-  );
+  renderComponent();
 
   const addToCartButton = screen.queryByRole('button', { name: /add to cart/i });
   userEvent.click(addToCartButton);
@@ -103,4 +85,13 @@ test("renders 'all in your cart' prompt and does not render 'add to cart' button
 
   expect(addToCartButton).not.toBeInTheDocument();
   expect(prompt).toBeInTheDocument();
+});
+
+test('"setProductName" function gets called once with product name', () => {
+  useParams.mockReturnValue({ id: singleProductData.id });
+  useFetch.mockReturnValue({ data: singleProductData, isError: false });
+  const { setProductNameMock } = renderComponent();
+
+  expect(setProductNameMock).toHaveBeenCalledTimes(1);
+  expect(setProductNameMock).toHaveBeenCalledWith(singleProductData.name);
 });

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import css from './ProductInCart.module.css';
@@ -8,20 +8,14 @@ import { ReactComponent as TrashIcon } from '../../assets/trash.svg';
 import { getColorName, stringifyPrice } from '../../utils/utils';
 import Loading from '../Loading/Loading';
 
-function ProductInCart({ color, quantity, setQuantity, sameOfDifferentColorInCart, remove, id, setIsError, data, locationData }) {
+function ProductInCart({ color, quantity, setQuantity, sameOfDifferentColorInCart, remove, id, data, locationData }) {
   const [showDialog, setShowDialog] = useState(false);
-  const isError = data?.isError;
   const price = data?.price;
   let url = `/products/${id}`;
   if(locationData)
     url = { pathname: url, state: locationData };
 
-  useEffect(() => {
-    if(isError)
-      setIsError?.(isError)
-  }, [isError, setIsError]);
-  
-  if(isError)
+  if(data?.isError)
     return (
       <p className="error">
         We were unable to find this product. Please, refresh the page or 
@@ -106,7 +100,6 @@ ProductInCart.propTypes = {
   setQuantity: PropTypes.func.isRequired,
   sameOfDifferentColorInCart: PropTypes.number.isRequired,
   remove: PropTypes.func.isRequired,
-  setIsError: PropTypes.func,
   data: PropTypes.object,
   locationData: PropTypes.shape({
     name: PropTypes.string.isRequired,
