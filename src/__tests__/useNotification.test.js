@@ -76,8 +76,3 @@ test('timeout argument affects how quickly notifications disappear', () => {
   expect(adamNotification).not.toBeInTheDocument();
   expect(quickNotification).not.toBeInTheDocument();
 });
-/* 
-  - calling notifyUser spawns new notification
-  - doing so multiple times spawns multiple notifications
-  - tiemout argument of notifyUser affects timeout
-*/

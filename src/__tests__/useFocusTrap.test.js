@@ -51,11 +51,8 @@ test('close callback is called when "Escape" key is pressed', () => {
   );
 
   userEvent.click(screen.getByRole('button', { name: /open/i }));
-  
   expect(closeMock).not.toHaveBeenCalled();
-  
   userEvent.keyboard('{Escape}');
-
   expect(closeMock).toHaveBeenCalledTimes(1);
 });
 
@@ -70,7 +67,6 @@ test('if autoFocus = true and autoFocusDelay = 0, the first element gets immedia
   const first = screen.getByRole('button', { name: /close/i });
 
   userEvent.click(screen.getByRole('button', { name: /open/i }));
-
   expect(first).toHaveFocus();
 });
 

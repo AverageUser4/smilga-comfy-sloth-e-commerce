@@ -258,7 +258,7 @@ function CartProvider({ children }) {
   useEffect(() => {
     /* handles readyPhases of the CartContext,
        used by components to show loading screen or something like that */
-    if(readyPhase.id !== 2 && cartProductsData.length && !cartProductsData.find(product => !product.data))
+    if(readyPhase.id !== 2 && !cartProductsData.find(product => !product.data))
       setReadyPhase({ id: 2, name: 'all-fetched' });
     else if(readyPhase.id === 0)
       setReadyPhase({ id: 1, name: 'effects-ran' });
