@@ -37,6 +37,7 @@ function CartProvider({ children }) {
   const [cartProductsData, setCartProductsData] = useState([]);
   const fetchedIDsRef = useRef([]);
   const [mergeNotificationData, setMergeNotificationData] = useState({ content: '', timeout: 30000, type: '', data: null });
+  const [readyPhase, setReadyPhase] = useState({ id: 0, name: 'initial' });
   
   const getSameProductDiffColorCount = useCallback((cart, item) => {
     let sameProductDiffColorsCount = 0;
@@ -49,6 +50,15 @@ function CartProvider({ children }) {
   }, []);
 
   const cartMergeGuestWithUser = useCallback((cart, username) => {
+    /* 
+      when user has some items in the 'guest' account and then logs into actual account
+      carts of boths are merged with respect to following rules:
+        - nothing gets removed from the actual account
+        - if item from guest account cannot fit to new cart it does not get added
+        (if there is no remaining space) or only x amount gets added (when there is x remaining space)
+
+      this function also creates changelog describing what was added to cart
+    */
     const guestCart = [...cart];
     const userCart = getCartFromStorage(username);    
     const outcomeCart = userCart;
@@ -148,6 +158,9 @@ function CartProvider({ children }) {
   }, [getSameProductDiffColorCount]);
 
   useEffect(() => {
+    /* handle messaging between different contexts (browser tabs / windows) 
+       makes sure the cart stays the same between all the contexts */
+
     channelRef.current = new BroadcastChannel('cart');
 
     channelRef.current.addEventListener('message', (event) => {
@@ -171,6 +184,9 @@ function CartProvider({ children }) {
   }, []);
 
   useEffect(() => {
+    /* sets cartProductsData, cartProductsData is combination of cart 
+       and additional data, as can be seen right below */
+
     const data = cart.map(item => {
       const sameProductDiffColorsCount = getSameProductDiffColorCount(cart, item);
       return { ...item, data: IDsToData.get(item.id), sameProductDiffColorsCount };
@@ -180,6 +196,12 @@ function CartProvider({ children }) {
   }, [cart, IDsToData, getSameProductDiffColorCount]);
 
   useEffect(() => {
+    /* fetch data for every product that is in cart if it was not
+       fetched yet, if 2 or more products share the same id, the data
+       is fetched only once, as it is fetched per id */
+
+    /* by default this hook does not perform any fetches,
+       user has to call requireFullData first */
     if(!shouldFetch)
       return;
 
@@ -214,18 +236,33 @@ function CartProvider({ children }) {
   }, [shouldFetch, cart, IDsToData]);
 
   useEffect(() => {
+    /* set cart when username changes */
+
+    // if username didn't change dont do anything
     if(username === latestUsernameRef.current)
       return;
       
+    /* if user logged in and was not logged in before merge his guest 
+       cart with the one they have on account they've just logged into */
     if(latestUsernameRef.current === '') {
       cartMergeGuestWithUser(cart, username);
       saveCartToStorage('', []);
+    /* if user logs out or changes account just get the cart for that account */
     } else {
       setCart(getCartFromStorage(username));
     }
 
     latestUsernameRef.current = username;
   }, [username, cart, cartMergeGuestWithUser]);
+
+  useEffect(() => {
+    /* handles readyPhases of the CartContext,
+       used by components to show loading screen or something like that */
+    if(readyPhase.id !== 2 && cartProductsData.length && !cartProductsData.find(product => !product.data))
+      setReadyPhase({ id: 2, name: 'all-fetched' });
+    else if(readyPhase.id === 0)
+      setReadyPhase({ id: 1, name: 'effects-ran' });
+  }, [readyPhase, cartProductsData]);
   
   let totalPrice = cartProductsData.length ? { products: 0, shipping: 0 } : null;
   const overflowingProducts = [];
@@ -347,6 +384,7 @@ function CartProvider({ children }) {
         totalPrice,
         overflowingProducts,
         mergeNotificationData,
+        readyPhase,
         requireFullData,
         cartGetItemCount,
         cartGetItemTypeCount,

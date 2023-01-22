@@ -5,3 +5,8 @@
 eg. count: 14, stock: 10, ends up being count: 6 - may investigate why this happens and if it happens consistently,
 but not allowing overflow to happen may be enough
 - logging in/out in Profile component breaks focus trap (because the 'last focusable' element is changed)
+- add code splitting
+- Checkout component flashes 'you have to login' and 'nothing in your cart' messages for brief moment before it shows expected content,
+it is caused by data from AuthContext and CartContext not being loaded immediately, should use isLoading for this page and check
+other pages for similiar issues
+- add alternative sizes for images

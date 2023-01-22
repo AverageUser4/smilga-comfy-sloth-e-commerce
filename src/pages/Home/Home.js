@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import manWorking from '../../assets/man-working.jpeg';
-import furniture from '../../assets/furniture.jpeg';
+import manWorking from '../../assets/man-working-tiny.jpeg';
+import furniture from '../../assets/furniture-small.jpeg';
 import FancyPics from '../../components/FancyPics/FancyPics.js';
 import Card from '../../components/Card/Card';
 import { ReactComponent as Compass } from '../../assets/compass.svg';

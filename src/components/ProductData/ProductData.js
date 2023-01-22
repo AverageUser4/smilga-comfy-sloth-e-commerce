@@ -140,10 +140,7 @@ function ProductData({ setProductName }) {
               </>
             :
             stock ?
-              <>
-                <span className={css['alert']}>All in your cart!</span>
-                <Link to="/cart" className="button button--uppercase">Go to cart</Link>
-              </>
+              <span className={css['alert']}>All in your <Link className="cool-link" to="/cart">cart</Link>!</span>
             :
               <span className={`${css['alert']} ${css['alert--danger']}`}>Sold out!</span>
           }

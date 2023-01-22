@@ -196,6 +196,7 @@
     .block-and-image__image {
       max-width: 540px;
       max-height: 540px;
+      height: 540px;
       margin: auto;
     }
   }

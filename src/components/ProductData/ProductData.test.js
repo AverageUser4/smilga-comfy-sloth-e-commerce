@@ -1,6 +1,6 @@
 import React from 'react';
 import { useParams, BrowserRouter as Router } from 'react-router-dom';
-import { render, screen } from '@testing-library/react';
+import { render, screen, getByRole } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import ProductData from './ProductData';
 import { AuthProvider } from '../../utils/AuthContext';
@@ -74,17 +74,19 @@ test("does not render 'add to cart' button when there is no stock", () => {
   expect(addToCartButton).not.toBeInTheDocument();
 });
 
-test("renders 'all in your cart' prompt and does not render 'add to cart' button when all of the stock is in the cart", () => {
+test("renders 'all in your' prompt and link to cart and does not render 'add to cart' button when all of the stock is in the cart", () => {
   useParams.mockReturnValue({ id: singleProductData.id });
   useFetch.mockReturnValue({ data: { ...singleProductData, stock: 1 }, isError: false });
   renderComponent();
 
   const addToCartButton = screen.queryByRole('button', { name: /add to cart/i });
   userEvent.click(addToCartButton);
-  const prompt = screen.getByText(/all in your cart/i);
+  const prompt = screen.getByText(/all in your/i);
+  const cartLink = getByRole(prompt, 'link');
 
   expect(addToCartButton).not.toBeInTheDocument();
   expect(prompt).toBeInTheDocument();
+  expect(cartLink).toBeInTheDocument();
 });
 
 test('"setProductName" function gets called once with product name', () => {

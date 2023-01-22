@@ -6,6 +6,7 @@ const AuthContext = createContext();
 
 function AuthProvider({ children }) {
   const [name, setName] = useState('');
+  const [isReady, setIsReady] = useState(false);
   const channelRef = useRef();
   const isLoggedIn = name ? true : false;
 
@@ -29,6 +30,8 @@ function AuthProvider({ children }) {
     const name = getCookie('user');
     if(name)
       setName(name);
+
+    setIsReady(true);
   }, []);
 
   useEffect(() => {
@@ -67,6 +70,7 @@ function AuthProvider({ children }) {
       value={{
         username: name,
         isLoggedIn,
+        isReady,
         login,
         logout,
       }}
