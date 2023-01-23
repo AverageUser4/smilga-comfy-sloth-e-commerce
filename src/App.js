@@ -19,14 +19,14 @@ const CartChangelog = lazy(() => import('./pages/CartChangelog/CartChangelog.js'
 
 export default function App() {
   return (
-    <Suspense fallback={<Loading/>}>
-      <Router>
+    <Router>
 
-        <Messenger/>
+      <Messenger/>
 
-        <Header/>
+      <Header/>
 
-        <Main>
+      <Main>
+        <Suspense fallback={<Loading/>}>
           <Switch>
 
               <Route path="/products/:id">
@@ -66,11 +66,11 @@ export default function App() {
               </Route>
 
           </Switch>
-        </Main>
+        </Suspense>
+      </Main>
 
-        <Footer/>
+      <Footer/>
 
-      </Router>
-    </Suspense>
+    </Router>
   );
 }

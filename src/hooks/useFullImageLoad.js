@@ -11,6 +11,8 @@ function useFullImageLoad(src) {
 
     imageElement.src = src;
     imageElement.decode().then(setToTrue).catch(setToTrue);
+
+    return () => ignore = true;
   }, [imageElement, src]);
 
   return ready;

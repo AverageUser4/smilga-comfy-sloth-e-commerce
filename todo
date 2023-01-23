@@ -7,3 +7,10 @@ but not allowing overflow to happen may be enough
 - logging in/out in Profile component breaks focus trap (because the 'last focusable' element is changed)
 - add code splitting
 - revise CartContext tests, make use of describe blocks as the file is pretty complex
+- images from one page are fetched even if they are not needed anymore:
+  - may need to throttle internet speed to see that
+  - go to products page
+  - all 23 images are being fetched
+  - choose single product (or any other)
+  - the 23 images are still being fetched, which makes page load slower
+  - it is not caused by useFullImageLoad, seems like SPA thing or browser thing

@@ -19,8 +19,6 @@ function Checkout() {
   const [showDialog, setShowDialog] = useState(false);
   useEffect(() => requireFullData(), [requireFullData]);
   
-  console.log(cartProductsData)
-  
   let content = <div></div>;
 
   if(!isAuthReady || cartReadyPhase.name !== 'all-fetched') {
