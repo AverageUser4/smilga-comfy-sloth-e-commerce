@@ -9,6 +9,7 @@ import { ReactComponent as Mining } from '../../assets/mining-diamond.svg';
 import { ReactComponent as Scroll } from '../../assets/scroll.svg';
 import StandaloneSection from '../../components/StandaloneSection/StandaloneSection.js';
 import VerticalGap from '../../components/VerticalGap/VerticalGap';
+import SingleFieldForm from '../../components/SingleFieldForm/SingleFieldForm';
 import useProducts from '../../hooks/useProducts';
 import Product from '../../components/Product/Product';
 import Loading from '../../components/Loading/Loading';
@@ -114,21 +115,7 @@ function Home() {
             </p>
           </div>
 
-          <form>
-            <div className="dual-input">
-              <input
-                type="email"
-                className="input input--type-1"
-                placeholder="Enter email"
-                aria-label="Email"
-              />
-              <button 
-                className="button button--type-1"
-              >
-                Subscribe
-              </button>
-            </div>
-          </form>
+          <SingleFieldForm validator={(value) => ({ isValid: value.includes('@'), message: 'Emails have @, you won\'t trick me!' })}/>
           
         </div>
 
