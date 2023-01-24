@@ -2,10 +2,9 @@
 - improve existing tests
 - screenreader (orca) for some reason reads only yes and no button when opening logout Dialog, the rest of Dialog components works fine
 - if product overflows in ProductInCart (has count > stock) the overflowing count is subtracted FROM STOCK
-eg. count: 14, stock: 10, ends up being count: 6 - may investigate why this happens and if it happens consistently,
-but not allowing overflow to happen may be enough
+  eg. count: 14, stock: 10, ends up being count: 6 - may investigate why this happens and if it happens consistently,
+  but not allowing overflow to happen may be enough
 - logging in/out in Profile component breaks focus trap (because the 'last focusable' element is changed)
-- add code splitting
 - revise CartContext tests, make use of describe blocks as the file is pretty complex
 - images from one page are fetched even if they are not needed anymore:
   - may need to throttle internet speed to see that
@@ -13,4 +12,5 @@ but not allowing overflow to happen may be enough
   - all 23 images are being fetched
   - choose single product (or any other)
   - the 23 images are still being fetched, which makes page load slower
-  - it is not caused by useFullImageLoad, seems like SPA thing or browser thing
+  - it is not caused by useFullImageLoad, seems like firefox thing 
+    (in chrome images are still fetched but don't block content)

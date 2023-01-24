@@ -9,7 +9,7 @@ module.exports = {
         "plugin:react/recommended",
         "plugin:react-hooks/recommended",
         "plugin:jest/recommended",
-        "plugin:jest-dom/recommended",
+        "plugin:jest-dom/recommended"
     ],
     "overrides": [
     ],
@@ -18,9 +18,10 @@ module.exports = {
         "sourceType": "module"
     },
     "plugins": [
-        "react",
+        "react"
     ],
     "rules": {
         "no-unused-vars": "warn",
-    }
+    },
+    "ignorePatterns": ["*.cy.js"]
 }
