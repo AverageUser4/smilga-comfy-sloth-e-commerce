@@ -3,9 +3,11 @@ import { Link } from 'react-router-dom';
 import CurrentPath from '../../components/CurrentPath/CurrentPath';
 import StandaloneSection from '../../components/StandaloneSection/StandaloneSection';
 import { useCartContext } from '../../utils/CartContext';
+import useDocumentTitle from '../../hooks/useDocumentTitle';
 
 function CartChangelog() {
   const { mergeNotificationData } = useCartContext();
+  useDocumentTitle('Cart Changelog');
 
   return (
     <div>

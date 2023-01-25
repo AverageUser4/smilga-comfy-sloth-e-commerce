@@ -27,6 +27,7 @@ function PayBox({ onSubmit }) {
 
       <input
         className={`${css['input']} ${css['input--number']}`}
+        type="text"
         placeholder="12345"
         aria-label="Card number."
         value={cardNumber}

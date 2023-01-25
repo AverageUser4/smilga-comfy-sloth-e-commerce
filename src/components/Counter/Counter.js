@@ -113,7 +113,7 @@ function Counter({ count, setCount, step = 1, min = 1, max = 999, fontSize = "cl
 
       case 'ArrowRight':
         increase();
-        break;
+          break;
 
       case 'Home':
         decrease(Number.MAX_SAFE_INTEGER);
@@ -153,11 +153,12 @@ function Counter({ count, setCount, step = 1, min = 1, max = 999, fontSize = "cl
         name="minus"
         aria-label="Subtract."
         aria-controls={counterID}
+        data-cy="counter-subtract"
       >
         <Minus aria-hidden="true"/>
       </button>
 
-      <span>{count}</span>
+      <span data-cy="counter-count">{count}</span>
 
       <button 
         style={buttonStyle}
@@ -166,6 +167,7 @@ function Counter({ count, setCount, step = 1, min = 1, max = 999, fontSize = "cl
         name="plus"
         aria-label="Add."
         aria-controls={counterID}
+        data-cy="counter-add"
       >
         <Plus aria-hidden="true"/>
       </button>

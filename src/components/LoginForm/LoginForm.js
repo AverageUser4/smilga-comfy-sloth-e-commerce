@@ -40,6 +40,7 @@ function LoginForm() {
         <span>Username:</span>
         <input 
           className="input"
+          type="text"
           name="name"
           value={userData.name}
           onChange={handleChange}

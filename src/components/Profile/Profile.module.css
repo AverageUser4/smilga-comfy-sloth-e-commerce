@@ -40,7 +40,9 @@
 
 .profile {
   display: flex;
-  gap: 24px;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px 24px;
 }
 
 .cart-count {
@@ -69,6 +71,7 @@
   .profile {
     display: none;
     justify-items: center;
+    justify-content: stretch;
     gap: 8px;
   
     position: absolute;

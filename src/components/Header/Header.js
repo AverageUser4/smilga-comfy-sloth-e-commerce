@@ -43,6 +43,7 @@ export default function Header() {
           ref={lastFocusableRef}
           aria-label="Open nav."
           aria-controls="header-nav"
+          data-cy="nav-open"
         >
           <MenuBars aria-hidden="true"/>
         </button>

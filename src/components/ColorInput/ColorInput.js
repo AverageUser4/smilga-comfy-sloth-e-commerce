@@ -10,7 +10,7 @@ function ColorInput({ name, value, currentValue, handleChange, size = 16 }) {
   const colorName = getColorName(value);
 
   return (
-    <label className="hidden-radio-label" style={labelStyles}>
+    <label className="hidden-radio-label" style={labelStyles} data-cy={colorName}>
       <input 
         className="hidden-radio"
         type="radio"

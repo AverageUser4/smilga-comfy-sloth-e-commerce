@@ -12,8 +12,11 @@ function Notification({ content = '', type = '', timeout = 3000, dateNow = 0 }) 
   const [notifications, setNotifications] = useState([]);
   const areThereVisible = notifications.findIndex(notif => notif) !== -1;
   const notificationsRef = useRef();
-  notificationsRef.current = notifications;
 
+  useEffect(() => {
+    notificationsRef.current = notifications;
+  }, [notifications]);
+  
   useEffect(() => {
     if(dateNow === lastDateRef.current)
       return;
