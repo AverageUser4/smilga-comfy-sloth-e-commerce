@@ -6,6 +6,7 @@ import Footer from './components/Footer/Footer.js';
 import Main from './components/Main/Main.js';
 import Messenger from './components/Messenger/Messenger.js';
 import Loading from './components/Loading/Loading.js';
+import ErrorBoundary from './components/ErrorBoundary/ErrorBoundary.js';
 
 const Home = lazy(() => import('./pages/Home/Home.js'));
 const ErrorPage = lazy(() => import('./pages/ErrorPage/ErrorPage.js'));
@@ -26,47 +27,49 @@ export default function App() {
       <Header/>
 
       <Main>
-        <Suspense fallback={<Loading/>}>
-          <Switch>
+        <ErrorBoundary>
+          <Suspense fallback={<Loading/>}>
+            <Switch>
 
-              <Route path="/products/:id">
-                <ProductPage/>
-              </Route>
+                <Route path="/products/:id">
+                  <ProductPage/>
+                </Route>
 
-              <Route path="/products">
-                <AllProducts/>
-              </Route>
+                <Route path="/products">
+                  <AllProducts/>
+                </Route>
 
-              <Route path="/about">
-                <About/>
-              </Route>
+                <Route path="/about">
+                  <About/>
+                </Route>
 
-              <Route path="/cart-changelog">
-                <CartChangelog/>
-              </Route>
+                <Route path="/cart-changelog">
+                  <CartChangelog/>
+                </Route>
 
-              <Route path="/cart">
-                <Cart/>
-              </Route>
+                <Route path="/cart">
+                  <Cart/>
+                </Route>
 
-              <Route path="/login">
-                <Login/>
-              </Route>
+                <Route path="/login">
+                  <Login/>
+                </Route>
 
-              <Route path="/checkout">
-                <Checkout/>
-              </Route>
+                <Route path="/checkout">
+                  <Checkout/>
+                </Route>
 
-              <Route exact path="/">
-                <Home/>
-              </Route>
+                <Route exact path="/">
+                  <Home/>
+                </Route>
 
-              <Route path="*">
-                <ErrorPage message="404 page not found."/>
-              </Route>
-
-          </Switch>
-        </Suspense>
+                <Route path="*">
+                  <ErrorPage message="404 page not found."/>
+                </Route>
+                
+            </Switch>
+          </Suspense>
+        </ErrorBoundary>
       </Main>
 
       <Footer/>

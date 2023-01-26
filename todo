@@ -14,3 +14,5 @@
   - the 23 images are still being fetched, which makes page load slower
   - it is not caused by useFullImageLoad, seems like firefox thing 
     (in chrome images are still fetched but don't block content)
+
+- add ErrorBoundary as there is code splitting (to simulate error happening you can turn off server before loading new page)
