@@ -8,15 +8,11 @@ class ErrorBoundary extends Component {
     return { isError: true };
   }
   
-  // componentDidCatch(error, errorInfo) {
-  //   console.error(error, errorInfo);
-  // }
-  
   render() {
     if(this.state.isError)
       return <h1>Oh no... error! Please, refresh!</h1>;
 
-    return <>{this.props.children}</>;
+    return this.props.children;
   }
 }
 
