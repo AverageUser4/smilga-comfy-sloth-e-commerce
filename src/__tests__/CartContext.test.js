@@ -10,9 +10,9 @@ jest.mock('../utils/AuthContext');
 
 function getSomeCart() {
   return [
-    { id: 'abc', color: '#000', count: 1, stock: 5 },
-    { id: 'cba', color: '#ff0000', count: 4, stock: 20 },
-    { id: 'abc', color: '#0000ff', count: 2, stock: 5 }
+    { id: 'abc', color: '#000', count: 1, stock: 5, name: 'chair' },
+    { id: 'cba', color: '#ff0000', count: 4, stock: 20, name: 'table' },
+    { id: 'abc', color: '#0000ff', count: 2, stock: 5, name: 'stool' }
   ];
 }
 
@@ -351,19 +351,129 @@ describe('account changes', () => {
 describe('cart merging', () => {
 
   test('adding brand new item works', () => {
+    fetchMockAddImplementation(fetch, 0, 20);
+    
+    const guestName = '';
+    const userName = 'adam';
+    const accountCart = getSomeCart();
+    const guestCart = [{ id: 'xyz', color: '#0000ff', count: 1, stock: 3, name: 'cool chair' }];
 
+    localStorage.setItem(`${userName}-cart`, JSON.stringify(accountCart));
+    localStorage.setItem(`${guestName}-cart`, JSON.stringify(guestCart));
+    useAuthContext.mockReturnValue({ username: guestName });
+    const { result, rerender } = renderHook(() => useCartContext(), { wrapper: CartProvider });
+  
+    useAuthContext.mockReturnValue({ username: userName });
+    rerender();
+
+    // cart has new item added
+    expect(result.current.cartProductsData).toHaveLength(4);
+    expect(result.current.cartProductsData).toEqual(expect.arrayContaining([expect.objectContaining({ id: 'xyz' })]));
   });
 
-  test('adding count to existing item works (stock not exceeded)', () => {
+  test('adding count to existing item works (same color, stock not exceeded)', () => {
+    fetchMockAddImplementation(fetch, 0, 20);
+    
+    const guestName = '';
+    const userName = 'adam';
+    const accountCart = [{ id: 'xyz', color: '#0000ff', count: 1, stock: 3, name: 'cool chair' }];
+    const guestCart = [{ id: 'xyz', color: '#0000ff', count: 2, stock: 3, name: 'cool chair' }];
 
+    localStorage.setItem(`${userName}-cart`, JSON.stringify(accountCart));
+    localStorage.setItem(`${guestName}-cart`, JSON.stringify(guestCart));
+    useAuthContext.mockReturnValue({ username: guestName });
+    const { result, rerender } = renderHook(() => useCartContext(), { wrapper: CartProvider });
+
+    useAuthContext.mockReturnValue({ username: userName });
+    rerender();
+
+    expect(result.current.cartProductsData).toHaveLength(1);
+    expect(result.current.cartProductsData[0].count).toBe(3);
   });
 
-  test('adding count to existing item works (stock exceeded)', () => {
+  test('adding count to existing item works (different color, stock not exceeded)', () => {
+    fetchMockAddImplementation(fetch, 0, 20);
+    
+    const guestName = '';
+    const userName = 'adam';
+    const accountCart = [{ id: 'xyz', color: '#0000ff', count: 1, stock: 3, name: 'cool chair' }];
+    const guestCart = [{ id: 'xyz', color: '#ff0000', count: 2, stock: 3, name: 'cool chair' }];
 
+    localStorage.setItem(`${userName}-cart`, JSON.stringify(accountCart));
+    localStorage.setItem(`${guestName}-cart`, JSON.stringify(guestCart));
+    useAuthContext.mockReturnValue({ username: guestName });
+    const { result, rerender } = renderHook(() => useCartContext(), { wrapper: CartProvider });
+
+    useAuthContext.mockReturnValue({ username: userName });
+    rerender();
+
+    expect(result.current.cartProductsData).toHaveLength(2);
+    expect(result.current.cartProductsData).toEqual(expect.arrayContaining([expect.objectContaining({ color: '#0000ff', count: 1 })]));
+    expect(result.current.cartProductsData).toEqual(expect.arrayContaining([expect.objectContaining({ color: '#ff0000', count: 2 })]));
+  });
+
+  test('adding count to existing item works (same color, stock exceeded)', () => {
+    fetchMockAddImplementation(fetch, 0, 20);
+    
+    const guestName = '';
+    const userName = 'adam';
+    const accountCart = [{ id: 'xyz', color: '#0000ff', count: 1, stock: 3, name: 'cool chair' }];
+    const guestCart = [{ id: 'xyz', color: '#0000ff', count: 3, stock: 3, name: 'cool chair' }];
+
+    localStorage.setItem(`${userName}-cart`, JSON.stringify(accountCart));
+    localStorage.setItem(`${guestName}-cart`, JSON.stringify(guestCart));
+    useAuthContext.mockReturnValue({ username: guestName });
+    const { result, rerender } = renderHook(() => useCartContext(), { wrapper: CartProvider });
+
+    useAuthContext.mockReturnValue({ username: userName });
+    rerender();
+
+    expect(result.current.cartProductsData).toHaveLength(1);
+    expect(result.current.cartProductsData[0].count).toBe(3);
+  });
+
+  test('adding count to existing item works (different color, stock exceeded)', () => {
+    fetchMockAddImplementation(fetch, 0, 20);
+    
+    const guestName = '';
+    const userName = 'adam';
+    const accountCart = [{ id: 'xyz', color: '#0000ff', count: 2, stock: 3, name: 'cool chair' }];
+    const guestCart = [{ id: 'xyz', color: '#ff0000', count: 2, stock: 3, name: 'cool chair' }];
+
+    localStorage.setItem(`${userName}-cart`, JSON.stringify(accountCart));
+    localStorage.setItem(`${guestName}-cart`, JSON.stringify(guestCart));
+    useAuthContext.mockReturnValue({ username: guestName });
+    const { result, rerender } = renderHook(() => useCartContext(), { wrapper: CartProvider });
+
+    useAuthContext.mockReturnValue({ username: userName });
+    rerender();
+
+    expect(result.current.cartProductsData).toHaveLength(2);
+    expect(result.current.cartProductsData).toEqual(expect.arrayContaining([expect.objectContaining({ color: '#0000ff', count: 2 })]));
+    expect(result.current.cartProductsData).toEqual(expect.arrayContaining([expect.objectContaining({ color: '#ff0000', count: 1 })]));
   });
   
   test('not enough stock, nothing gets added', () => {
+    fetchMockAddImplementation(fetch, 0, 20);
+    
+    const guestName = '';
+    const userName = 'adam';
+    const accountCart = [{ id: 'xyz', color: '#0000ff', count: 3, stock: 3, name: 'cool chair' }];
+    const guestCart = [
+      { id: 'xyz', color: '#ff0000', count: 2, stock: 3, name: 'cool chair' },
+      { id: 'xyz', color: '#0000ff', count: 1, stock: 3, name: 'cool chair' }
+    ];
 
+    localStorage.setItem(`${userName}-cart`, JSON.stringify(accountCart));
+    localStorage.setItem(`${guestName}-cart`, JSON.stringify(guestCart));
+    useAuthContext.mockReturnValue({ username: guestName });
+    const { result, rerender } = renderHook(() => useCartContext(), { wrapper: CartProvider });
+
+    useAuthContext.mockReturnValue({ username: userName });
+    rerender();
+
+    expect(result.current.cartProductsData).toHaveLength(1);
+    expect(result.current.cartProductsData).toEqual(expect.arrayContaining([expect.objectContaining({ color: '#0000ff', count: 3 })]));
   });
   
 });
