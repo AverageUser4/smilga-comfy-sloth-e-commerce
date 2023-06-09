@@ -63,7 +63,7 @@ function Product({ image, price, name, id, description, showDetails = false, loc
         <div className={css['detailed__price']}>{stringifyPrice(price)}</div>
         <p className="paragraph paragraph--small paragraph--color-1">{cutText(description, 130)}</p>
 
-        <Link to="url" className="button button--uppercase">Details</Link>
+        <Link to={url} className="button button--uppercase">Details</Link>
 
       </div>
       
