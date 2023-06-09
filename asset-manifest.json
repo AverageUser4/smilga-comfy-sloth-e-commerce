@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/smilga-comfy-sloth-e-commerce/static/css/main.245d94a3.css",
-    "main.js": "/smilga-comfy-sloth-e-commerce/static/js/main.77014988.js",
+    "main.js": "/smilga-comfy-sloth-e-commerce/static/js/main.11a258fb.js",
     "static/css/399.0278b3dc.chunk.css": "/smilga-comfy-sloth-e-commerce/static/css/399.0278b3dc.chunk.css",
-    "static/js/399.4d57b87c.chunk.js": "/smilga-comfy-sloth-e-commerce/static/js/399.4d57b87c.chunk.js",
+    "static/js/399.f78822d5.chunk.js": "/smilga-comfy-sloth-e-commerce/static/js/399.f78822d5.chunk.js",
     "static/css/219.1c0b3e8e.chunk.css": "/smilga-comfy-sloth-e-commerce/static/css/219.1c0b3e8e.chunk.css",
     "static/js/219.b6f00129.chunk.js": "/smilga-comfy-sloth-e-commerce/static/js/219.b6f00129.chunk.js",
     "static/css/8.881e0304.chunk.css": "/smilga-comfy-sloth-e-commerce/static/css/8.881e0304.chunk.css",
     "static/js/8.603c1cff.chunk.js": "/smilga-comfy-sloth-e-commerce/static/js/8.603c1cff.chunk.js",
     "static/css/501.f1419578.chunk.css": "/smilga-comfy-sloth-e-commerce/static/css/501.f1419578.chunk.css",
-    "static/js/501.96b69493.chunk.js": "/smilga-comfy-sloth-e-commerce/static/js/501.96b69493.chunk.js",
+    "static/js/501.7d37e134.chunk.js": "/smilga-comfy-sloth-e-commerce/static/js/501.7d37e134.chunk.js",
     "static/css/874.1e6df92c.chunk.css": "/smilga-comfy-sloth-e-commerce/static/css/874.1e6df92c.chunk.css",
     "static/js/874.b0f9781f.chunk.js": "/smilga-comfy-sloth-e-commerce/static/js/874.b0f9781f.chunk.js",
     "static/css/489.b863347a.chunk.css": "/smilga-comfy-sloth-e-commerce/static/css/489.b863347a.chunk.css",
@@ -45,15 +45,15 @@
     "static/media/trash.svg": "/smilga-comfy-sloth-e-commerce/static/media/trash.39699bf65641a0507a6e2b56f9100f5d.svg",
     "static/media/minus.svg": "/smilga-comfy-sloth-e-commerce/static/media/minus.cfae676f6a10ddc0ba75a496ed12506d.svg",
     "main.245d94a3.css.map": "/smilga-comfy-sloth-e-commerce/static/css/main.245d94a3.css.map",
-    "main.77014988.js.map": "/smilga-comfy-sloth-e-commerce/static/js/main.77014988.js.map",
+    "main.11a258fb.js.map": "/smilga-comfy-sloth-e-commerce/static/js/main.11a258fb.js.map",
     "399.0278b3dc.chunk.css.map": "/smilga-comfy-sloth-e-commerce/static/css/399.0278b3dc.chunk.css.map",
-    "399.4d57b87c.chunk.js.map": "/smilga-comfy-sloth-e-commerce/static/js/399.4d57b87c.chunk.js.map",
+    "399.f78822d5.chunk.js.map": "/smilga-comfy-sloth-e-commerce/static/js/399.f78822d5.chunk.js.map",
     "219.1c0b3e8e.chunk.css.map": "/smilga-comfy-sloth-e-commerce/static/css/219.1c0b3e8e.chunk.css.map",
     "219.b6f00129.chunk.js.map": "/smilga-comfy-sloth-e-commerce/static/js/219.b6f00129.chunk.js.map",
     "8.881e0304.chunk.css.map": "/smilga-comfy-sloth-e-commerce/static/css/8.881e0304.chunk.css.map",
     "8.603c1cff.chunk.js.map": "/smilga-comfy-sloth-e-commerce/static/js/8.603c1cff.chunk.js.map",
     "501.f1419578.chunk.css.map": "/smilga-comfy-sloth-e-commerce/static/css/501.f1419578.chunk.css.map",
-    "501.96b69493.chunk.js.map": "/smilga-comfy-sloth-e-commerce/static/js/501.96b69493.chunk.js.map",
+    "501.7d37e134.chunk.js.map": "/smilga-comfy-sloth-e-commerce/static/js/501.7d37e134.chunk.js.map",
     "874.1e6df92c.chunk.css.map": "/smilga-comfy-sloth-e-commerce/static/css/874.1e6df92c.chunk.css.map",
     "874.b0f9781f.chunk.js.map": "/smilga-comfy-sloth-e-commerce/static/js/874.b0f9781f.chunk.js.map",
     "489.b863347a.chunk.css.map": "/smilga-comfy-sloth-e-commerce/static/css/489.b863347a.chunk.css.map",
@@ -67,6 +67,6 @@
   },
   "entrypoints": [
     "static/css/main.245d94a3.css",
-    "static/js/main.77014988.js"
+    "static/js/main.11a258fb.js"
   ]
 }
